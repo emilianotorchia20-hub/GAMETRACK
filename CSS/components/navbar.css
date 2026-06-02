@@ -1,0 +1,191 @@
+/* ==========================
+   👑 PREMIUM NAVBAR
+========================== */
+
+nav {
+
+  position: sticky;
+
+  top: 18px;
+
+  z-index: 1000;
+
+  width: fit-content;
+
+  margin: 20px auto 40px;
+
+  padding: 10px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  border-radius: 999px;
+
+  background:
+
+    linear-gradient(
+      145deg,
+      rgba(20,20,22,.72),
+      rgba(5,5,5,.78)
+    );
+
+  backdrop-filter: blur(18px);
+
+  -webkit-backdrop-filter: blur(18px);
+
+  border:
+    1px solid rgba(255,255,255,.06);
+
+  box-shadow:
+
+    inset 0 1px 0 rgba(255,255,255,.05),
+
+    0 10px 35px rgba(0,0,0,.45),
+
+    0 0 25px rgba(255,215,120,.03);
+
+  overflow: hidden;
+
+}
+
+/* ==========================
+   ✨ TOP SHINE
+========================== */
+
+nav::before {
+
+  content:"";
+
+  position:absolute;
+
+  inset:0;
+
+  border-radius:999px;
+
+  background:
+
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.08),
+      transparent 18%,
+      transparent 70%,
+      rgba(255,255,255,.015)
+    );
+
+  pointer-events:none;
+
+}
+
+/* ==========================
+   🔗 LINKS
+========================== */
+
+nav a {
+
+  position: relative;
+
+  z-index: 2;
+
+  padding: 12px 20px;
+
+  border-radius: 999px;
+
+  color: rgba(255,255,255,.72);
+
+  text-decoration: none;
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+  letter-spacing: .2px;
+
+  transition:
+
+    color .22s ease,
+
+    background .22s ease,
+
+    transform .22s ease,
+
+    box-shadow .22s ease;
+
+}
+
+/* ==========================
+   ✨ HOVER
+========================== */
+
+nav a:hover {
+
+  color: #ffffff;
+
+  background:
+    rgba(255,255,255,.05);
+
+  transform:
+    translateY(-1px);
+
+}
+
+/* ==========================
+   🔥 ACTIVE
+========================== */
+
+nav a.active {
+
+  color: #ffffff;
+
+  background:
+
+    linear-gradient(
+      145deg,
+      rgba(255,215,120,.18),
+      rgba(220,38,38,.12)
+    );
+
+  border:
+    1px solid rgba(255,215,120,.12);
+
+  box-shadow:
+
+    inset 0 1px 0 rgba(255,255,255,.06),
+
+    0 0 20px rgba(255,215,120,.08);
+
+}
+
+/* ==========================
+   📱 MOBILE
+========================== */
+
+@media(max-width:700px){
+
+  nav {
+
+    width: calc(100% - 24px);
+
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+    gap: 6px;
+
+    padding: 8px;
+
+    border-radius: 28px;
+
+  }
+
+  nav a {
+
+    padding: 10px 14px;
+
+    font-size: 13px;
+
+  }
+
+}

@@ -1,0 +1,212 @@
+ /* =========================
+   🔥 RESET
+========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+/* =========================
+   🎰 BODY CASINO PREMIUM
+========================= */
+
+body{
+
+    font-family:
+        Inter,
+        Arial,
+        sans-serif;
+
+    color:#f8fafc;
+
+    min-height:100vh;
+
+    padding:20px;
+
+    overflow-x:hidden;
+
+    background:
+
+        /* glow rojo superior */
+        radial-gradient(
+            circle at top,
+            rgba(185,28,28,.22),
+            transparent 30%
+        ),
+
+        /* glow dorado lateral */
+        radial-gradient(
+            circle at right,
+            rgba(212,175,55,.08),
+            transparent 25%
+        ),
+
+        /* glow rojo inferior */
+        radial-gradient(
+            circle at bottom left,
+            rgba(127,29,29,.18),
+            transparent 28%
+        ),
+
+        /* fondo principal */
+        linear-gradient(
+            180deg,
+            #030303,
+            #090909,
+            #050505
+        );
+
+    background-attachment: fixed;
+
+    position:relative;
+}
+
+/* =========================
+   ✨ CAPA ATMÓSFERA
+========================= */
+
+body::before{
+
+    content:"";
+
+    position:fixed;
+
+    inset:0;
+
+    pointer-events:none;
+
+    background:
+
+        linear-gradient(
+            rgba(255,255,255,.015),
+            transparent
+        );
+
+    z-index:-1;
+}
+
+/* =========================
+   💎 TEXTURA SUTIL
+========================= */
+
+body::after{
+
+    content:"";
+
+    position:fixed;
+
+    inset:0;
+
+    opacity:.035;
+
+    pointer-events:none;
+
+    background-image:
+        radial-gradient(
+            rgba(255,255,255,.6) 1px,
+            transparent 1px
+        );
+
+    background-size:4px 4px;
+
+    z-index:-1;
+}
+
+/* =========================
+   📝 TITULOS
+========================= */
+
+h1{
+
+    margin-bottom:20px;
+
+    font-size:clamp(28px,4vw,42px);
+
+    font-weight:800;
+
+    letter-spacing:-1px;
+
+    color:white;
+
+    text-shadow:
+        0 0 20px rgba(0,0,0,.6);
+
+}
+
+/* =========================
+   ✨ SUBTÍTULOS
+========================= */
+
+h2{
+
+    color:#f8fafc;
+
+    font-weight:700;
+
+    letter-spacing:-0.5px;
+}
+
+/* =========================
+   🪙 SCROLLBAR PRO
+========================= */
+
+::-webkit-scrollbar{
+    width:10px;
+}
+
+::-webkit-scrollbar-track{
+    background:#050505;
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:
+        linear-gradient(
+            180deg,
+            #7f1d1d,
+            #d4af37
+        );
+
+    border-radius:20px;
+}
+
+/* =========================
+   ✨ SELECCIÓN TEXTO
+========================= */
+
+::selection{
+
+    background:
+        rgba(212,175,55,.3);
+
+    color:white;
+}
+
+/* =========================
+   🔥 LINKS
+========================= */
+
+a{
+
+    color:#f8fafc;
+
+    text-decoration:none;
+
+    transition:.2s;
+}
+
+a:hover{
+
+    color:#facc15;
+}
+
+/* =========================
+   🎞 FADE GLOBAL
+========================= */
+
+body.fade-out{
+    opacity:0;
+    transition:opacity .25s ease;
+}

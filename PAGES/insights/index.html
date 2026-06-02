@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        GAMETRACK • Insights
+    </title>
+
+    <!-- =========================
+         🎨 CSS BASE
+    ========================== -->
+
+    <link rel="stylesheet" href="../../CSS/base.css">
+
+    <link rel="stylesheet" href="../../CSS/layout.css">
+
+    <link rel="stylesheet" href="../../CSS/utilities.css">
+
+    <!-- =========================
+         🧩 COMPONENTES
+    ========================== -->
+
+    <link rel="stylesheet" href="../../CSS/components/animations.css">
+
+    <link rel="stylesheet" href="../../CSS/components/alerts.css">
+
+    <link rel="stylesheet" href="../../CSS/components/background.css">
+
+    <link rel="stylesheet" href="../../CSS/components/buttons.css">
+
+    <link rel="stylesheet" href="../../CSS/components/cards.css">
+
+    <link rel="stylesheet" href="../../CSS/components/history.css">
+
+    <link rel="stylesheet" href="../../CSS/components/install.css">
+
+    <link rel="stylesheet" href="../../CSS/components/loader.css">
+
+    <link rel="stylesheet" href="../../CSS/components/logo.css">
+
+    <link rel="stylesheet" href="../../CSS/components/navbar.css">
+
+    <link rel="stylesheet" href="../../CSS/components/settings.css">
+
+    <link rel="stylesheet" href="../../CSS/components/stats.css">
+
+    <!-- =========================
+         📄 INSIGHTS PAGE
+    ========================== -->
+
+    <link rel="stylesheet" href="../../CSS/pages/insights.css">
+
+    <!-- =========================
+         🔔 TOASTIFY
+    ========================== -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+    >
+
+    <!-- =========================
+         📱 PWA
+    ========================== -->
+
+    <link rel="manifest" href="/manifest.json">
+
+    <meta
+        name="theme-color"
+        content="#0f172a"
+    >
+
+</head>
+
+<body>
+
+    <!-- =========================
+         🌌 BACKGROUND FX
+    ========================== -->
+
+    <div class="bg-light"></div>
+
+    <div class="bg-shine"></div>
+
+    <div class="bg-noise"></div>
+
+    <!-- ✨ PARTICLES -->
+
+    <div class="particles">
+
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+
+    </div>
+
+    <!-- =========================
+         🔝 NAVBAR
+    ========================== -->
+
+    <nav>
+
+        <a href="../../index.html">
+
+            Inicio
+
+        </a>
+
+        <a href="../historial/index.html">
+
+            Historial
+
+        </a>
+
+        <a href="../estadisticas/index.html">
+
+            Estadísticas
+
+        </a>
+
+        <a
+            href="../insights/index.html"
+            class="active"
+        >
+
+            Insights
+
+        </a>
+
+        <a href="../configuracion/index.html">
+
+            Configuración
+
+        </a>
+
+        <a href="../roulette/index.html">
+
+            Ruleta
+
+        </a>
+
+    </nav>
+
+    <!-- =========================
+         🧠 HERO
+    ========================== -->
+
+    <section class="insights-hero">
+
+        <div class="hero-content">
+
+            <p class="hero-badge">
+
+                ANALYTICS
+
+            </p>
+
+            <h1>
+
+                Insights inteligentes
+
+            </h1>
+
+            <p class="hero-description">
+
+                Analizá tendencias,
+                rendimiento y evolución
+                de tus sesiones.
+
+            </p>
+
+        </div>
+
+    </section>
+
+    <!-- =========================
+         📈 INSIGHTS
+    ========================== -->
+
+    <main class="insights-container">
+
+        <div
+            id="insights"
+            class="insights-grid"
+        ></div>
+
+    </main>
+
+    <!-- =========================
+         📊 CHART.JS
+    ========================== -->
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- =========================
+         🔔 TOASTIFY
+    ========================== -->
+
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+    <!-- =========================
+         🔧 JAVASCRIPT
+    ========================== -->
+
+    <script
+        src="../../JS/insights.js"
+        defer
+    ></script>
+
+</body>
+
+</html>

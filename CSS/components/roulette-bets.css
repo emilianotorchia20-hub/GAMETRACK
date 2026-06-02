@@ -1,0 +1,307 @@
+/* =========================
+   🎰 PANEL APUESTAS
+========================= */
+
+.bet-panel {
+
+  position: relative;
+
+  overflow: hidden;
+
+  flex: 1;
+
+  max-width: 600px;
+
+  padding: 24px;
+
+  border-radius: 24px;
+
+  background:
+
+    linear-gradient(
+      145deg,
+      rgba(18,18,18,.96),
+      rgba(5,5,5,.96)
+    );
+
+  border:
+    1px solid rgba(212,175,55,.10);
+
+  box-shadow:
+
+    0 12px 40px rgba(0,0,0,.55),
+
+    inset 0 1px 0 rgba(255,255,255,.03);
+
+}
+
+.bet-panel h2 {
+
+  color: #f8fafc;
+
+  margin-bottom: 20px;
+
+}
+
+/* =========================
+   💰 FICHAS
+========================= */
+
+.chips {
+
+  position: relative;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  gap: 12px;
+
+  flex-wrap: wrap;
+
+  width: 100%;
+
+  margin: 22px 0 28px;
+
+  padding: 0;
+
+  z-index: 10;
+
+}
+
+.chip {
+
+  position: relative;
+
+  z-index: 5;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 10px 16px;
+
+  border-radius: 999px;
+
+  border:
+    1px solid rgba(212,175,55,.12);
+
+  background:
+    rgba(255,255,255,.05);
+
+  color: white;
+
+  font-weight: bold;
+
+  cursor: pointer;
+
+  transition:
+    transform .2s ease,
+    background .2s ease,
+    box-shadow .2s ease;
+
+}
+
+.chip:hover {
+
+  transform:
+    scale(1.05);
+
+}
+
+.chip.active {
+
+  background:
+
+    linear-gradient(
+      135deg,
+      #d4af37,
+      #facc15
+    );
+
+  color: black;
+
+  box-shadow:
+    0 0 20px rgba(212,175,55,.25);
+
+}
+
+/* =========================
+   🎯 BOTONES APUESTA
+========================= */
+
+.bet-options {
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 10px;
+
+}
+
+.bet-options button {
+
+  padding: 12px;
+
+  border-radius: 12px;
+
+}
+
+/* =========================
+   🔢 GRILLA NUMEROS
+========================= */
+
+.numbers-grid {
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(12, 1fr);
+
+  gap: 6px;
+
+  margin: 20px 0;
+
+}
+
+.numbers-grid div {
+
+  padding: 10px;
+
+  text-align: center;
+
+  border-radius: 8px;
+
+  font-size: 12px;
+
+  font-weight: bold;
+
+  cursor: pointer;
+
+  transition: .15s;
+
+}
+
+.numbers-grid div:hover {
+
+  transform:
+    scale(1.08);
+
+}
+
+/* 🎨 COLORES */
+
+.num-red {
+
+  background: #b91c1c;
+
+  color: white;
+
+}
+
+.num-black {
+
+  background: #000;
+
+  color: white;
+
+}
+
+.num-green {
+
+  background: #15803d;
+
+  color: white;
+
+}
+
+/* =========================
+   📋 APUESTAS
+========================= */
+
+#betsList {
+
+  margin-top: 10px;
+
+  padding: 12px;
+
+  background:
+    rgba(255,255,255,.04);
+
+  border-radius: 14px;
+
+  font-size: 14px;
+
+  color: #a1a1aa;
+
+}
+
+#betsList:empty {
+
+  display: none;
+
+}
+
+.bet-item {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  background:
+    rgba(255,255,255,.04);
+
+  padding: 8px 12px;
+
+  border-radius: 10px;
+
+  margin-bottom: 6px;
+
+}
+
+/* =========================
+   ❌ BORRAR APUESTA
+========================= */
+
+.delete-bet {
+
+  background: transparent;
+
+  border: none;
+
+  color: #ef4444;
+
+  font-size: 16px;
+
+  font-weight: bold;
+
+  cursor: pointer;
+
+  width: 24px;
+
+  height: 24px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+}
+
+.delete-bet:hover {
+
+  transform:
+    scale(1.2);
+
+  color: #dc2626;
+
+}

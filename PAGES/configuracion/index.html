@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>
+        Configuración - GameTrack
+    </title>
+
+    <!-- =========================
+         🎨 CSS BASE
+    ========================== -->
+
+    <link rel="stylesheet" href="../../CSS/base.css">
+
+    <link rel="stylesheet" href="../../CSS/layout.css">
+
+    <link rel="stylesheet" href="../../CSS/utilities.css">
+
+    <!-- =========================
+         🧩 COMPONENTES
+    ========================== -->
+
+    <link rel="stylesheet" href="../../CSS/components/animations.css">
+
+    <link rel="stylesheet" href="../../CSS/components/alerts.css">
+
+    <link rel="stylesheet" href="../../CSS/components/buttons.css">
+
+    <link rel="stylesheet" href="../../CSS/components/cards.css">
+
+    <link rel="stylesheet" href="../../CSS/components/forms.css">
+
+    <link rel="stylesheet" href="../../CSS/components/history.css">
+
+    <link rel="stylesheet" href="../../CSS/components/install.css">
+
+    <link rel="stylesheet" href="../../CSS/components/loader.css">
+
+    <link rel="stylesheet" href="../../CSS/components/logo.css">
+
+    <link rel="stylesheet" href="../../CSS/components/navbar.css">
+
+    <link rel="stylesheet" href="../../CSS/components/settings.css">
+
+    <link rel="stylesheet" href="../../CSS/components/stats.css">
+
+    <!-- =========================
+         🔔 TOASTIFY
+    ========================== -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+    >
+
+    <!-- =========================
+         📱 PWA
+    ========================== -->
+
+    <link rel="manifest" href="/manifest.json">
+
+    <meta
+        name="theme-color"
+        content="#0f172a"
+    >
+
+</head>
+
+<body>
+
+    <!-- =========================
+         🎬 LOADER
+    ========================== -->
+
+    <div id="loader">
+
+        <div class="loader-content">
+
+            <div class="loader-logo">
+
+                🎮
+
+            </div>
+
+            <h1>
+
+                GameTrack
+
+            </h1>
+
+            <div class="loader-bar">
+
+                <div class="loader-progress"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- =========================
+         🔝 NAVBAR
+    ========================== -->
+
+    <nav>
+
+        <a href="../../index.html">
+
+            Inicio
+
+        </a>
+
+        <a href="../historial/index.html">
+
+            Historial
+
+        </a>
+
+        <a href="../estadisticas/index.html">
+
+            Estadísticas
+
+        </a>
+
+        <a href="../insights/index.html">
+
+            Insights
+
+        </a>
+
+        <a
+            href="../configuracion/index.html"
+            class="active"
+        >
+
+            Configuración
+
+        </a>
+
+        <a href="../roulette/index.html">
+
+            Ruleta
+
+        </a>
+
+    </nav>
+
+    <!-- =========================
+         ⚙️ MAIN
+    ========================== -->
+
+    <main>
+
+        <!-- 👑 HEADER -->
+
+        <div class="page-header">
+
+            <h1>
+
+                ⚙️ Configuración
+
+            </h1>
+
+        </div>
+
+        <!-- =========================
+             💰 BANKROLL
+        ========================== -->
+
+        <div class="stat-card">
+
+            <p class="stat-title">
+
+                Bankroll actual
+
+            </p>
+
+            <p
+                id="bankroll"
+                class="stat-value"
+            >
+
+                0
+
+            </p>
+
+        </div>
+
+        <!-- =========================
+             💰 ALERTAS BANKROLL
+        ========================== -->
+
+        <section class="settings-card">
+
+            <h2>
+
+                💰 Alertas bankroll
+
+            </h2>
+
+            <div class="setting-item">
+
+                <label for="bankrollAlertsEnabled">
+
+                    Activar alertas
+
+                </label>
+
+                <input
+                    type="checkbox"
+                    id="bankrollAlertsEnabled"
+                >
+
+            </div>
+
+            <div class="setting-item">
+
+                <label for="bankrollLimit">
+
+                    Límite total
+
+                </label>
+
+                <input
+                    type="number"
+                    id="bankrollLimit"
+                    placeholder="Ej: 50000"
+                >
+
+            </div>
+
+        </section>
+
+        <!-- =========================
+             📉 ALERTAS SESIÓN
+        ========================== -->
+
+        <section class="settings-card">
+
+            <h2>
+
+                📉 Alertas por sesión
+
+            </h2>
+
+            <div class="setting-item">
+
+                <label for="sessionAlertsEnabled">
+
+                    Activar alertas
+
+                </label>
+
+                <input
+                    type="checkbox"
+                    id="sessionAlertsEnabled"
+                >
+
+            </div>
+
+            <div class="setting-item">
+
+                <label for="sessionLossLimit">
+
+                    Límite por sesión
+
+                </label>
+
+                <input
+                    type="number"
+                    id="sessionLossLimit"
+                    placeholder="Ej: 10000"
+                >
+
+            </div>
+
+        </section>
+
+        <!-- =========================
+             💾 BACKUP PREMIUM
+        ========================== -->
+
+        <section class="backup-card">
+
+            <!-- ✨ HEADER -->
+
+            <div class="backup-header">
+
+                <div class="backup-icon">
+
+                    💾
+
+                </div>
+
+                <div class="backup-title-wrap">
+
+                    <h2>
+
+                        Backup de datos
+
+                    </h2>
+
+                    <div class="backup-line"></div>
+
+                </div>
+
+            </div>
+
+            <!-- 📝 DESCRIPTION -->
+
+            <p class="backup-description">
+
+                Exportá o importá todas tus
+                sesiones, estadísticas,
+                configuraciones y progreso
+                para mantener tu cuenta
+                segura y sincronizada.
+
+            </p>
+
+            <!-- 🚀 ACTIONS -->
+
+            <div class="backup-actions">
+
+                <!-- 📤 EXPORT -->
+
+                <button
+                    class="backup-btn export-btn"
+                    id="exportDataBtn"
+                    type="button"
+                    onclick="exportData()"
+                >
+
+                    💾 Exportar datos
+
+                </button>
+
+                <!-- 📥 IMPORT -->
+
+                <label
+                    class="backup-btn import-btn"
+                >
+
+                    📥 Importar datos
+
+                    <input
+                        type="file"
+                        id="importFile"
+                        accept=".json"
+                        onchange="
+                            importData(
+                                this.files[0]
+                            )
+                        "
+                    >
+
+                </label>
+
+            </div>
+
+        </section>
+
+        <!-- =========================
+             🗑 RESET
+        ========================== -->
+
+        <div class="stat-card small-card">
+
+            <p class="stat-title">
+
+                Reiniciar datos
+
+            </p>
+
+            <button id="reset">
+
+                Resetear todo
+
+            </button>
+
+        </div>
+
+    </main>
+
+    <!-- =========================
+         🔔 TOASTIFY
+    ========================== -->
+
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+    <!-- =========================
+         🔧 JAVASCRIPT
+    ========================== -->
+
+    <script src="../../JS/storage.js"></script>
+
+    <script src="../../JS/alerts.js"></script>
+
+    <script src="../../JS/sessions.js"></script>
+
+    <script src="../../JS/app.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>
+        Estadísticas - GameTrack
+    </title>
+
+    <!-- =========================
+         🎨 CSS BASE
+    ========================== -->
+
+    <link rel="stylesheet" href="../../CSS/base.css">
+
+    <link rel="stylesheet" href="../../CSS/layout.css">
+
+    <link rel="stylesheet" href="../../CSS/utilities.css">
+
+    <!-- =========================
+         🧩 COMPONENTES
+    ========================== -->
+
+    <link rel="stylesheet" href="../../CSS/components/animations.css">
+
+    <link rel="stylesheet" href="../../CSS/components/alerts.css">
+
+    <link rel="stylesheet" href="../../CSS/components/buttons.css">
+
+    <link rel="stylesheet" href="../../CSS/components/cards.css">
+
+    <link rel="stylesheet" href="../../CSS/components/forms.css">
+
+    <link rel="stylesheet" href="../../CSS/components/history.css">
+
+    <link rel="stylesheet" href="../../CSS/components/install.css">
+
+    <link rel="stylesheet" href="../../CSS/components/loader.css">
+
+    <link rel="stylesheet" href="../../CSS/components/logo.css">
+
+    <link rel="stylesheet" href="../../CSS/components/navbar.css">
+
+    
+
+    <link rel="stylesheet" href="../../CSS/components/settings.css">
+
+    <link rel="stylesheet" href="../../CSS/components/stats.css">
+
+    <!-- =========================
+         🔔 TOASTIFY
+    ========================== -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+    >
+
+    <!-- =========================
+         📱 PWA
+    ========================== -->
+
+    <link rel="manifest" href="/manifest.json">
+
+    <meta
+        name="theme-color"
+        content="#0f172a"
+    >
+
+</head>
+
+<body>
+
+    <!-- =========================
+         🎬 LOADER
+    ========================== -->
+
+    <div id="loader">
+
+        <div class="loader-content">
+
+            <div class="loader-logo">
+
+                🎮
+
+            </div>
+
+            <h1>
+
+                GameTrack
+
+            </h1>
+
+            <div class="loader-bar">
+
+                <div class="loader-progress"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- =========================
+         🔝 NAVBAR
+    ========================== -->
+
+    <nav>
+
+        <a href="../../index.html">
+
+            Inicio
+
+        </a>
+
+        <a href="../historial/index.html">
+
+            Historial
+
+        </a>
+
+        <a
+            href="../estadisticas/index.html"
+            class="active"
+        >
+
+            Estadísticas
+
+        </a>
+
+        <a href="../insights/index.html">
+
+            Insights
+
+        </a>
+
+        <a href="../configuracion/index.html">
+
+            Configuración
+
+        </a>
+
+        <a href="../roulette/index.html">
+
+            Ruleta
+
+        </a>
+
+    </nav>
+
+    <!-- =========================
+         📊 MAIN
+    ========================== -->
+
+    <main class="stats-page">
+
+        <!-- =========================
+             👑 PREMIUM LOGO
+        ========================== -->
+
+        <div class="page-logo">
+
+            <div class="page-logo-icon">
+
+                📊
+
+            </div>
+
+            <div class="page-logo-content">
+
+                <h1>
+
+                    Estadísticas
+
+                </h1>
+
+                <div class="page-logo-line"></div>
+
+            </div>
+
+        </div>
+
+        <!-- =========================
+             📈 CONTENEDOR STATS
+        ========================== -->
+
+        <div
+            id="stats"
+            class="stats-container"
+        ></div>
+
+    </main>
+
+    <!-- =========================
+         📊 CHART.JS
+    ========================== -->
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- =========================
+         🔔 TOASTIFY
+    ========================== -->
+
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+    <!-- =========================
+         🔧 JAVASCRIPT
+    ========================== -->
+
+    <script src="../../JS/storage.js"></script>
+
+    <script src="../../JS/alerts.js"></script>
+
+    <script src="../../JS/sessions.js"></script>
+
+    <script src="../../JS/app.js"></script>
+
+</body>
+
+</html>

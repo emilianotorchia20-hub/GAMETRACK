@@ -1,0 +1,137 @@
+/* =========================
+   📊 HISTORIAL RULETA
+========================= */
+
+.history-bar {
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  gap: 10px;
+
+  margin: 15px 0 20px;
+
+  padding: 0 10px;
+
+  width: 100%;
+
+  max-width: 700px;
+
+  flex-wrap: nowrap;
+
+  overflow-x: auto;
+
+  overflow-y: hidden;
+
+  scrollbar-width: none;
+
+}
+
+/* ocultar scrollbar chrome */
+
+.history-bar::-webkit-scrollbar {
+
+  display: none;
+
+}
+
+/* =========================
+   🎯 ITEM HISTORIAL
+========================= */
+
+.history-item {
+
+  min-width: 32px;
+
+  height: 32px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 8px;
+
+  font-size: 13px;
+
+  font-weight: bold;
+
+  color: white;
+
+  flex-shrink: 0;
+
+  box-shadow:
+    0 0 8px rgba(0,0,0,.7);
+
+  transition:
+    transform .2s ease,
+    box-shadow .2s ease;
+
+}
+
+/* =========================
+   ✨ HOVER
+========================= */
+
+.history-item:hover {
+
+  transform:
+    translateY(-2px)
+    scale(1.06);
+
+  box-shadow:
+    0 0 14px rgba(255,255,255,.12);
+
+}
+
+/* =========================
+   🎨 COLORES
+========================= */
+
+.history-item.red {
+
+  background: #b91c1c;
+
+}
+
+.history-item.black {
+
+  background: #000;
+
+}
+
+.history-item.green {
+
+  background: #15803d;
+
+  color: white;
+
+}
+
+/* =========================
+   📱 RESPONSIVE
+========================= */
+
+@media(max-width:700px){
+
+  .history-bar {
+
+    gap: 8px;
+
+  }
+
+  .history-item {
+
+    min-width: 28px;
+
+    height: 28px;
+
+    font-size: 11px;
+
+  }
+
+}
