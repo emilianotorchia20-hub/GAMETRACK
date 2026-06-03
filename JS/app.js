@@ -199,7 +199,118 @@ reg.addEventListener(
   }
 
 );
+// ==========================
+// 📱 SERVICE WORKER + UPDATE
+// ==========================
+if ("serviceWorker" in navigator) {
 
+  navigator.serviceWorker
+    .register("./sw.js")
+
+    .then(reg => {
+
+      console.log(
+        "✅ SW registrado"
+      );
+
+      reg.update();
+
+      navigator.serviceWorker
+        .addEventListener(
+          "controllerchange",
+          () => {
+
+            window.location.reload();
+
+          }
+        );
+
+      if (reg.waiting) {
+
+        window.mostrarUpdateUI(
+          reg
+        );
+
+      }
+
+      // 🔥 detectar nuevo SW
+      reg.addEventListener(
+
+        "updatefound",
+
+        () => {
+
+          const newWorker =
+            reg.installing;
+
+          if (!newWorker) return;
+
+          newWorker.addEventListener(
+
+            "statechange",
+
+            () => {
+
+              if (
+
+                newWorker.state ===
+                "installed"
+
+                &&
+
+                navigator
+                  .serviceWorker
+                  .controller
+
+              ) {
+
+                const interval =
+
+                  setInterval(() => {
+
+                    if (
+                      reg.waiting
+                    ) {
+
+                      clearInterval(
+                        interval
+                      );
+
+                      console.log(
+                        "✅ Actualización lista"
+                      );
+
+                      window
+                        .mostrarUpdateUI(
+                          reg
+                        );
+
+                    }
+
+                  }, 200);
+
+              }
+
+            }
+
+          );
+
+        }
+
+      );
+
+    })
+
+    .catch(err => {
+
+      console.log(
+        "❌ Error SW:",
+        err
+      );
+
+    });
+
+}
 // ==========================
 // 🚀 UPDATE UI
 // ==========================

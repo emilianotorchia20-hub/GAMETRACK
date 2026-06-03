@@ -1,4 +1,4 @@
-const CACHE_NAME = "gametrack-v2";
+const CACHE_NAME = "gametrack-v1";
 
 const urlsToCache = [
 
