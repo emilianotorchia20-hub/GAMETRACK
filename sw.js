@@ -76,29 +76,35 @@ self.addEventListener(
 
     event.waitUntil(
 
-      caches.keys()
+      Promise.all([
 
-        .then(keys =>
+        self.clients.claim(),
 
-          Promise.all(
+        caches.keys()
 
-            keys.map(key => {
+          .then(keys =>
 
-              if (
-                key !== CACHE_NAME
-              ) {
+            Promise.all(
 
-                return caches.delete(
-                  key
-                );
+              keys.map(key => {
 
-              }
+                if (
+                  key !== CACHE_NAME
+                ) {
 
-            })
+                  return caches.delete(
+                    key
+                  );
+
+                }
+
+              })
+
+            )
 
           )
 
-        )
+      ])
 
     );
 
@@ -159,7 +165,11 @@ self.addEventListener(
 
     ) {
 
-      
+      console.log(
+        "🚀 skipWaiting"
+      );
+
+      self.skipWaiting();
 
     }
 
