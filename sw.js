@@ -1,4 +1,4 @@
-const CACHE_NAME = "gametrack-v1";
+const CACHE_NAME = "gametrack-v2";
 
 const urlsToCache = [
 
@@ -159,7 +159,7 @@ self.addEventListener(
 
     ) {
 
-      self.skipWaiting();
+      
 
     }
 
