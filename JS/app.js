@@ -134,71 +134,7 @@ window.addEventListener(
   }
 );
 
-// 🔥 detectar nuevo SW
-reg.addEventListener(
 
-  "updatefound",
-
-  () => {
-
-    const newWorker =
-      reg.installing;
-
-    if (!newWorker) return;
-
-    newWorker.addEventListener(
-
-      "statechange",
-
-      () => {
-
-        if (
-
-          newWorker.state ===
-          "installed"
-
-          &&
-
-          navigator
-            .serviceWorker
-            .controller
-
-        ) {
-
-          const interval =
-
-            setInterval(() => {
-
-              if (
-                reg.waiting
-              ) {
-
-                clearInterval(
-                  interval
-                );
-
-                console.log(
-                  "✅ Actualización lista"
-                );
-
-                window
-                  .mostrarUpdateUI(
-                    reg
-                  );
-
-              }
-
-            }, 200);
-
-        }
-
-      }
-
-    );
-
-  }
-
-);
 // ==========================
 // 📱 SERVICE WORKER + UPDATE
 // ==========================
