@@ -134,95 +134,71 @@ window.addEventListener(
   }
 );
 
-// ==========================
-// 📱 SERVICE WORKER + UPDATE
-// ==========================
-if ("serviceWorker" in navigator) {
+// 🔥 detectar nuevo SW
+reg.addEventListener(
 
-  navigator.serviceWorker
-    .register("./sw.js")
+  "updatefound",
 
-    .then(reg => {
+  () => {
 
-      console.log(
-        "✅ SW registrado"
-      );
+    const newWorker =
+      reg.installing;
 
-      // 🔥 buscar updates
-      reg.update();
+    if (!newWorker) return;
 
-      // 🔄 reload automático
-      navigator.serviceWorker
-        .addEventListener(
-          "controllerchange",
-          () => {
+    newWorker.addEventListener(
 
-            window.location.reload();
+      "statechange",
 
-          }
-        );
+      () => {
 
-      // 🔥 update esperando
-      if (reg.waiting) {
+        if (
 
-        window.mostrarUpdateUI(
-          reg
-        );
+          newWorker.state ===
+          "installed"
 
-      }
+          &&
 
-      // 🔥 detectar nuevo SW
-      reg.addEventListener(
-        "updatefound",
-        () => {
+          navigator
+            .serviceWorker
+            .controller
 
-          const newWorker =
-            reg.installing;
+        ) {
 
-          if (!newWorker) return;
+          const interval =
 
-          newWorker.addEventListener(
-            "statechange",
-            () => {
+            setInterval(() => {
 
               if (
-                newWorker.state ===
-                "installed"
+                reg.waiting
               ) {
 
-                if (
-                  navigator
-                    .serviceWorker
-                    .controller
-                ) {
+                clearInterval(
+                  interval
+                );
 
-                  window
-                    .mostrarUpdateUI(
-                      reg
-                    );
+                console.log(
+                  "✅ Actualización lista"
+                );
 
-                }
+                window
+                  .mostrarUpdateUI(
+                    reg
+                  );
 
               }
 
-            }
-          );
+            }, 200);
 
         }
-      );
 
-    })
+      }
 
-    .catch(err => {
+    );
 
-      console.log(
-        "❌ Error SW:",
-        err
-      );
+  }
 
-    });
-
-}
+);
 
 // ==========================
 // 🚀 UPDATE UI
