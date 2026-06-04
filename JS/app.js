@@ -1,6 +1,7 @@
 // ==========================
 // 🎬 LOADER + NAVEGACIÓN
 // ==========================
+console.log("APP VERSION 777");
 document.addEventListener("DOMContentLoaded", () => {
 
   const loader =
