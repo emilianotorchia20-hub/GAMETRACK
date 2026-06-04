@@ -134,7 +134,6 @@ window.addEventListener(
   }
 );
 
-
 // ==========================
 // 📱 SERVICE WORKER + UPDATE
 // ==========================
