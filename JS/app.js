@@ -148,18 +148,24 @@ if ("serviceWorker" in navigator) {
         "✅ SW registrado"
       );
 
+      // Buscar updates
       reg.update();
 
+      // Cuando el nuevo SW toma control
       navigator.serviceWorker
         .addEventListener(
+
           "controllerchange",
+
           () => {
 
             window.location.reload();
 
           }
+
         );
 
+      // Si ya hay una actualización esperando
       if (reg.waiting) {
 
         window.mostrarUpdateUI(
@@ -168,7 +174,7 @@ if ("serviceWorker" in navigator) {
 
       }
 
-      // 🔥 detectar nuevo SW
+      // Detectar nuevo SW
       reg.addEventListener(
 
         "updatefound",
@@ -199,30 +205,14 @@ if ("serviceWorker" in navigator) {
 
               ) {
 
-                const interval =
+                console.log(
+                  "✅ Actualización lista"
+                );
 
-                  setInterval(() => {
-
-                    if (
-                      reg.waiting
-                    ) {
-
-                      clearInterval(
-                        interval
-                      );
-
-                      console.log(
-                        "✅ Actualización lista"
-                      );
-
-                      window
-                        .mostrarUpdateUI(
-                          reg
-                        );
-
-                    }
-
-                  }, 200);
+                window
+                  .mostrarUpdateUI(
+                    reg
+                  );
 
               }
 
@@ -246,6 +236,59 @@ if ("serviceWorker" in navigator) {
     });
 
 }
+
+// ==========================
+// 🚀 UPDATE UI
+// ==========================
+window.mostrarUpdateUI =
+function(reg){
+
+  if (
+    document.getElementById(
+      "updateBtn"
+    )
+  ) {
+    return;
+  }
+
+  const btn =
+    document.createElement(
+      "button"
+    );
+
+  btn.id = "updateBtn";
+
+  btn.innerText =
+    "🔄 Actualización disponible";
+
+  btn.className =
+    "install-btn";
+
+  document.body.appendChild(
+    btn
+  );
+
+  btn.addEventListener(
+
+    "click",
+
+    () => {
+
+      if (
+        reg.waiting
+      ) {
+
+        reg.waiting.postMessage({
+          type: "SKIP_WAITING"
+        });
+
+      }
+
+    }
+
+  );
+
+};
 // ==========================
 // 🚀 UPDATE UI
 // ==========================

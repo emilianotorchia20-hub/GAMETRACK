@@ -1,4 +1,4 @@
-const CACHE_NAME = "gametrack-v2";
+const CACHE_NAME = "gametrack-v1";
 
 const urlsToCache = [
 
@@ -37,10 +37,6 @@ self.addEventListener(
 
   event => {
 
-    console.log(
-      "SW installing..."
-    );
-
     event.waitUntil(
 
       caches
@@ -70,41 +66,31 @@ self.addEventListener(
 
   event => {
 
-    console.log(
-      "SW activated"
-    );
-
     event.waitUntil(
 
-      Promise.all([
+      caches.keys()
 
-        self.clients.claim(),
+        .then(keys =>
 
-        caches.keys()
+          Promise.all(
 
-          .then(keys =>
+            keys.map(key => {
 
-            Promise.all(
+              if (
+                key !== CACHE_NAME
+              ) {
 
-              keys.map(key => {
+                return caches.delete(
+                  key
+                );
 
-                if (
-                  key !== CACHE_NAME
-                ) {
+              }
 
-                  return caches.delete(
-                    key
-                  );
-
-                }
-
-              })
-
-            )
+            })
 
           )
 
-      ])
+        )
 
     );
 
@@ -164,10 +150,6 @@ self.addEventListener(
       "SKIP_WAITING"
 
     ) {
-
-      console.log(
-        "🚀 skipWaiting"
-      );
 
       self.skipWaiting();
 
