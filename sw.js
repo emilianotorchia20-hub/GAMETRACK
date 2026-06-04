@@ -122,25 +122,42 @@ self.addEventListener(
 
   event => {
 
+    if (
+      event.request.method !== "GET"
+    ) return;
+
     event.respondWith(
 
-      caches.match(
-        event.request
-      )
+      fetch(event.request)
 
-      .then(response => {
+        .then(response => {
 
-        return (
+          const responseClone =
+            response.clone();
 
-          response ||
+          caches
+            .open(CACHE_NAME)
 
-          fetch(
+            .then(cache => {
+
+              cache.put(
+                event.request,
+                responseClone
+              );
+
+            });
+
+          return response;
+
+        })
+
+        .catch(() => {
+
+          return caches.match(
             event.request
-          )
+          );
 
-        );
-
-      })
+        })
 
     );
 
