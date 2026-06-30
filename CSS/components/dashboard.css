@@ -19,6 +19,14 @@
 
 }
 
+main:has(.dashboard-hero) {
+
+  width: min(1180px, 100%);
+
+  margin: 0 auto;
+
+}
+
 /* ==========================
    💎 HERO MAIN
 ========================== */
@@ -226,9 +234,10 @@
 
   z-index: 2;
 
-  display: flex;
+  display: grid;
 
-  flex-wrap: wrap;
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
 
   gap: 14px;
 
@@ -240,7 +249,7 @@
 
 .hero-stat {
 
-  min-width: 110px;
+  min-width: 0;
 
   padding: 14px 16px;
 
@@ -469,6 +478,8 @@
 
   gap: 12px;
 
+  min-height: 74px;
+
   padding: 14px 16px;
 
   border-radius: 18px;
@@ -508,6 +519,12 @@
   font-size: 14px;
 
   font-weight: 700;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
 
 }
 
@@ -598,15 +615,16 @@
 
   .hero-stats {
 
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+
     gap: 12px;
 
   }
 
   .hero-stat {
 
-    flex: 1;
-
-    min-width: 90px;
+    min-width: 0;
 
     padding: 14px;
 
@@ -621,6 +639,16 @@
   .player-info h3 {
 
     font-size: 20px;
+
+  }
+
+}
+
+@media(max-width:520px){
+
+  .hero-stats {
+
+    grid-template-columns: 1fr;
 
   }
 

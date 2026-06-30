@@ -707,3 +707,93 @@
     display: none;
 
 }
+
+/* =========================
+   ORGANIZED SETTINGS LAYOUT
+========================= */
+
+.settings-page {
+
+  width: min(1180px, 100%);
+
+  max-width: 1180px;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 24px;
+
+  align-items: stretch;
+
+}
+
+.settings-page .page-header,
+.settings-page .backup-card,
+.settings-page section:nth-of-type(4) {
+
+  grid-column: 1 / -1;
+
+}
+
+.settings-page > .stat-card,
+.settings-page .settings-card,
+.settings-page .backup-card {
+
+  width: 100%;
+
+  max-width: none;
+
+  margin: 0;
+
+}
+
+.settings-page > .stat-card {
+
+  min-height: 100%;
+
+}
+
+.settings-page .settings-card {
+
+  display: flex;
+
+  flex-direction: column;
+
+}
+
+.settings-page .settings-card .setting-item:last-child {
+
+  margin-bottom: 0;
+
+}
+
+.settings-page > .small-card {
+
+  grid-column: 1 / -1;
+
+  justify-self: center;
+
+  width: min(420px, 100%);
+
+}
+
+@media(max-width: 900px) {
+
+  .settings-page {
+
+    grid-template-columns: 1fr;
+
+  }
+
+  .settings-page .page-header,
+  .settings-page .backup-card,
+  .settings-page section:nth-of-type(4),
+  .settings-page > .small-card {
+
+    grid-column: auto;
+
+  }
+
+}

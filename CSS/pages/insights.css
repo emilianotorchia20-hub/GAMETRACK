@@ -229,12 +229,14 @@
     grid-template-columns:
         repeat(
             auto-fit,
-            minmax(340px, 1fr)
+            minmax(280px, 1fr)
         );
 
     gap: 18px;
 
     margin-top: 10px;
+
+    align-items: stretch;
 
 }
 
@@ -251,6 +253,16 @@
     
 
     min-height: 200px;
+
+    height: 100%;
+
+    margin: 0;
+
+    max-width: none;
+
+    display: flex;
+
+    flex-direction: column;
 
     padding: 28px;
 
@@ -401,6 +413,8 @@
     font-size: 0.98rem;
 
     line-height: 1.7;
+
+    margin-top: auto;
 
 }
 
