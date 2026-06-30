@@ -25,6 +25,13 @@ export default defineConfig({
             copyFileSync(source, join(assets, file));
           }
         }
+
+        const legacyJsDir = join(dist, "JS");
+        mkdirSync(legacyJsDir, { recursive: true });
+        for (const file of ["storage.js", "alerts.js", "sessions.js", "insights.js", "roulette.js", "app.js"]) {
+          const source = resolve(__dirname, "JS", file);
+          if (existsSync(source)) copyFileSync(source, join(legacyJsDir, file));
+        }
       },
     },
   ],

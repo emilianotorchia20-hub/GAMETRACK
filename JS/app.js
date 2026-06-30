@@ -409,6 +409,15 @@ const activityList =
     "activityList"
   );
 
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
 if (activityList) {
 
   if (sesionesDashboard.length === 0) {
@@ -417,7 +426,7 @@ if (activityList) {
 
       <div class="activity-empty">
 
-        Sin sesiones todavÃ­a
+        Sin sesiones todavia
 
       </div>
 
@@ -439,6 +448,8 @@ if (activityList) {
           s.resultado ??
           (s.final - s.inicial);
 
+        const gameName = escapeHtml(s.game || "Juego");
+
         return `
 
           <div class="activity-item">
@@ -449,13 +460,13 @@ if (activityList) {
 
                 <div class="activity-game">
 
-                  ðŸŽ° ${s.game}
+                  ${gameName}
 
                 </div>
 
                 <div class="activity-time">
 
-                  SesiÃ³n reciente
+                  Sesion reciente
 
                 </div>
 

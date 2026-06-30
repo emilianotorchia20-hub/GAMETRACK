@@ -7,13 +7,15 @@ import { initTauriUpdater } from "./tauri-updater.js";
 window.Toastify = Toastify;
 window.Chart = Chart;
 
+const legacyBasePath = window.location.pathname.includes("/PAGES/") ? "../../JS/" : "./JS/";
+
 const legacyScripts = {
-  storage: new URL("./storage.js", import.meta.url).href,
-  alerts: new URL("./alerts.js", import.meta.url).href,
-  sessions: new URL("./sessions.js", import.meta.url).href,
-  insights: new URL("./insights.js", import.meta.url).href,
-  roulette: new URL("./roulette.js", import.meta.url).href,
-  app: new URL("./app.js", import.meta.url).href,
+  storage: `${legacyBasePath}storage.js`,
+  alerts: `${legacyBasePath}alerts.js`,
+  sessions: `${legacyBasePath}sessions.js`,
+  insights: `${legacyBasePath}insights.js`,
+  roulette: `${legacyBasePath}roulette.js`,
+  app: `${legacyBasePath}app.js`,
 };
 
 const pageScripts = [

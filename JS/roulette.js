@@ -1,6 +1,6 @@
 ﻿
 // =========================
-// ðŸŽ¯ DATOS RULETA
+//
 // =========================
 const numeros = [
   0,32,15,19,4,21,2,25,17,34,6,
@@ -19,7 +19,7 @@ function getColor(n) {
 }
 
 // =========================
-// ðŸ§  ESTADO
+//
 // =========================
 let wheel, result;
 let rotation = 0;
@@ -28,7 +28,7 @@ let currentChip = 100;
 let bets = [];
 let saldoFichas = Number(localStorage.getItem("saldoFichas")) || 1000;
 // =========================
-// ðŸš€ INIT
+//
 // =========================
 function initRoulettePage() {
   
@@ -42,7 +42,7 @@ function initRoulettePage() {
   setupChips();
   setupBotonesApuesta();
 
-  // ðŸ‘‡ ESTO AGREGÃS
+  //
   document.querySelectorAll(".strategy-card").forEach(card => {
     card.addEventListener("click", () => {
       const tipo = card.dataset.strategy;
@@ -66,7 +66,7 @@ if (document.readyState === "loading") {
 }
 
 // =========================
-// ðŸŽ¨ RULETA VISUAL (FIXED)
+//
 // =========================
 function crearRueda() {
   if (!wheel) return;
@@ -75,7 +75,7 @@ function crearRueda() {
 
   const grad = numeros.map((n, i) => {
     const start = i * ang;
-    const end = (i + 1) * ang + 0.5; // ðŸ‘ˆ overlap clave
+    const end = (i + 1) * ang + 0.5;
 
     return `${getColor(n)} ${start}deg ${end}deg`;
   }).join(",");
@@ -86,7 +86,7 @@ function crearRueda() {
 }
 
 // =========================
-// ðŸ”¢ NÃšMEROS EN LA RUEDA
+//
 // =========================
 function dibujarNumeros() {
   const cont = document.getElementById("numbers");
@@ -121,7 +121,7 @@ function dibujarNumeros() {
 });
 }
 // =========================
-// ðŸ”¢ GRID DE APUESTAS
+//
 // =========================
 function generarGridNumeros() {
   const grid = document.getElementById("numbersGrid");
@@ -144,7 +144,7 @@ function generarGridNumeros() {
 }
 
 // =========================
-// ðŸ’° FICHAS
+//
 // =========================
 function setupChips() {
   document.querySelectorAll(".chip").forEach(btn => {
@@ -157,7 +157,7 @@ function setupChips() {
 }
 
 // =========================
-// ðŸŽ¯ BOTONES DE APUESTA
+//
 // =========================
 function setupBotonesApuesta() {
   document.querySelectorAll(".bet-options button").forEach(btn => {
@@ -169,20 +169,20 @@ function setupBotonesApuesta() {
 }
 
 // =========================
-// âž• AGREGAR APUESTA
+//
 // =========================
 function agregarApuesta(tipo, valor = null) {
 
-  // ðŸ” buscar si ya existe esa apuesta
+  //
   const existente = bets.find(b => 
     b.tipo === tipo && b.valor === valor
   );
 
   if (existente) {
-    // ðŸ‘‰ acumular fichas
+    //
     existente.monto += currentChip;
   } else {
-    // ðŸ‘‰ crear nueva
+    //
     bets.push({
       tipo,
       valor,
@@ -193,7 +193,7 @@ function agregarApuesta(tipo, valor = null) {
   renderApuestas();
 }
 // =========================
-// ðŸ“Š MOSTRAR APUESTAS
+//
 // =========================
 function renderApuestas() {
   const cont = document.getElementById("betsList");
@@ -205,23 +205,19 @@ function renderApuestas() {
   }
 
   cont.innerHTML = bets.map((b, index) => {
-    let texto = "";
-
-    if (b.tipo === "numero") {
-      texto = `ðŸŽ¯ ${b.valor} â†’ ${b.monto}`;
-    } else {
-      texto = `ðŸŽ² ${b.tipo} â†’ ${b.monto}`;
-    }
+    const texto = b.tipo === "numero"
+      ? `Numero ${b.valor} -> ${b.monto}`
+      : `${formatBetName(b.tipo)} -> ${b.monto}`;
 
     return `
       <div class="bet-item">
         <span>${texto}</span>
-        <button class="delete-bet" data-index="${index}">âœ–</button>
+        <button class="delete-bet" data-index="${index}" aria-label="Eliminar apuesta">x</button>
       </div>
     `;
   }).join("");
 
-  // ðŸ‘‡ agregar eventos a cada botÃ³n
+  //
   document.querySelectorAll(".delete-bet").forEach(btn => {
     btn.addEventListener("click", () => {
       const i = Number(btn.dataset.index);
@@ -230,8 +226,22 @@ function renderApuestas() {
   });
 }
 
+function formatBetName(tipo) {
+  const names = {
+    rojo: "Rojo",
+    negro: "Negro",
+    par: "Par",
+    impar: "Impar",
+    docena1: "1-12",
+    docena2: "13-24",
+    docena3: "25-36",
+  };
+
+  return names[tipo] || tipo;
+}
+
 // =========================
-// ðŸ’° CÃLCULO DE GANANCIA
+//
 // =========================
 function calcularGanancia(resultado) {
   let totalApostado = 0;
@@ -240,17 +250,17 @@ function calcularGanancia(resultado) {
   bets.forEach(b => {
     totalApostado += b.monto;
 
-    // ðŸŽ¯ nÃºmero
+    //
     if (b.tipo === "numero" && b.valor === resultado) {
       totalGanado += b.monto * 36;
     }
 
-    // ðŸ”´ rojo
+    //
     if (b.tipo === "rojo" && rojos.includes(resultado)) {
       totalGanado += b.monto * 2;
     }
 
-    // âš« negro
+    //
     if (b.tipo === "negro" && !rojos.includes(resultado) && resultado !== 0) {
       totalGanado += b.monto * 2;
     }
@@ -279,7 +289,7 @@ function calcularGanancia(resultado) {
     }
   });
 
-  // ðŸŽ¯ ganancia neta real
+  //
   return totalGanado;
 }
 
@@ -287,7 +297,7 @@ function calcularGanancia(resultado) {
 function girar() {
 
   if (bets.length === 0) {
-    alert("HacÃ© una apuesta primero");
+    alert("Hace una apuesta primero");
     return;
   }
 
@@ -296,10 +306,10 @@ function girar() {
   const ang = 360 / numeros.length;
   const vueltas = 5;
 
-  // ðŸŽ¯ elegimos nÃºmero random
+  //
   const index = Math.floor(Math.random() * numeros.length);
 
-  // ðŸ‘‰ rotaciÃ³n hacia ese nÃºmero
+  //
   const target = index * ang;
 
   const OFFSET = ang / 2-1;
@@ -316,7 +326,7 @@ function girar() {
   const realIndex = Math.floor(angle / ang);
   const numeroReal = numeros[realIndex];
 
-  // ðŸŽ¯ AGREGAR AL HISTORIAL (ESTO FALTABA)
+  //
   historial.unshift(numeroReal);
 
   // limitar historial
@@ -330,7 +340,7 @@ function girar() {
   // renderizar
   renderHistorial();
 
-  // ðŸ‘‡ mostrar resultado
+  //
   result.textContent = numeroReal;
   result.style.color = getTextColor(numeroReal);
 
@@ -365,417 +375,143 @@ function eliminarApuesta(index) {
   bets.splice(index, 1);
   renderApuestas();
 }
-function mostrarEstrategia(tipo) {
 
-  const info = {
-
-    martingale: `
-
-      <h3>ðŸŽ¯ Martingale</h3>
-
-      <strong>Â¿CÃ³mo funciona?</strong>
-
-      <p>
-        DuplicÃ¡s la apuesta cada vez que perdÃ©s hasta recuperar todo.
-      </p>
-
-      <strong>Regla</strong>
-
-      <ul>
-        <li>PerdÃ©s â†’ duplicÃ¡s</li>
-        <li>GanÃ¡s â†’ volvÃ©s al monto inicial</li>
-      </ul>
-
-      <div class="strategy-example">
-
-        <strong>Ejemplo</strong>
-
-        <ul>
-          <li><code>100</code> â†’ perdÃ©s</li>
-          <li><code>200</code> â†’ perdÃ©s</li>
-          <li><code>400</code> â†’ ganÃ¡s</li>
-        </ul>
-
-      </div>
-
-      <strong>Ventajas</strong>
-
-      <ul>
-        <li>Simple de entender</li>
-        <li>RecuperaciÃ³n rÃ¡pida</li>
-      </ul>
-
-      <strong>Riesgos</strong>
-
-      <ul>
-        <li>Consume mucho saldo</li>
-        <li>Las malas rachas son peligrosas</li>
-      </ul>
-
-    `,
-
-    dalembert: `
-
-      <h3>ðŸ“Š Dâ€™Alembert</h3>
-
-      <strong>Â¿CÃ³mo funciona?</strong>
-
-      <p>
-        SubÃ­s una unidad al perder y bajÃ¡s una al ganar.
-      </p>
-
-      <strong>Regla</strong>
-
-      <ul>
-        <li>PerdÃ©s â†’ +1 unidad</li>
-        <li>GanÃ¡s â†’ -1 unidad</li>
-      </ul>
-
-      <div class="strategy-example">
-
-        <strong>Ejemplo</strong>
-
-        <ul>
-          <li><code>100</code> â†’ perdÃ©s â†’ <code>200</code></li>
-          <li><code>200</code> â†’ ganÃ¡s â†’ <code>100</code></li>
-        </ul>
-
-      </div>
-
-      <strong>Ventajas</strong>
-
-      <ul>
-        <li>MÃ¡s estable que Martingale</li>
-        <li>Menor exposiciÃ³n</li>
-      </ul>
-
-      <strong>Riesgos</strong>
-
-      <ul>
-        <li>Recupera pÃ©rdidas lentamente</li>
-      </ul>
-
-    `,
-
-    fibonacci: `
-
-      <h3>ðŸ”¢ Fibonacci</h3>
-
-      <strong>Â¿CÃ³mo funciona?</strong>
-
-      <p>
-        UsÃ¡s la secuencia:
-        <code>1,1,2,3,5,8...</code>
-      </p>
-
-      <strong>Regla</strong>
-
-      <ul>
-        <li>PerdÃ©s â†’ avanzÃ¡s en la secuencia</li>
-        <li>GanÃ¡s â†’ retrocedÃ©s 2 pasos</li>
-      </ul>
-
-      <div class="strategy-example">
-
-        <strong>Ejemplo</strong>
-
-        <ul>
-          <li><code>100</code> â†’ perdÃ©s â†’ <code>100</code></li>
-          <li><code>100</code> â†’ perdÃ©s â†’ <code>200</code></li>
-          <li><code>200</code> â†’ ganÃ¡s â†’ volvÃ©s atrÃ¡s</li>
-        </ul>
-
-      </div>
-
-      <strong>Ventajas</strong>
-
-      <ul>
-        <li>Menos agresiva que Martingale</li>
-      </ul>
-
-      <strong>Riesgos</strong>
-
-      <ul>
-        <li>Puede crecer rÃ¡pido igual</li>
-      </ul>
-
-    `,
-
-    labouchere: `
-
-      <h3>ðŸ§  Labouchere</h3>
-
-      <strong>Â¿CÃ³mo funciona?</strong>
-
-      <p>
-        CreÃ¡s una secuencia numÃ©rica y apostÃ¡s la suma
-        del primer y Ãºltimo nÃºmero.
-      </p>
-
-      <strong>Regla</strong>
-
-      <ul>
-        <li>GanÃ¡s â†’ tachÃ¡s extremos</li>
-        <li>PerdÃ©s â†’ agregÃ¡s monto al final</li>
-      </ul>
-
-      <div class="strategy-example">
-
-        <strong>Ejemplo</strong>
-
-        <ul>
-          <li>Lista: <code>1-2-3-4</code></li>
-          <li>Apuesta: <code>1 + 4 = 5</code></li>
-        </ul>
-
-      </div>
-
-      <strong>Ventajas</strong>
-
-      <ul>
-        <li>Estructurada y flexible</li>
-      </ul>
-
-      <strong>Riesgos</strong>
-
-      <ul>
-        <li>Las rachas largas destruyen la secuencia</li>
-      </ul>
-
-    `,
-
-    reverseMartingale: `
-
-      <h3>ðŸ”¥ Reverse Martingale</h3>
-
-      <strong>Â¿CÃ³mo funciona?</strong>
-
-      <p>
-        DuplicÃ¡s solo cuando ganÃ¡s.
-      </p>
-
-      <strong>Regla</strong>
-
-      <ul>
-        <li>GanÃ¡s â†’ duplicÃ¡s</li>
-        <li>PerdÃ©s â†’ volvÃ©s al inicio</li>
-      </ul>
-
-      <div class="strategy-example">
-
-        <strong>Ejemplo</strong>
-
-        <ul>
-          <li><code>100</code> â†’ ganÃ¡s â†’ <code>200</code></li>
-          <li><code>200</code> â†’ ganÃ¡s â†’ <code>400</code></li>
-        </ul>
-
-      </div>
-
-      <strong>Ventajas</strong>
-
-      <ul>
-        <li>Aprovecha rachas positivas</li>
-      </ul>
-
-      <strong>Riesgos</strong>
-
-      <ul>
-        <li>PodÃ©s perder ganancias rÃ¡pido</li>
-      </ul>
-
-    `,
-
-    flat: `
-
-      <h3>ðŸŸ¢ Apuesta plana</h3>
-
-      <strong>Â¿CÃ³mo funciona?</strong>
-
-      <p>
-        ApostÃ¡s siempre la misma cantidad.
-      </p>
-
-      <strong>Regla</strong>
-
-      <ul>
-        <li>Mismo monto siempre</li>
-        <li>Sin progresiones</li>
-      </ul>
-
-      <div class="strategy-example">
-
-        <strong>Ejemplo</strong>
-
-        <ul>
-          <li><code>100</code> â†’ siempre <code>100</code></li>
-        </ul>
-
-      </div>
-
-      <strong>Ventajas</strong>
-
-      <ul>
-        <li>Muy segura</li>
-        <li>Control del bankroll</li>
-      </ul>
-
-      <strong>Riesgos</strong>
-
-      <ul>
-        <li>Ganancias lentas</li>
-      </ul>
-
-    `,
-
-    paroli: `
-
-      <h3>âš¡ Paroli</h3>
-
-      <strong>Â¿CÃ³mo funciona?</strong>
-
-      <p>
-        AumentÃ¡s apuesta solo cuando ganÃ¡s.
-      </p>
-
-      <strong>Regla</strong>
-
-      <ul>
-        <li>GanÃ¡s â†’ subÃ­s apuesta</li>
-        <li>PerdÃ©s â†’ reiniciÃ¡s</li>
-      </ul>
-
-      <div class="strategy-example">
-
-        <strong>Ejemplo</strong>
-
-        <ul>
-          <li><code>100</code> â†’ <code>200</code></li>
-          <li><code>200</code> â†’ <code>400</code></li>
-        </ul>
-
-      </div>
-
-      <strong>Ventajas</strong>
-
-      <ul>
-        <li>Protege tu saldo</li>
-      </ul>
-
-      <strong>Riesgos</strong>
-
-      <ul>
-        <li>Las rachas pueden terminar rÃ¡pido</li>
-      </ul>
-
-    `,
-
-    sector: `
-
-      <h3>ðŸŽ¯ Estrategia de sectores</h3>
-
-      <strong>Â¿CÃ³mo funciona?</strong>
-
-      <p>
-        ApostÃ¡s grupos cercanos dentro de la rueda.
-      </p>
-
-      <strong>Regla</strong>
-
-      <ul>
-        <li>CubrÃ­s zonas especÃ­ficas</li>
-        <li>BuscÃ¡s repeticiones regionales</li>
-      </ul>
-
-      <div class="strategy-example">
-
-        <strong>Ejemplo</strong>
-
-        <ul>
-          <li>Zona <code>17-20</code></li>
-          <li>Zona <code>26-32</code></li>
-        </ul>
-
-      </div>
-
-      <strong>Ventajas</strong>
-
-      <ul>
-        <li>Cubre mÃºltiples nÃºmeros</li>
-      </ul>
-
-      <strong>Riesgos</strong>
-
-      <ul>
-        <li>No asegura resultados</li>
-      </ul>
-
-    `,
-
-    contra: `
-
-      <h3>ðŸ”„ Contra racha</h3>
-
-      <strong>Â¿CÃ³mo funciona?</strong>
-
-      <p>
-        ApostÃ¡s contra la tendencia reciente.
-      </p>
-
-      <strong>Regla</strong>
-
-      <ul>
-        <li>Muchos rojos â†’ apostÃ¡s negro</li>
-        <li>Muchos pares â†’ apostÃ¡s impar</li>
-      </ul>
-
-      <div class="strategy-example">
-
-        <strong>Ejemplo</strong>
-
-        <ul>
-          <li><code>5</code> rojos seguidos â†’ negro</li>
-        </ul>
-
-      </div>
-
-      <strong>Ventajas</strong>
-
-      <ul>
-        <li>Busca reversiÃ³n estadÃ­stica</li>
-      </ul>
-
-      <strong>Riesgos</strong>
-
-      <ul>
-        <li>Las rachas pueden continuar</li>
-      </ul>
-
-    `
+function getStrategyContent(tipo) {
+  const strategies = {
+    martingale: {
+      title: "Martingale",
+      description: "Duplicas la apuesta cada vez que perdes hasta recuperar lo perdido.",
+      rules: ["Perdes: duplicas la apuesta", "Ganas: volves al monto inicial"],
+      example: ["100 -> perdes", "200 -> perdes", "400 -> ganas"],
+      benefits: ["Simple de entender", "Recuperacion rapida"],
+      risks: ["Consume mucho saldo", "Las malas rachas son peligrosas"],
+    },
+    dalembert: {
+      title: "D'Alembert",
+      description: "Subis una unidad al perder y bajas una unidad al ganar.",
+      rules: ["Perdes: sumas 1 unidad", "Ganas: restas 1 unidad"],
+      example: ["100 -> perdes -> 200", "200 -> ganas -> 100"],
+      benefits: ["Mas estable que Martingale", "Menor exposicion"],
+      risks: ["Recupera perdidas lentamente"],
+    },
+    fibonacci: {
+      title: "Fibonacci",
+      description: "Usas la secuencia 1, 1, 2, 3, 5, 8 para definir el monto.",
+      rules: ["Perdes: avanzas en la secuencia", "Ganas: retrocedes 2 pasos"],
+      example: ["100 -> perdes -> 100", "100 -> perdes -> 200", "200 -> ganas -> retrocedes"],
+      benefits: ["Menos agresiva que Martingale"],
+      risks: ["Puede crecer rapido en una mala racha"],
+    },
+    labouchere: {
+      title: "Labouchere",
+      description: "Creas una secuencia numerica y apostas la suma del primer y ultimo numero.",
+      rules: ["Ganas: tachas los extremos", "Perdes: agregas el monto al final"],
+      example: ["Lista: 1-2-3-4", "Apuesta: 1 + 4 = 5"],
+      benefits: ["Estructurada y flexible"],
+      risks: ["Las rachas largas agrandan la secuencia"],
+    },
+    reverseMartingale: {
+      title: "Reverse Martingale",
+      description: "Duplicas solo cuando ganas para aprovechar una racha positiva.",
+      rules: ["Ganas: duplicas", "Perdes: volves al inicio"],
+      example: ["100 -> ganas -> 200", "200 -> ganas -> 400"],
+      benefits: ["Aprovecha rachas positivas"],
+      risks: ["Podes devolver ganancias rapido"],
+    },
+    flat: {
+      title: "Apuesta plana",
+      description: "Apostas siempre la misma cantidad, sin progresiones.",
+      rules: ["Mismo monto siempre", "Sin subir por perdidas ni ganancias"],
+      example: ["100 -> siempre 100"],
+      benefits: ["Muy controlada", "Buena para cuidar bankroll"],
+      risks: ["Ganancias lentas"],
+    },
+    paroli: {
+      title: "Paroli",
+      description: "Aumentas la apuesta solo cuando ganas y reinicias al perder.",
+      rules: ["Ganas: subis apuesta", "Perdes: reinicias"],
+      example: ["100 -> 200", "200 -> 400"],
+      benefits: ["Protege tu saldo inicial"],
+      risks: ["La racha puede terminar rapido"],
+    },
+    sector: {
+      title: "Estrategia de sectores",
+      description: "Apostas a grupos cercanos dentro de la rueda.",
+      rules: ["Cubris zonas especificas", "Buscas repeticiones regionales"],
+      example: ["Zona 17-20", "Zona 26-32"],
+      benefits: ["Cubre multiples numeros"],
+      risks: ["No asegura resultados"],
+    },
+    contra: {
+      title: "Contra racha",
+      description: "Apostas contra la tendencia reciente.",
+      rules: ["Muchos rojos: apostas negro", "Muchos pares: apostas impar"],
+      example: ["5 rojos seguidos -> negro"],
+      benefits: ["Busca reversion estadistica"],
+      risks: ["Las rachas pueden continuar"],
+    },
   };
 
-/*
-  const panel = document.getElementById("strategyInfo");
-
-  panel.innerHTML = info[tipo] || "<p>Sin informaciÃ³n</p>";
-
-  panel.classList.add("active");
-*/
-
-  document.querySelectorAll(".strategy-card").forEach(card => {
-    card.classList.remove("active");
-  });
-
-  const activeCard = document.querySelector(
-  `.strategy-card[data-strategy="${tipo}"]`
- );
-
-  if (activeCard) {
-    activeCard.classList.add("active");
-  }
-
+  return strategies[tipo];
 }
 
+function addStrategySection(panel, label, text) {
+  const strong = document.createElement("strong");
+  strong.textContent = label;
+
+  const paragraph = document.createElement("p");
+  paragraph.textContent = text;
+
+  panel.append(strong, paragraph);
+}
+
+function addStrategyList(panel, label, items, highlighted = false) {
+  const strong = document.createElement("strong");
+  strong.textContent = label;
+
+  const list = document.createElement("ul");
+  for (const item of items) {
+    const li = document.createElement("li");
+    li.textContent = item;
+    list.appendChild(li);
+  }
+
+  if (highlighted) {
+    const box = document.createElement("div");
+    box.className = "strategy-example";
+    box.append(strong, list);
+    panel.appendChild(box);
+    return;
+  }
+
+  panel.append(strong, list);
+}
+
+function mostrarEstrategia(tipo) {
+  const panel = document.getElementById("strategyInfo");
+  const data = getStrategyContent(tipo);
+
+  document.querySelectorAll(".strategy-card").forEach(card => {
+    card.classList.toggle("active", card.dataset.strategy === tipo);
+  });
+
+  if (!panel || !data) return;
+
+  panel.replaceChildren();
+
+  const title = document.createElement("h3");
+  title.textContent = data.title;
+  panel.appendChild(title);
+
+  addStrategySection(panel, "Como funciona", data.description);
+  addStrategyList(panel, "Regla", data.rules);
+  addStrategyList(panel, "Ejemplo", data.example, true);
+  addStrategyList(panel, "Ventajas", data.benefits);
+  addStrategyList(panel, "Riesgos", data.risks);
+
+  panel.classList.add("active");
+  panel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
 
 function renderHistorial() {
   const cont = document.getElementById("historial");
