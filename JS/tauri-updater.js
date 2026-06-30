@@ -161,9 +161,10 @@ class GameTrackUpdater {
     await safeLog("info", "Updater iniciado.");
     await safeLog("info", `Versión instalada: ${this.installedVersion}`);
 
-    if (this.prefs.autoCheck) {
-      window.setTimeout(() => this.autoCheck(), AUTO_CHECK_DELAY_MS);
-    }
+    this.prefs.autoCheck = true;
+    setStoredBoolean(keys.autoCheck, true);
+    this.emitState();
+    window.setTimeout(() => this.autoCheck({ ignoreCooldown: true }), AUTO_CHECK_DELAY_MS);
   }
 
   async getInstalledVersion() {
@@ -280,11 +281,11 @@ class GameTrackUpdater {
     this.updateModal();
   }
 
-  async autoCheck() {
+  async autoCheck({ ignoreCooldown = false } = {}) {
     if (!this.isNative || !this.prefs.autoCheck || this.operation) return;
 
     const lastCheck = Date.parse(localStorage.getItem(keys.lastCheck) || "");
-    if (Number.isFinite(lastCheck) && Date.now() - lastCheck < AUTO_CHECK_INTERVAL_MS) {
+    if (!ignoreCooldown && Number.isFinite(lastCheck) && Date.now() - lastCheck < AUTO_CHECK_INTERVAL_MS) {
       return;
     }
 
