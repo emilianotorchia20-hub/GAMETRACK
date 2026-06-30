@@ -1,0 +1,182 @@
+/* =========================
+   🔔 TOASTIFY
+========================= */
+
+.toastify {
+
+  border-radius: 14px !important;
+
+  font-weight: 700;
+
+  padding: 14px 18px !important;
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,.45) !important;
+
+  border:
+    1px solid rgba(212,175,55,.18);
+
+  backdrop-filter: blur(10px);
+
+}
+
+/* =========================
+   ⚙️ SETTINGS CARD
+========================= */
+
+.settings-card {
+
+  background:
+
+    linear-gradient(
+      145deg,
+      rgba(18,18,18,.96),
+      rgba(8,8,8,.96)
+    );
+
+  border:
+    1px solid rgba(212,175,55,.10);
+
+  border-radius: 22px;
+
+  padding: 28px;
+
+  max-width: 520px;
+
+  margin: 30px auto;
+
+  box-shadow:
+
+    0 15px 40px rgba(0,0,0,.5),
+
+    0 0 20px rgba(185,28,28,.08),
+
+    inset 0 1px 0 rgba(255,255,255,.04);
+
+  backdrop-filter: blur(12px);
+
+}
+
+/* =========================
+   🏷 TITULO SETTINGS
+========================= */
+
+.settings-card h2 {
+
+  margin-bottom: 24px;
+
+  font-size: 1.5rem;
+
+  color: #f8fafc;
+
+  position: relative;
+
+}
+
+.settings-card h2::after {
+
+  content: "";
+
+  display: block;
+
+  width: 70px;
+
+  height: 2px;
+
+  margin-top: 10px;
+
+  border-radius: 20px;
+
+  background:
+
+    linear-gradient(
+      90deg,
+      #d4af37,
+      transparent
+    );
+
+}
+
+/* =========================
+   ⚙️ ITEMS
+========================= */
+
+.setting-item {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin-bottom: 22px;
+
+  gap: 20px;
+
+}
+
+/* =========================
+   🏷 LABELS
+========================= */
+
+.setting-item label {
+
+  font-size: 15px;
+
+  color: #e2e8f0;
+
+  font-weight: 600;
+
+}
+
+/* =========================
+   🔢 INPUTS
+========================= */
+
+.setting-item input[type="number"] {
+
+  background:
+    rgba(255,255,255,.04);
+
+  border:
+    1px solid rgba(212,175,55,.10);
+
+  color: white;
+
+  padding: 12px 14px;
+
+  border-radius: 12px;
+
+  outline: none;
+
+  width: 150px;
+
+  transition: .2s;
+
+}
+
+.setting-item input[type="number"]:focus {
+
+  border:
+    1px solid rgba(212,175,55,.35);
+
+  box-shadow:
+    0 0 20px rgba(212,175,55,.08);
+
+}
+
+/* =========================
+   ☑ CHECKBOX
+========================= */
+
+.setting-item input[type="checkbox"] {
+
+  width: 22px;
+
+  height: 22px;
+
+  cursor: pointer;
+
+  accent-color: #d4af37;
+
+}

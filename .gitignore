@@ -1,0 +1,16 @@
+node_modules/
+dist/
+src-tauri/target/
+src-tauri/gen/
+src-tauri/icons/*.icns
+src-tauri/gametrack-updater.key
+src-tauri/gametrack-updater.key.*
+*.pem
+*.key
+*.p12
+*.pfx
+*.log
+vite-dev.log
+vite-dev.err.log
+release/*
+!release/.gitkeep

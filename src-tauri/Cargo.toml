@@ -1,0 +1,24 @@
+[package]
+name = "gametrack"
+version = "1.0.0"
+description = "GameTrack desktop application"
+authors = ["GameTrack"]
+edition = "2021"
+license = ""
+repository = "https://github.com/emilianotorchia20-hub/GAMETRACK"
+
+[lib]
+name = "gametrack_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+log = "0.4"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tauri = { version = "2", features = [] }
+tauri-plugin-log = "2"
+tauri-plugin-process = "2"
+tauri-plugin-updater = "2"

@@ -1,0 +1,235 @@
+/* =========================
+   🔥 BOTONES GLOBALES
+========================= */
+
+button {
+
+  background:
+    linear-gradient(
+      135deg,
+      #b91c1c,
+      #7f1d1d
+    );
+
+  color: #f8fafc;
+
+  border:
+    1px solid rgba(212,175,55,.25);
+
+  padding: 10px 16px;
+
+  border-radius: 10px;
+
+  font-weight: bold;
+
+  cursor: pointer;
+
+  transition: 0.25s;
+
+  box-shadow:
+    0 0 18px rgba(185,28,28,.2);
+
+}
+
+button:hover {
+
+  background:
+    linear-gradient(
+      135deg,
+      #dc2626,
+      #991b1b
+    );
+
+  transform:
+    translateY(-2px)
+    scale(1.03);
+
+  box-shadow:
+    0 0 24px rgba(220,38,38,.3);
+
+}
+
+/* =========================
+   🗑 BOTÓN ELIMINAR
+========================= */
+
+.delete-btn {
+
+  margin-top: 10px;
+
+  background: #ef4444;
+
+  color: white;
+
+  padding: 8px 14px;
+
+  border-radius: 8px;
+
+  border: none;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+
+  width: auto;
+
+  align-self: center;
+
+  font-size: 13px;
+
+}
+
+.delete-btn:hover {
+
+  background: #dc2626;
+
+}
+
+/* =========================
+   ⚠ BOTÓN PELIGRO
+========================= */
+
+.danger-btn {
+
+  background: #ef4444;
+
+  color: white;
+
+  padding: 10px 16px;
+
+  border-radius: 10px;
+
+  border: none;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+
+}
+
+.danger-btn:hover {
+
+  background: #dc2626;
+
+  transform: scale(1.05);
+
+}
+
+/* =========================
+   📲 BOTÓN INSTALAR
+========================= */
+
+.install-btn {
+
+  position: fixed;
+
+  bottom: 20px;
+
+  right: 20px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #d4af37,
+      #b91c1c
+    );
+
+  color: white;
+
+  padding: 12px 18px;
+
+  border-radius: 14px;
+
+  border:
+    1px solid rgba(212,175,55,.25);
+
+  cursor: pointer;
+
+  font-weight: 700;
+
+  box-shadow:
+    0 10px 25px rgba(0,0,0,0.45);
+
+}
+
+/* =========================
+   ❌ BORRAR APUESTA
+========================= */
+
+.delete-bet {
+
+  background: transparent;
+
+  border: none;
+
+  color: #ef4444;
+
+  font-size: 16px;
+
+  font-weight: bold;
+
+  cursor: pointer;
+
+  width: 24px;
+
+  height: 24px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  transition: 0.2s;
+
+}
+
+.delete-bet:hover {
+
+  transform: scale(1.2);
+
+  color: #dc2626;
+
+}
+
+/* =========================
+   🎰 BOTÓN GIRAR
+========================= */
+
+.bet-panel button#girar {
+
+  margin-top: 15px;
+
+  width: 100%;
+
+  padding: 14px;
+
+  border-radius: 14px;
+
+  border: none;
+
+  background:
+    linear-gradient(
+      135deg,
+      #d4af37,
+      #b91c1c
+    );
+
+  color: white;
+
+  font-weight: bold;
+
+  cursor: pointer;
+
+  transition: 0.25s;
+
+}
+
+.bet-panel button#girar:hover {
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 10px 25px rgba(185,28,28,.4);
+
+}

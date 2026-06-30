@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>
+        Ruleta - GameTrack
+    </title>
+
+    <!-- =========================
+         🎨 CSS BASE
+    ========================== -->
+
+    <link rel="stylesheet" href="../../CSS/base.css">
+
+    <link rel="stylesheet" href="../../CSS/layout.css">
+
+    <link rel="stylesheet" href="../../CSS/utilities.css">
+
+    <!-- =========================
+         🧩 COMPONENTES
+    ========================== -->
+
+    <link rel="stylesheet" href="../../CSS/components/animations.css">
+
+    <link rel="stylesheet" href="../../CSS/components/alerts.css">
+
+    <link rel="stylesheet" href="../../CSS/components/buttons.css">
+
+    <link rel="stylesheet" href="../../CSS/components/cards.css">
+
+    <link rel="stylesheet" href="../../CSS/components/forms.css">
+
+    <link rel="stylesheet" href="../../CSS/components/history.css">
+
+    <link rel="stylesheet" href="../../CSS/components/install.css">
+
+    <link rel="stylesheet" href="../../CSS/components/loader.css">
+
+    <link rel="stylesheet" href="../../CSS/components/logo.css">
+
+    <link rel="stylesheet" href="../../CSS/components/navbar.css">
+
+    <link rel="stylesheet" href="../../CSS/components/settings.css">
+
+    <link rel="stylesheet" href="../../CSS/components/stats.css">
+
+    <link rel="stylesheet" href="../../CSS/components/updater.css">
+
+    <!-- =========================
+         🎰 RULETA MODULAR
+    ========================== -->
+
+    <link rel="stylesheet" href="../../CSS/components/roulette-layout.css">
+
+    <link rel="stylesheet" href="../../CSS/components/roulette-wheel.css">
+
+    <link rel="stylesheet" href="../../CSS/components/roulette-bets.css">
+
+    <link rel="stylesheet" href="../../CSS/components/roulette-history.css">
+
+    <link rel="stylesheet" href="../../CSS/components/roulette-strategies.css">
+
+    <link rel="stylesheet" href="../../CSS/components/roulette-result.css">
+
+    <!-- =========================
+         📱 PWA
+    ========================== -->
+
+    <link rel="manifest" href="../../manifest.json">
+
+    <meta
+        name="theme-color"
+        content="#0f172a"
+    >
+
+</head>
+
+<body>
+
+    <!-- =========================
+         🎬 LOADER
+    ========================== -->
+
+    <div id="loader">
+
+        <div class="loader-content">
+
+            <div class="loader-logo">
+
+                🎮
+
+            </div>
+
+            <h1>
+
+                GameTrack
+
+            </h1>
+
+            <div class="loader-bar">
+
+                <div class="loader-progress"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- =========================
+         🔝 NAVBAR
+    ========================== -->
+
+    <nav>
+
+        <a href="../../index.html">
+
+            Inicio
+
+        </a>
+
+        <a href="../historial/index.html">
+
+            Historial
+
+        </a>
+
+        <a href="../estadisticas/index.html">
+
+            Estadísticas
+
+        </a>
+
+        <a href="../insights/index.html">
+
+            Insights
+
+        </a>
+
+        <a href="../configuracion/index.html">
+
+            Configuración
+
+        </a>
+
+        <a
+            href="../roulette/index.html"
+            class="active"
+        >
+
+            Ruleta
+
+        </a>
+
+    </nav>
+
+    <!-- =========================
+         🎰 MAIN RULETA
+    ========================== -->
+
+    <main class="ruleta-page">
+
+        <!-- =========================
+             👑 HEADER
+        ========================== -->
+
+        <div class="page-header">
+
+            <h1>
+
+                🎰 Ruleta
+
+            </h1>
+
+        </div>
+
+        <!-- =========================
+             📊 HISTORIAL
+        ========================== -->
+
+        <div
+            id="historial"
+            class="history-bar"
+        ></div>
+
+        <!-- =========================
+             🎡 RULETA
+        ========================== -->
+
+        <div class="roulette-wrapper">
+
+            <div class="roulette-container">
+
+                <!-- 🔺 PUNTERO -->
+
+                <div class="pointer"></div>
+
+                <!-- 🎡 WHEEL -->
+
+                <div
+                    class="wheel"
+                    id="wheel"
+                >
+
+                    <div
+                        class="wheel-inner"
+                        id="wheel-inner"
+                    >
+
+                        <div id="numbers"></div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- =========================
+             📊 RESULTADO
+        ========================== -->
+
+        <div class="stat-card roulette-result-card">
+
+            <p class="stat-title">
+
+                Resultado
+
+            </p>
+
+            <p
+                id="resultado"
+                class="stat-value roulette-result-value"
+            ></p>
+
+        </div>
+
+        <!-- =========================
+             🎮 LAYOUT PRINCIPAL
+        ========================== -->
+
+        <div class="game-layout">
+
+            <!-- =========================
+                 📘 INFO ESTRATEGIA
+            ========================== -->
+
+            <div
+                id="strategyInfo"
+                class="strategy-info"
+            ></div>
+
+            <!-- =========================
+                 🎰 PANEL APUESTAS
+            ========================== -->
+
+            <div class="bet-panel">
+
+                <h2>
+
+                    🎰 Apuestas
+
+                </h2>
+
+                <!-- =========================
+                     💰 FICHAS
+                ========================== -->
+
+                <div class="chips">
+
+                    <button
+                        class="chip"
+                        data-value="10"
+                    >
+                        10
+                    </button>
+
+                    <button
+                        class="chip"
+                        data-value="50"
+                    >
+                        50
+                    </button>
+
+                    <button
+                        class="chip active"
+                        data-value="100"
+                    >
+                        100
+                    </button>
+
+                    <button
+                        class="chip"
+                        data-value="500"
+                    >
+                        500
+                    </button>
+
+                </div>
+
+                <!-- =========================
+                     🎯 OPCIONES
+                ========================== -->
+
+                <div class="bet-options">
+
+                    <button data-bet="rojo">
+
+                        Rojo
+
+                    </button>
+
+                    <button data-bet="negro">
+
+                        Negro
+
+                    </button>
+
+                    <button data-bet="par">
+
+                        Par
+
+                    </button>
+
+                    <button data-bet="impar">
+
+                        Impar
+
+                    </button>
+
+                    <button data-bet="docena1">
+
+                        1-12
+
+                    </button>
+
+                    <button data-bet="docena2">
+
+                        13-24
+
+                    </button>
+
+                    <button data-bet="docena3">
+
+                        25-36
+
+                    </button>
+
+                </div>
+
+                <!-- =========================
+                     🔢 NUMEROS
+                ========================== -->
+
+                <div
+                    class="numbers-grid"
+                    id="numbersGrid"
+                ></div>
+
+                <!-- =========================
+                     📋 APUESTAS
+                ========================== -->
+
+                <div id="betsList"></div>
+
+                <!-- =========================
+                     📊 RESULTADO APUESTA
+                ========================== -->
+
+                <div
+                    id="resultadoApuesta"
+                    class="stat-value roulette-result-value"
+                ></div>
+
+                <!-- =========================
+                     🎡 GIRAR
+                ========================== -->
+
+                <button id="girar">
+
+                    Girar
+
+                </button>
+
+            </div>
+
+            <!-- =========================
+                 📊 PANEL ESTRATEGIAS
+            ========================== -->
+
+            <div class="strategy-panel">
+
+                <h2>
+
+                    📊 Estrategias
+
+                </h2>
+
+                <!-- =========================
+                     🔥 PROGRESIVAS
+                ========================== -->
+
+                <h4>
+
+                    Progresivas
+
+                </h4>
+
+                <div
+                    class="strategy-card"
+                    data-strategy="martingale"
+                >
+
+                    <h3>
+
+                        Martingale
+
+                    </h3>
+
+                    <p>
+
+                        Duplicar apuesta tras perder
+
+                    </p>
+
+                </div>
+
+                <div
+                    class="strategy-card"
+                    data-strategy="dalembert"
+                >
+
+                    <h3>
+
+                        D’Alembert
+
+                    </h3>
+
+                    <p>
+
+                        Sube y baja progresivamente
+
+                    </p>
+
+                </div>
+
+                <div
+                    class="strategy-card"
+                    data-strategy="fibonacci"
+                >
+
+                    <h3>
+
+                        Fibonacci
+
+                    </h3>
+
+                    <p>
+
+                        Recuperación con secuencia
+
+                    </p>
+
+                </div>
+
+                <div
+                    class="strategy-card"
+                    data-strategy="labouchere"
+                >
+
+                    <h3>
+
+                        Labouchere
+
+                    </h3>
+
+                    <p>
+
+                        Sistema de cancelación progresiva
+
+                    </p>
+
+                </div>
+
+                <div
+                    class="strategy-card"
+                    data-strategy="reverseMartingale"
+                >
+
+                    <h3>
+
+                        Reverse Martingale
+
+                    </h3>
+
+                    <p>
+
+                        Duplicar cuando ganás
+
+                    </p>
+
+                </div>
+
+                <!-- =========================
+                     🟡 CONSERVADORAS
+                ========================== -->
+
+                <h4>
+
+                    Conservadoras
+
+                </h4>
+
+                <div
+                    class="strategy-card"
+                    data-strategy="flat"
+                >
+
+                    <h3>
+
+                        Apuesta plana
+
+                    </h3>
+
+                    <p>
+
+                        Misma cantidad siempre
+
+                    </p>
+
+                </div>
+
+                <div
+                    class="strategy-card"
+                    data-strategy="paroli"
+                >
+
+                    <h3>
+
+                        Paroli
+
+                    </h3>
+
+                    <p>
+
+                        Aprovechar rachas ganadoras
+
+                    </p>
+
+                </div>
+
+                <!-- =========================
+                     🔴 AVANZADAS
+                ========================== -->
+
+                <h4>
+
+                    Avanzadas
+
+                </h4>
+
+                <div
+                    class="strategy-card"
+                    data-strategy="sector"
+                >
+
+                    <h3>
+
+                        Estrategia de sectores
+
+                    </h3>
+
+                    <p>
+
+                        Apostar zonas de la ruleta
+
+                    </p>
+
+                </div>
+
+                <div
+                    class="strategy-card"
+                    data-strategy="contra"
+                >
+
+                    <h3>
+
+                        Contra racha
+
+                    </h3>
+
+                    <p>
+
+                        Apostar contra tendencias
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- =========================
+         🔧 JAVASCRIPT
+    ========================== -->
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script type="module" src="../../JS/main.js"></script>
+
+</body>
+
+</html>

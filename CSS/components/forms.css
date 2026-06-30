@@ -1,0 +1,367 @@
+/* ==========================
+   🧾 FORM CONTAINER
+========================== */
+
+.form-container {
+
+  position: relative;
+
+  overflow: hidden;
+
+  max-width: 540px;
+
+  margin: 0 auto;
+
+  padding: 34px;
+
+  border-radius: 34px;
+
+  background:
+
+    linear-gradient(
+      145deg,
+      rgba(20,20,22,.72),
+      rgba(5,5,5,.78)
+    );
+
+  backdrop-filter: blur(18px);
+
+  -webkit-backdrop-filter: blur(18px);
+
+  border:
+    1px solid rgba(255,255,255,.06);
+
+  box-shadow:
+
+    inset 0 1px 0 rgba(255,255,255,.05),
+
+    inset 0 -30px 45px rgba(0,0,0,.35),
+
+    0 14px 55px rgba(0,0,0,.55),
+
+    0 0 30px rgba(255,215,120,.03);
+
+}
+
+/* ==========================
+   ✨ SHINE
+========================== */
+
+.form-container::before {
+
+  content:"";
+
+  position:absolute;
+
+  inset:0;
+
+  border-radius:34px;
+
+  background:
+
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.08),
+      transparent 18%,
+      transparent 65%,
+      rgba(255,255,255,.015)
+    );
+
+  pointer-events:none;
+
+}
+
+/* ==========================
+   🔥 GOLD GLOW
+========================== */
+
+.form-container::after {
+
+  content:"";
+
+  position:absolute;
+
+  width:240px;
+  height:240px;
+
+  top:-120px;
+  right:-120px;
+
+  border-radius:50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255,215,120,.10),
+      transparent 72%
+    );
+
+  filter: blur(24px);
+
+  pointer-events:none;
+
+}
+
+/* ==========================
+   👑 TITLE
+========================== */
+
+.form-container h2 {
+
+  position: relative;
+
+  z-index: 2;
+
+  margin-bottom: 28px;
+
+  font-size: 34px;
+
+  font-weight: 900;
+
+  letter-spacing: -1px;
+
+  color: #ffffff;
+
+  text-shadow:
+
+    0 0 18px rgba(255,255,255,.04),
+
+    0 0 35px rgba(255,255,255,.02);
+
+}
+
+/* ==========================
+   📦 GROUP
+========================== */
+
+.form-group {
+
+  position: relative;
+
+  z-index: 2;
+
+  margin-bottom: 22px;
+
+}
+
+/* ==========================
+   🏷 LABEL
+========================== */
+
+.form-group label {
+
+  display: block;
+
+  margin-bottom: 10px;
+
+  color: rgba(255,255,255,.72);
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  letter-spacing: 1px;
+
+  text-transform: uppercase;
+
+}
+
+/* ==========================
+   ✍ INPUTS
+========================== */
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+
+  width: 100%;
+
+  padding: 16px 18px;
+
+  border-radius: 18px;
+
+  background:
+    rgba(255,255,255,.04);
+
+  border:
+    1px solid rgba(255,255,255,.06);
+
+  color: #ffffff;
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  outline: none;
+
+  appearance: none;
+
+  -webkit-appearance: none;
+
+  -moz-appearance: none;
+
+  transition:
+
+    border-color .22s ease,
+
+    background .22s ease,
+
+    box-shadow .22s ease,
+
+    transform .22s ease;
+
+}
+
+/* ==========================
+   🔽 SELECT OPTIONS FIX
+========================== */
+
+.form-group select option {
+
+  background: #0a0a0a;
+
+  color: #ffffff;
+
+}
+
+/* ==========================
+   ✨ PLACEHOLDER
+========================== */
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+
+  color:
+    rgba(255,255,255,.28);
+
+}
+
+/* ==========================
+   ✨ FOCUS
+========================== */
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+
+  background:
+    rgba(255,255,255,.05);
+
+  border-color:
+    rgba(255,215,120,.18);
+
+  box-shadow:
+
+    0 0 0 4px rgba(255,215,120,.05),
+
+    0 0 20px rgba(255,215,120,.05);
+
+}
+
+/* ==========================
+   📝 TEXTAREA
+========================== */
+
+.form-group textarea {
+
+  min-height: 120px;
+
+  resize: vertical;
+
+}
+
+/* ==========================
+   🚀 BUTTON
+========================== */
+
+.form-container button {
+
+  position: relative;
+
+  z-index: 2;
+
+  width: 100%;
+
+  margin-top: 8px;
+
+  padding: 16px;
+
+  border: none;
+
+  border-radius: 20px;
+
+  cursor: pointer;
+
+  font-size: 15px;
+
+  font-weight: 800;
+
+  letter-spacing: .5px;
+
+  color: #ffffff;
+
+  background:
+
+    linear-gradient(
+      135deg,
+      #d4af37,
+      #dc2626
+    );
+
+  box-shadow:
+
+    0 10px 30px rgba(220,38,38,.22),
+
+    0 0 25px rgba(255,215,120,.12);
+
+  transition:
+
+    transform .22s ease,
+
+    box-shadow .22s ease,
+
+    filter .22s ease;
+
+}
+
+/* ==========================
+   ✨ BUTTON HOVER
+========================== */
+
+.form-container button:hover {
+
+  transform:
+    translateY(-2px);
+
+  filter:
+    brightness(1.05);
+
+  box-shadow:
+
+    0 14px 35px rgba(220,38,38,.28),
+
+    0 0 35px rgba(255,215,120,.18);
+
+}
+
+/* ==========================
+   📱 MOBILE
+========================== */
+
+@media(max-width:700px){
+
+  .form-container {
+
+    padding: 24px;
+
+    border-radius: 28px;
+
+  }
+
+  .form-container h2 {
+
+    font-size: 28px;
+
+  }
+
+}

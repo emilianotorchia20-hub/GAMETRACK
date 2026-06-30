@@ -1,0 +1,210 @@
+ /* =========================
+   🎰 NAVBAR CASINO PREMIUM
+========================= */
+
+nav{
+
+    position:sticky;
+
+    top:14px;
+
+    z-index:1000;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:14px;
+
+    padding:16px 24px;
+
+    margin:
+      0 auto 40px auto;
+
+    width:fit-content;
+
+    border-radius:22px;
+
+    backdrop-filter:blur(14px);
+
+    background:
+
+      linear-gradient(
+        145deg,
+        rgba(18,18,18,.92),
+        rgba(5,5,5,.92)
+      );
+
+    border:
+      1px solid rgba(212,175,55,.12);
+
+    box-shadow:
+
+      0 10px 35px rgba(0,0,0,.55),
+
+      inset 0 1px 0 rgba(255,255,255,.04),
+
+      0 0 25px rgba(185,28,28,.12);
+
+}
+
+/* =========================
+   ✨ LINKS
+========================= */
+
+nav a{
+
+    position:relative;
+
+    text-decoration:none;
+
+    color:#cbd5e1;
+
+    font-weight:700;
+
+    font-size:14px;
+
+    letter-spacing:.3px;
+
+    padding:
+      10px 16px;
+
+    border-radius:12px;
+
+    transition:
+      all .25s ease;
+
+    overflow:hidden;
+}
+
+/* =========================
+   🌟 EFECTO HOVER
+========================= */
+
+nav a::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    opacity:0;
+
+    transition:.25s;
+
+    border-radius:12px;
+
+    background:
+
+      linear-gradient(
+        135deg,
+        rgba(212,175,55,.16),
+        rgba(185,28,28,.16)
+      );
+
+}
+
+/* =========================
+   🔥 HOVER
+========================= */
+
+nav a:hover{
+
+    color:#facc15;
+
+    transform:
+      translateY(-2px);
+
+    text-shadow:
+      0 0 12px rgba(250,204,21,.35);
+
+}
+
+nav a:hover::before{
+    opacity:1;
+}
+
+/* =========================
+   👑 LINK ACTIVO
+========================= */
+
+nav a.active{
+
+    color:#fff;
+
+    background:
+
+      linear-gradient(
+        135deg,
+        #991b1b,
+        #7f1d1d
+      );
+
+    border:
+      1px solid rgba(212,175,55,.2);
+
+    box-shadow:
+
+      0 0 20px rgba(185,28,28,.25),
+
+      inset 0 1px 0 rgba(255,255,255,.06);
+
+}
+
+/* =========================
+   ✨ BRILLO ACTIVO
+========================= */
+
+nav a.active::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:12px;
+    right:12px;
+    bottom:4px;
+
+    height:2px;
+
+    border-radius:10px;
+
+    background:
+
+      linear-gradient(
+        90deg,
+        transparent,
+        #facc15,
+        transparent
+      );
+
+}
+
+/* =========================
+   📱 RESPONSIVE
+========================= */
+
+@media(max-width:700px){
+
+    nav{
+
+        gap:6px;
+
+        padding:12px;
+
+        flex-wrap:wrap;
+
+        width:100%;
+    }
+
+    nav a{
+
+        font-size:13px;
+
+        padding:8px 12px;
+    }
+
+}
