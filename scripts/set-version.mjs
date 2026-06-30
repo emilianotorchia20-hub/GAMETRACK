@@ -4,7 +4,7 @@ const version = process.argv[2];
 const semver = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?$/;
 
 if (!semver.test(version || "")) {
-  console.error("Versión inválida. Uso: npm run version:set -- 1.0.1");
+  console.error("Version invalida. Uso: npm run version:set -- 1.0.1");
   process.exit(1);
 }
 
@@ -17,10 +17,22 @@ async function updateJson(path, updater) {
 
 async function updateCargo(path) {
   const raw = await readFile(path, "utf8");
-  const next = raw.replace(/^version\s*=\s*"[^"]+"/m, `version = "${version}"`);
-  if (next === raw) {
-    throw new Error(`No se encontró version en ${path}`);
+  const packageSection = raw.match(/^\[package\]\r?\n[\s\S]*?(?=^\[|\Z)/m);
+
+  if (!packageSection) {
+    throw new Error(`No se encontro la seccion [package] en ${path}`);
   }
+
+  const section = packageSection[0];
+  const updatedSection = section.match(/^version\s*=/m)
+    ? section.replace(/^version\s*=\s*"[^"]*"/m, `version = "${version}"`)
+    : section.replace(/^(name\s*=\s*"[^"]+"\r?\n)/m, `$1version = "${version}"\n`);
+
+  if (updatedSection === section && !section.includes(`version = "${version}"`)) {
+    throw new Error(`No se pudo actualizar version en ${path}`);
+  }
+
+  const next = raw.slice(0, packageSection.index) + updatedSection + raw.slice(packageSection.index + section.length);
   await writeFile(path, next);
 }
 
@@ -45,4 +57,4 @@ await updateJson("src-tauri/tauri.conf.json", (data) => {
 
 await updateCargo("src-tauri/Cargo.toml");
 
-console.log(`Versión sincronizada: ${version}`);
+console.log(`Version sincronizada: ${version}`);

@@ -19,27 +19,40 @@ const env = {
   TAURI_SIGNING_PRIVATE_KEY: keyPath,
 };
 
-const build = spawnSync("npm.cmd", ["run", "tauri", "--", "build"], {
-  env,
-  shell: false,
-  stdio: "inherit",
-});
+function run(command, args) {
+  if (process.platform === "win32") {
+    return spawnSync("cmd.exe", ["/d", "/s", "/c", command, ...args], {
+      env,
+      shell: false,
+      stdio: "inherit",
+    });
+  }
+
+  return spawnSync(command, args, {
+    env,
+    shell: false,
+    stdio: "inherit",
+  });
+}
+
+function printFailure(label, result) {
+  console.error(`${label} fallo.`);
+  console.error(`status: ${result.status ?? "desconocido"}`);
+  console.error(`signal: ${result.signal ?? "ninguna"}`);
+  if (result.error) console.error(`error: ${result.error.message}`);
+}
+
+const build = run("npm.cmd", ["run", "tauri", "--", "build"]);
 
 if (build.status !== 0) {
-  console.error(`tauri build fallo con codigo ${build.status ?? "desconocido"}.`);
-  if (build.error) console.error(build.error.message);
+  printFailure("tauri build", build);
   process.exit(build.status ?? 1);
 }
 
-const latest = spawnSync("node", ["scripts/generate-latest-json.mjs"], {
-  env,
-  shell: false,
-  stdio: "inherit",
-});
+const latest = run("node", ["scripts/generate-latest-json.mjs"]);
 
 if (latest.status !== 0) {
-  console.error(`generate-latest-json fallo con codigo ${latest.status ?? "desconocido"}.`);
-  if (latest.error) console.error(latest.error.message);
+  printFailure("generate-latest-json", latest);
 }
 
 process.exit(latest.status ?? 1);
