@@ -24,6 +24,7 @@ function setupBotonesApuesta() {
 //
 // =========================
 function agregarApuesta(tipo, valor = null) {
+  if (isSpinning) return;
 
   //
   const existente = bets.find(b => 

@@ -1,180 +1,68 @@
-.page-logo {
-
-    position: relative;
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 24px;
-
-    margin-bottom: 50px;
-
-}
-/* ==========================
-   👑 MINIMAL PREMIUM LOGO
-========================== */
-
-.page-logo {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 18px;
-
-    margin-bottom: 40px;
-
+.stats-page .page-logo {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 28px;
 }
 
-/* ==========================
-   ✨ ICON
-========================== */
-
-.page-logo-icon {
-
-    position: relative;
-
-    width: 58px;
-
-    height: 58px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    border-radius: 18px;
-
-    font-size: 1.7rem;
-
-    background:
-
-        linear-gradient(
-            135deg,
-            rgba(255,255,255,0.08),
-            rgba(255,255,255,0.03)
-        );
-
-    border:
-        1px solid rgba(255,255,255,0.06);
-
-    backdrop-filter: blur(14px);
-
-    box-shadow:
-
-        0 6px 25px rgba(0,0,0,0.28),
-
-        inset 0 1px 0 rgba(255,255,255,0.04);
-
-    transition:
-        transform .3s ease,
-        box-shadow .3s ease;
-
+.stats-page .page-logo::before {
+  content: "";
+  position: absolute;
+  left: -24px;
+  right: -24px;
+  top: 50%;
+  height: 120px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 12% 50%, rgba(212,175,55,.14), transparent 26%),
+    linear-gradient(90deg, rgba(185,28,28,.12), transparent 42%);
+  filter: blur(18px);
+  opacity: .8;
 }
 
-.page-logo:hover .page-logo-icon {
-
-    transform:
-        translateY(-2px);
-
-    box-shadow:
-
-        0 10px 30px rgba(0,0,0,0.35),
-
-        0 0 20px rgba(255,255,255,0.05);
-
+.stats-page .page-logo-icon,
+.stats-page .page-logo-content {
+  position: relative;
+  z-index: 1;
 }
 
-/* ==========================
-   🧠 TITLE
-========================== */
-
-.page-logo-content h1 {
-
-    font-size:
-        clamp(2.3rem, 4vw, 4rem);
-
-    line-height: 1;
-
-    font-weight: 900;
-
-    letter-spacing: -2px;
-
-    margin-bottom: 12px;
-
-    background:
-
-        linear-gradient(
-            135deg,
-            #ffffff 0%,
-            #cbd5e1 100%
-        );
-
-    -webkit-background-clip: text;
-
-    -webkit-text-fill-color: transparent;
-
+.stats-page .page-logo-icon {
+  display: grid;
+  place-items: center;
+  width: 58px;
+  aspect-ratio: 1;
+  border-radius: 18px;
+  font-size: 1.55rem;
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.1), rgba(255,255,255,.035));
+  border: 1px solid rgba(212,175,55,.16);
+  box-shadow:
+    0 16px 38px rgba(0,0,0,.38),
+    inset 0 1px 0 rgba(255,255,255,.1);
 }
 
-/* ==========================
-   🌈 LINE
-========================== */
-
-.page-logo-line {
-
-    width: 110px;
-
-    height: 4px;
-
-    border-radius: 999px;
-
-    background:
-
-        linear-gradient(
-            90deg,
-            #fde047,
-            #f59e0b,
-            #ef4444
-        );
-
-    box-shadow:
-        0 0 12px rgba(245,158,11,0.35);
-
+.stats-page .page-logo-content h1 {
+  margin: 0 0 12px;
+  color: #f8fafc;
+  font-size: clamp(42px, 6vw, 72px);
+  line-height: .92;
+  font-weight: 950;
+  letter-spacing: 0;
+  text-shadow:
+    0 12px 34px rgba(0,0,0,.55),
+    0 0 26px rgba(255,255,255,.06);
 }
 
-/* ==========================
-   📱 MOBILE
-========================== */
-
-@media (max-width: 768px) {
-
-    .page-logo {
-
-        gap: 14px;
-
-        margin-bottom: 30px;
-
-    }
-
-    .page-logo-icon {
-
-        width: 48px;
-
-        height: 48px;
-
-        border-radius: 14px;
-
-        font-size: 1.3rem;
-
-    }
-
-    .page-logo-content h1 {
-
-        font-size:
-            clamp(2rem, 8vw, 3rem);
-
-    }
-
+.stats-page .page-logo-line {
+  width: 128px;
+  height: 4px;
+  border-radius: 999px;
+  background:
+    linear-gradient(90deg, #facc15, #d97706, #ef4444);
+  box-shadow:
+    0 0 16px rgba(250,204,21,.32),
+    0 0 30px rgba(239,68,68,.16);
 }
+

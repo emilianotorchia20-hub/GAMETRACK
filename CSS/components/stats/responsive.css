@@ -1,56 +1,71 @@
-@media(max-width:700px){
-
-  .page-header {
-
-    margin-bottom: 30px;
-
-  }
-
-  .page-header h1 {
-
-    font-size: 34px;
-
-  }
+@media(max-width:1050px) {
 
   .stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 
+  .stats-hero {
     grid-template-columns: 1fr;
-
-    gap: 18px;
-
   }
 
-  .stat-card {
-
-    padding: 22px;
-
-    border-radius: 26px;
-
-  }
-
-  .chart-container {
-
-    padding: 20px;
-
-    border-radius: 26px;
-
-  }
-
-  .stat-title {
-
-    font-size: 12px;
-
-    letter-spacing: 2px;
-
-  }
-
-  .stat-value {
-
-    font-size: 16px;
-
+  .stats-hero__badges {
+    justify-content: flex-start;
   }
 
 }
-/* ==========================
-   👑 PREMIUM PAGE LOGO
-========================== */
+
+@media(max-width:700px) {
+
+  .stats-page {
+    width: min(100% - 24px, 1240px);
+    padding-top: 22px;
+  }
+
+  .stats-page .page-logo {
+    gap: 14px;
+    margin-bottom: 22px;
+  }
+
+  .stats-page .page-logo-icon {
+    width: 48px;
+    border-radius: 15px;
+    font-size: 1.25rem;
+  }
+
+  .stats-page .page-logo-content h1 {
+    font-size: clamp(34px, 12vw, 50px);
+  }
+
+  .stats-hero {
+    padding: 22px;
+    border-radius: 22px;
+  }
+
+  .stats-hero h2 {
+    font-size: clamp(34px, 12vw, 54px);
+  }
+
+  .chart-header {
+    flex-direction: column;
+    padding: 22px 20px 0;
+  }
+
+  .chart-shell {
+    height: 300px;
+    padding: 4px 14px 16px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stats-page .stat-card,
+  .stats-page .stat-card.is-featured {
+    grid-column: auto;
+    min-height: 132px;
+    padding: 20px;
+    border-radius: 20px;
+  }
+
+}
+

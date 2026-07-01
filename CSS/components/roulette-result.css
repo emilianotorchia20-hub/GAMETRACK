@@ -1,162 +1,74 @@
-/* =========================
-   🎡 CONTENEDOR RULETA
-========================= */
-
-.roulette-container {
-
+.roulette-result-card {
   position: relative;
-
-  width: 340px;
-
-  height: 340px;
-
-  margin: 50px auto;
-
-  border-radius: 50%;
-
-  padding: 14px;
-
-  background:
-
-    radial-gradient(
-      circle,
-      #1a1a1a,
-      #000
-    );
-
-  border:
-    2px solid rgba(212,175,55,.14);
-
-  box-shadow:
-
-    inset 0 0 30px rgba(0,0,0,.9),
-
-    0 20px 60px rgba(0,0,0,.9),
-
-    0 0 25px rgba(185,28,28,.12);
-
-}
-
-/* ✨ GLOW */
-
-.roulette-container::before {
-
-  content:"";
-
-  position:absolute;
-
-  inset:0;
-
-  border-radius:50%;
-
-  pointer-events:none;
-
-  background:
-
-    radial-gradient(
-      circle at top,
-      rgba(212,175,55,.08),
-      transparent 35%
-    );
-
-}
-
-/* =========================
-   🎡 RULETA
-========================= */
-
-.wheel {
-
-  width: 100%;
-
-  height: 100%;
-
-  border-radius: 50%;
-
-  position: relative;
-
   overflow: hidden;
-
-  border:
-    10px solid #111;
-
+  width: min(360px, calc(100% - 32px));
+  margin: 4px auto 18px;
+  text-align: center;
+  border: 1px solid rgba(250,204,21,.18);
+  background:
+    radial-gradient(circle at 50% 0%, rgba(250,204,21,.16), transparent 52%),
+    linear-gradient(180deg, rgba(255,255,255,.065), rgba(255,255,255,.025));
   box-shadow:
-    inset 0 0 25px rgba(0,0,0,.9);
-
+    0 16px 34px rgba(0,0,0,.36),
+    inset 0 1px 0 rgba(255,255,255,.09);
 }
 
-.wheel-inner {
-
+.roulette-result-card::before {
+  content: "";
   position: absolute;
-
   inset: 0;
-
-  border-radius: 50%;
-
-  transition:
-    transform 2s cubic-bezier(0.1, 0.7, 0.2, 1);
-
-}
-
-/* =========================
-   🔢 NUMEROS
-========================= */
-
-#numbers {
-
-  position: absolute;
-
-  inset: 0;
-
   pointer-events: none;
-
+  background:
+    linear-gradient(90deg, transparent, rgba(255,255,255,.13), transparent);
+  transform: translateX(-120%);
 }
 
-#numbers div {
+.roulette-result-card:has(.result-pop)::before {
+  animation: resultShine 1s ease;
+}
 
-  position: absolute;
-
-  color: white;
-
-  font-size: 11px;
-
-  font-weight: bold;
-
+.roulette-result-value {
+  min-height: 1.15em;
   text-shadow:
-
-    0 0 6px black,
-
-    0 0 12px black;
-
-  transform-origin: center;
-
-  white-space: nowrap;
-
+    0 2px 4px rgba(0,0,0,.55),
+    0 0 20px currentColor;
 }
 
-/* =========================
-   🔺 PUNTERO
-========================= */
+.roulette-result-value.result-pop {
+  animation: resultPop .72s cubic-bezier(.18,.9,.25,1.25);
+}
 
-.pointer {
+@keyframes resultPop {
+  0% {
+    opacity: .35;
+    transform: translateY(10px) scale(.72);
+    filter: blur(3px);
+  }
 
-  position: absolute;
+  58% {
+    opacity: 1;
+    transform: translateY(-2px) scale(1.16);
+    filter: blur(0);
+  }
 
-  top: -18px;
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
 
-  left: 50%;
+@keyframes resultShine {
+  0% {
+    transform: translateX(-120%);
+  }
 
-  transform: translateX(-50%);
+  100% {
+    transform: translateX(120%);
+  }
+}
 
-  border-left: 14px solid transparent;
-
-  border-right: 14px solid transparent;
-
-  border-top: 30px solid #f8fafc;
-
-  filter:
-    drop-shadow(0 0 10px rgba(255,255,255,.45));
-
-  z-index: 10;
-
+@media (prefers-reduced-motion: reduce) {
+  .roulette-result-value.result-pop,
+  .roulette-result-card:has(.result-pop)::before {
+    animation: none;
+  }
 }

@@ -1,83 +1,72 @@
-@media(max-width:1100px){
+@media(max-width: 1050px) {
 
-  .dashboard-hero {
-
+  .home-command,
+  .dashboard-hero,
+  .session-workspace {
     grid-template-columns: 1fr;
+  }
 
+  .home-command {
+    min-height: 0;
   }
 
 }
 
-/* ==========================
-   📱 MOBILE
-========================== */
+@media(max-width: 760px) {
 
-@media(max-width:700px){
-
-  .dashboard-hero {
-
-    gap: 18px;
-
+  .home-page {
+    width: min(100% - 24px, 1240px);
+    padding-top: 24px;
   }
 
+  .home-command,
   .hero-main,
-  .player-card {
+  .player-card,
+  .home-page .form-container,
+  .session-side-card {
+    border-radius: 22px;
+  }
 
+  .home-command {
     padding: 24px;
-
-    border-radius: 28px;
-
   }
 
-  .hero-title {
-
-    font-size: 34px;
-
+  .home-command h1 {
+    font-size: clamp(40px, 13vw, 62px);
   }
 
-  .hero-profit {
-
-    font-size: 42px;
-
+  .home-command__profit strong {
+    font-size: clamp(32px, 11vw, 48px);
   }
 
   .hero-stats {
-
-    grid-template-columns:
-      repeat(3, minmax(0, 1fr));
-
-    gap: 12px;
-
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .hero-stat {
-
-    min-width: 0;
-
-    padding: 14px;
-
+    min-height: 102px;
   }
 
-  .hero-stat-value {
-
-    font-size: 18px;
-
-  }
-
-  .player-info h3 {
-
-    font-size: 20px;
-
+  .form-row,
+  .home-quick-grid {
+    grid-template-columns: 1fr;
   }
 
 }
 
-@media(max-width:520px){
+@media(max-width: 520px) {
 
   .hero-stats {
-
     grid-template-columns: 1fr;
+  }
 
+  .home-actions {
+    flex-direction: column;
+  }
+
+  .home-action {
+    width: 100%;
   }
 
 }
+

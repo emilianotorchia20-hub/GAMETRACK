@@ -1,8 +1,7 @@
 function getSettings() {
     const settings = localStorage.getItem("settings");
-    if(settings){
-        return JSON.parse(settings);
-    }
+    if (settings) return JSON.parse(settings);
+
     return {
         bankrollAlertsEnabled: false,
         bankrollLimit: 50000,
@@ -11,103 +10,135 @@ function getSettings() {
     };
 }
 
-function saveSettings(settings){
+function saveSettings(settings) {
     localStorage.setItem("settings", JSON.stringify(settings));
 }
 
-// --- NUEVAS FUNCIONES DE BACKUP (Copiar desde aquí) ---
+function collectBackupData() {
+    const allData = {};
 
-/**
- * Exporta todo el contenido de localStorage a un archivo .json
- */
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        allData[key] = localStorage.getItem(key);
+    }
+
+    return allData;
+}
+
+function getBackupFileName() {
+    return `gametrack_backup_${new Date().toISOString().slice(0, 10)}.json`;
+}
+
+function downloadTextFile(fileName, content) {
+    const blob = new Blob(
+        [content],
+        { type: "application/json" }
+    );
+
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = fileName;
+    link.click();
+    URL.revokeObjectURL(url);
+}
+
+function markLastBackup() {
+    localStorage.setItem(
+        "gametrack.lastBackupAt",
+        new Date().toISOString()
+    );
+}
+
+function themedAlert(message, options = {}) {
+    if (window.gameTrackAlert) {
+        return window.gameTrackAlert(message, options);
+    }
+
+    return Promise.resolve();
+}
+
+function themedConfirm(message, options = {}) {
+    if (window.gameTrackConfirm) {
+        return window.gameTrackConfirm(message, options);
+    }
+
+    return Promise.resolve(false);
+}
+
 async function exportData() {
-
     try {
+        const dataStr = JSON.stringify(collectBackupData(), null, 2);
 
-        const allData = {};
-
-        // 📦 Obtener localStorage
-        for (let i = 0; i < localStorage.length; i++) {
-
-            const key = localStorage.key(i);
-
-            allData[key] =
-                localStorage.getItem(key);
-
+        if (!window.showSaveFilePicker) {
+            downloadTextFile(getBackupFileName(), dataStr);
+            markLastBackup();
+            await themedAlert("Backup exportado", {
+                title: "Datos protegidos",
+            });
+            return;
         }
 
-        // 📄 JSON bonito
-        const dataStr =
-            JSON.stringify(allData, null, 2);
+        const fileHandle = await window.showSaveFilePicker({
+            suggestedName: getBackupFileName(),
+            types: [{
+                description: "JSON Files",
+                accept: {
+                    "application/json": [".json"]
+                }
+            }]
+        });
 
-        // 💾 Selector nativo
-        const fileHandle =
-            await window.showSaveFilePicker({
-
-                suggestedName:
-                    `gametrack_backup_${
-                        new Date()
-                            .toISOString()
-                            .slice(0,10)
-                    }.json`,
-
-                types: [{
-
-                    description: "JSON Files",
-
-                    accept: {
-                        "application/json": [".json"]
-                    }
-
-                }]
-
-            });
-
-        // ✍ escribir archivo
-        const writable =
-            await fileHandle.createWritable();
-
+        const writable = await fileHandle.createWritable();
         await writable.write(dataStr);
-
         await writable.close();
 
-        alert("✅ Backup exportado");
-
-    }
-
-    catch (err) {
-
+        markLastBackup();
+        await themedAlert("Backup exportado", {
+            title: "Datos protegidos",
+        });
+    } catch (err) {
         console.log(err);
-
     }
-
 }
-/**
- * Lee un archivo .json y restaura el localStorage
- * @param {File} file - El archivo obtenido de un input type="file"
- */
+
+function quickExportData() {
+    const dataStr = JSON.stringify(collectBackupData(), null, 2);
+    downloadTextFile(getBackupFileName(), dataStr);
+    markLastBackup();
+}
+
 function importData(file) {
     if (!file) return;
 
     const reader = new FileReader();
-    reader.onload = function(e) {
+    reader.onload = async function(e) {
         try {
             const importedData = JSON.parse(e.target.result);
-            
-            // Opcional: Limpiar lo actual antes de importar para evitar basura
-            if (confirm("¿Estás seguro? Esto reemplazará todos tus datos actuales.")) {
+
+            if (await themedConfirm("Esto reemplazara todos tus datos actuales. Continuar?", {
+                title: "Importar backup",
+                confirmText: "Importar",
+                danger: true,
+            })) {
                 localStorage.clear();
-                
+
                 for (const key in importedData) {
                     localStorage.setItem(key, importedData[key]);
                 }
-                
-                alert("¡Datos importados con éxito! La página se recargará.");
+
+                await themedAlert("Datos importados con exito. La pagina se recargara.", {
+                    title: "Importacion completa",
+                });
                 window.location.reload();
             }
         } catch (err) {
-            alert("Error: El archivo no es un backup válido.");
+            themedAlert("El archivo no es un backup valido.", {
+                title: "Backup invalido",
+                danger: true,
+            });
         }
     };
+
     reader.readAsText(file);
 }

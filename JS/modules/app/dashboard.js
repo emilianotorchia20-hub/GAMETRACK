@@ -1,150 +1,263 @@
-const sesionesDashboard =
+const dashboardSessions =
   JSON.parse(
     localStorage.getItem("sessions")
   ) || [];
 
-// ðŸ’° total
-const gananciaTotalDashboard =
-  sesionesDashboard.reduce((acc, s) => {
+function getDashboardResult(session) {
+  return Number(
+    session.resultado ??
+    (session.final - session.inicial) ??
+    0
+  );
+}
 
-    const resultado =
-      s.resultado ??
-      (s.final - s.inicial);
+function formatDashboardMoney(value) {
+  return value.toLocaleString("es-AR", {
+    style: "currency",
+    currency: "ARS",
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0
+  });
+}
 
-    return acc + resultado;
+function formatDashboardSignedMoney(value) {
+  const sign =
+    value >= 0 ? "+" : "-";
 
-  }, 0);
+  return `${sign}${formatDashboardMoney(Math.abs(value))}`;
+}
 
-// ðŸŸ¢ ganadas
-const ganadasDashboard =
-  sesionesDashboard.filter(s => {
+function setDashboardText(id, value) {
+  const element =
+    document.getElementById(id);
 
-    const resultado =
-      s.resultado ??
-      (s.final - s.inicial);
+  if (element) {
+    element.textContent =
+      value;
+  }
+}
 
-    return resultado > 0;
+function getDashboardStreak(sessions) {
+  let streak = 0;
 
-  }).length;
+  for (let i = sessions.length - 1; i >= 0; i--) {
+    const result =
+      getDashboardResult(sessions[i]);
 
-// ðŸ“Š winrate
-const winrateDashboard =
-  sesionesDashboard.length
-    ? (
-        ganadasDashboard /
-        sesionesDashboard.length
-      ) * 100
-    : 0;
+    if (result > 0) {
+      if (streak >= 0) streak++;
+      else break;
+    } else if (result < 0) {
+      if (streak <= 0) streak--;
+      else break;
+    } else {
+      break;
+    }
+  }
 
-// ðŸ“ˆ invertido
-const invertidoDashboard =
-  sesionesDashboard.reduce(
-    (acc, s) =>
-      acc + Number(s.inicial),
+  return streak;
+}
+
+function getStreakCopy(streak) {
+  if (streak > 0) return `${streak} ganadas`;
+  if (streak < 0) return `${Math.abs(streak)} perdidas`;
+  return "Sin racha";
+}
+
+function getTopGame(sessions) {
+  const games = {};
+
+  sessions.forEach(session => {
+    const game =
+      session.game || "Sin juego";
+
+    games[game] =
+      (games[game] || 0) + getDashboardResult(session);
+  });
+
+  return Object.entries(games)
+    .sort((a, b) => b[1] - a[1])[0];
+}
+
+function getDashboardLevel(total) {
+  if (total > 1000000) return "Casino King";
+  if (total > 200000) return "High Roller";
+  if (total > 50000) return "Pro Player";
+  if (total > 0) return "Rising Player";
+  return "Rookie";
+}
+
+function getDashboardTip({ total, winrate, streak }) {
+  if (dashboardSessions.length === 0) {
+    return {
+      title: "Crea tu primera muestra",
+      text: "Registra varias sesiones con notas cortas para detectar patrones de juego, rachas y limites saludables."
+    };
+  }
+
+  if (total < 0 && streak < 0) {
+    return {
+      title: "Momento de proteger capital",
+      text: "Tu balance y tu racha estan en rojo. Baja el monto por sesion y evita perseguir perdidas."
+    };
+  }
+
+  if (winrate >= 60 && total > 0) {
+    return {
+      title: "Buen ritmo, mantene disciplina",
+      text: "Los datos vienen fuertes. Mantene apuesta estable y usa el historial para no sobreexponerte."
+    };
+  }
+
+  return {
+    title: "Sigue construyendo lectura",
+    text: "El panel mejora con cada registro. Agrega notas sobre estrategia, estado y tipo de mesa."
+  };
+}
+
+const dashboardTotal =
+  dashboardSessions.reduce(
+    (sum, session) => sum + getDashboardResult(session),
     0
   );
 
-// ðŸ’Ž ROI
-const roiDashboard =
-  invertidoDashboard
-    ? (
-        gananciaTotalDashboard /
-        invertidoDashboard
-      ) * 100
-    : 0;
+const dashboardWins =
+  dashboardSessions.filter(
+    session => getDashboardResult(session) > 0
+  ).length;
 
-// ðŸ‘‘ nivel
-let nivelDashboard = "Rookie";
-
-if (gananciaTotalDashboard > 50000) {
-  nivelDashboard = "Pro Player";
-}
-
-if (gananciaTotalDashboard > 200000) {
-  nivelDashboard = "High Roller";
-}
-
-if (gananciaTotalDashboard > 1000000) {
-  nivelDashboard = "Casino King";
-}
-
-// ==========================
-// ðŸŽ¨ RENDER
-// ==========================
-
-const profitEl =
-  document.getElementById(
-    "dashboardProfit"
+const dashboardInvested =
+  dashboardSessions.reduce(
+    (sum, session) => sum + (Number(session.inicial) || 0),
+    0
   );
 
-if (profitEl) {
+const dashboardWinrate =
+  dashboardSessions.length
+  ? (dashboardWins / dashboardSessions.length) * 100
+  : 0;
 
-  profitEl.textContent =
-    `${gananciaTotalDashboard >= 0 ? "+" : "-"}$${Math.abs(
-      gananciaTotalDashboard
-    ).toLocaleString("es-AR")}`;
+const dashboardRoi =
+  dashboardInvested
+  ? (dashboardTotal / dashboardInvested) * 100
+  : 0;
 
-}
+const dashboardAverage =
+  dashboardSessions.length
+  ? dashboardTotal / dashboardSessions.length
+  : 0;
 
-const winrateEl =
-  document.getElementById(
-    "dashboardWinrate"
-  );
+const dashboardResults =
+  dashboardSessions.map(getDashboardResult);
 
-if (winrateEl) {
+const dashboardBest =
+  dashboardResults.length
+  ? Math.max(...dashboardResults)
+  : 0;
 
-  winrateEl.textContent =
-    `${winrateDashboard.toFixed(0)}%`;
+const dashboardStreak =
+  getDashboardStreak(dashboardSessions);
 
-}
+const dashboardLast =
+  dashboardSessions.length
+  ? getDashboardResult(dashboardSessions[dashboardSessions.length - 1])
+  : null;
 
-const sessionsEl =
-  document.getElementById(
-    "dashboardSessions"
-  );
+const dashboardTopGame =
+  getTopGame(dashboardSessions);
 
-if (sessionsEl) {
+setDashboardText(
+  "dashboardProfit",
+  formatDashboardSignedMoney(dashboardTotal)
+);
 
-  sessionsEl.textContent =
-    sesionesDashboard.length;
+setDashboardText(
+  "dashboardSignal",
+  dashboardSessions.length
+  ? dashboardTotal >= 0
+    ? "Balance positivo acumulado"
+    : "Balance en zona de recuperacion"
+  : "Sin sesiones registradas"
+);
 
-}
+setDashboardText(
+  "dashboardWinrate",
+  `${dashboardWinrate.toFixed(0)}%`
+);
 
-const roiEl =
-  document.getElementById(
-    "dashboardROI"
-  );
+setDashboardText(
+  "dashboardSessions",
+  String(dashboardSessions.length)
+);
 
-if (roiEl) {
+setDashboardText(
+  "dashboardROI",
+  `${dashboardRoi.toFixed(1)}%`
+);
 
-  roiEl.textContent =
-    `${roiDashboard.toFixed(1)}%`;
+setDashboardText(
+  "dashboardAverage",
+  formatDashboardMoney(dashboardAverage)
+);
 
-}
+setDashboardText(
+  "dashboardBest",
+  formatDashboardMoney(dashboardBest)
+);
 
-const levelEl =
-  document.getElementById(
-    "dashboardLevel"
-  );
+setDashboardText(
+  "dashboardStreak",
+  getStreakCopy(dashboardStreak)
+);
 
-if (levelEl) {
+setDashboardText(
+  "dashboardLevel",
+  getDashboardLevel(dashboardTotal)
+);
 
-  levelEl.textContent =
-    nivelDashboard;
+setDashboardText(
+  "dashboardLevelHint",
+  dashboardSessions.length
+  ? `${dashboardSessions.length} sesiones analizadas`
+  : "Nivel automatico"
+);
 
-}
+setDashboardText(
+  "dashboardLastSession",
+  dashboardLast === null
+  ? "Sin datos"
+  : formatDashboardSignedMoney(dashboardLast)
+);
 
-// ==========================
-// ðŸ“‹ ACTIVIDAD RECIENTE
-// ==========================
+setDashboardText(
+  "dashboardTopGame",
+  dashboardTopGame?.[0] || "Sin datos"
+);
+
+const dashboardTip =
+  getDashboardTip({
+    total: dashboardTotal,
+    winrate: dashboardWinrate,
+    streak: dashboardStreak
+  });
+
+setDashboardText(
+  "dashboardTipTitle",
+  dashboardTip.title
+);
+
+setDashboardText(
+  "dashboardTipText",
+  dashboardTip.text
+);
 
 const activityList =
   document.getElementById(
     "activityList"
   );
 
-function escapeHtml(value) {
-  return String(value)
+function escapeDashboardHtml(value) {
+  return String(value ?? "")
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
@@ -153,81 +266,42 @@ function escapeHtml(value) {
 }
 
 if (activityList) {
-
-  if (sesionesDashboard.length === 0) {
-
+  if (dashboardSessions.length === 0) {
     activityList.innerHTML = `
-
       <div class="activity-empty">
-
-        Sin sesiones todavia
-
+        Todavia no hay sesiones guardadas.
       </div>
-
     `;
-
-  }
-
-  else {
-
-    const recientes =
-      [...sesionesDashboard]
+  } else {
+    const recent =
+      [...dashboardSessions]
         .reverse()
-        .slice(0, 3);
+        .slice(0, 4);
 
     activityList.innerHTML =
-      recientes.map(s => {
-
+      recent.map(session => {
         const profit =
-          s.resultado ??
-          (s.final - s.inicial);
+          getDashboardResult(session);
 
-        const gameName = escapeHtml(s.game || "Juego");
+        const gameName =
+          escapeDashboardHtml(session.game || "Juego");
 
         return `
-
           <div class="activity-item">
-
             <div class="activity-left">
-
+              <span class="activity-dot ${profit >= 0 ? "win" : "loss"}"></span>
               <div>
-
-                <div class="activity-game">
-
-                  ${gameName}
-
-                </div>
-
-                <div class="activity-time">
-
-                  Sesion reciente
-
-                </div>
-
+                <div class="activity-game">${gameName}</div>
+                <div class="activity-time">Sesion reciente</div>
               </div>
-
             </div>
 
-            <div class="
-              activity-profit
-              ${profit >= 0 ? "win" : "loss"}
-            ">
-
-              ${profit >= 0 ? "+" : "-"}$${Math.abs(
-                profit
-              ).toLocaleString("es-AR")}
-
+            <div class="activity-profit ${profit >= 0 ? "win" : "loss"}">
+              ${formatDashboardSignedMoney(profit)}
             </div>
-
           </div>
-
         `;
-
       }).join("");
-
   }
-
 }
-// ==========================
-// ðŸ’¾ EXPORTAR DATOS
-// ==========================
+

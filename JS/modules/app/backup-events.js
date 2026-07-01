@@ -7,9 +7,10 @@ if (exportBtn) {
 
     exportBtn.addEventListener(
         "click",
-        () => {
+        async () => {
 
-            exportData();
+            await exportData();
+            window.renderSettingsDataHealth?.();
 
         }
     );
@@ -35,6 +36,31 @@ if (importInput) {
                 e.target.files[0];
 
             importData(file);
+
+        }
+    );
+
+}
+
+const quickBackupBtn =
+    document.getElementById(
+        "quickBackupBtn"
+    );
+
+if (quickBackupBtn) {
+
+    quickBackupBtn.addEventListener(
+        "click",
+        () => {
+
+            quickExportData();
+            window.renderSettingsDataHealth?.();
+            window.gameTrackAlert?.(
+                "Backup rapido descargado.",
+                {
+                    title: "Datos protegidos"
+                }
+            );
 
         }
     );

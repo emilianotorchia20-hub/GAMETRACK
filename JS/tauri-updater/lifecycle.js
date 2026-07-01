@@ -1,7 +1,7 @@
 import { getVersion } from "@tauri-apps/api/app";
 import { isTauri } from "@tauri-apps/api/core";
 import { AUTO_CHECK_DELAY_MS, keys } from "./config.js";
-import { safeLog, setStoredBoolean } from "./helpers.js";
+import { formatDate, safeLog, setStoredBoolean } from "./helpers.js";
 
 export async function init() {
     this.isNative = await Promise.resolve(isTauri());

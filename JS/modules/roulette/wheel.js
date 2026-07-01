@@ -1,58 +1,128 @@
 function crearRueda() {
   if (!wheel) return;
 
-  const ang = 360 / numeros.length;
+  wheel.replaceChildren();
+  wheel.classList.remove("settled");
 
-  const grad = numeros.map((n, i) => {
-    const start = i * ang;
-    const end = (i + 1) * ang + 0.5;
+  const rim = document.createElement("div");
+  rim.className = "wheel-rim";
 
-    return `${getColor(n)} ${start}deg ${end}deg`;
-  }).join(",");
+  wheelInner = document.createElement("div");
+  wheelInner.className = "wheel-inner";
+  wheelInner.id = "wheel-inner";
 
-  const wheelInner = document.getElementById("wheel-inner");
+  const pockets = document.createElement("div");
+  pockets.className = "roulette-pockets";
+  pockets.style.background = getPocketGradient();
 
-  wheelInner.style.background = `conic-gradient(${grad})`; 
+  const separators = document.createElement("div");
+  separators.className = "roulette-separators";
+  separators.style.background = getSeparatorGradient();
+
+  const numbersLayer = document.createElement("div");
+  numbersLayer.id = "numbers";
+  numbersLayer.className = "roulette-numbers";
+
+  numeros.forEach((number, index) => {
+    numbersLayer.appendChild(createWheelNumber(number, index));
+  });
+
+  const innerBowl = document.createElement("div");
+  innerBowl.className = "inner-bowl";
+
+  const spindle = document.createElement("div");
+  spindle.className = "roulette-spindle";
+
+  wheelInner.append(pockets, separators, numbersLayer, innerBowl, spindle);
+
+  ballTrack = document.createElement("div");
+  ballTrack.className = "ball-track";
+
+  ball = document.createElement("div");
+  ball.className = "roulette-ball";
+  ballTrack.appendChild(ball);
+
+  const glare = document.createElement("div");
+  glare.className = "wheel-glare";
+
+  wheel.append(rim, wheelInner, ballTrack, glare);
+  setWheelRotation(rotation);
+  setBallAngle(ballAngle, BALL_TRACK_RADIUS);
 }
 
-// =========================
-//
-// =========================
+function getPocketGradient() {
+  return `conic-gradient(from ${-SLOT_ANGLE / 2}deg, ${
+    numeros.map((number, index) => {
+      const start = index * SLOT_ANGLE;
+      const end = (index + 1) * SLOT_ANGLE;
+      return `${getPocketColor(number)} ${start}deg ${end}deg`;
+    }).join(",")
+  })`;
+}
+
+function getSeparatorGradient() {
+  return `repeating-conic-gradient(from ${-SLOT_ANGLE / 2}deg,
+    rgba(248,214,133,.95) 0deg .5deg,
+    rgba(20,12,5,.75) .5deg 1.15deg,
+    transparent 1.15deg ${SLOT_ANGLE}deg
+  )`;
+}
+
+function getPocketColor(number) {
+  if (number === 0) {
+    return "#087b50";
+  }
+
+  return rojos.includes(number)
+    ? "#a91117"
+    : "#111217";
+}
+
+function createWheelNumber(number, index) {
+  const item = document.createElement("span");
+  item.className = `wheel-number ${getNumberColorClass(number)}`;
+  item.dataset.number = String(number);
+  item.textContent = number;
+
+  const angle = index * SLOT_ANGLE;
+  item.style.setProperty("--number-angle", `${angle}deg`);
+
+  return item;
+}
+
+function setWheelRotation(angle) {
+  rotation = angle;
+  if (wheelInner) {
+    wheelInner.style.transform = `rotate(${angle}deg)`;
+  }
+}
+
+function setBallAngle(angle, radius = BALL_TRACK_RADIUS) {
+  ballAngle = angle;
+  if (!ball) return;
+
+  ball.style.setProperty("--ball-angle", `${angle}deg`);
+  ball.style.setProperty("--ball-radius", String(radius / 100));
+}
+
+function highlightWinningPocket(number) {
+  document.querySelectorAll(".wheel-number").forEach((item) => {
+    item.classList.toggle("winner", Number(item.dataset.number) === number);
+  });
+
+  const pointer = document.querySelector(".pointer");
+  pointer?.classList.add("settled");
+  wheel?.classList.add("settled");
+
+  window.setTimeout(() => {
+    pointer?.classList.remove("settled");
+  }, 1400);
+}
+
 function dibujarNumeros() {
-  const cont = document.getElementById("numbers");
-  if (!cont) return;
-
-  cont.innerHTML = "";
-
-  const ang = 360 / numeros.length;
-  const radio = 130;
-
-  numeros.forEach((n, i) => {
-  const el = document.createElement("div");
-  el.textContent = n;
-
-  const a = i * ang + ang / 2; // centrado + ajuste fino
-
-  el.style.position = "absolute";
-  el.style.left = "50%";
-  el.style.top = "50%";
-
-  el.style.transform = `
-    translate(-50%, -50%)
-    rotate(${a}deg)
-    translateY(-${radio}px)
-    rotate(-${a}deg)
-  `;
-
-  el.style.color = "#fff";
-  el.style.fontWeight = "bold";
-
-  cont.appendChild(el);
-});
+  if (!wheelInner) crearRueda();
 }
-// =========================
-//
-// =========================
+
 function generarGridNumeros() {
   const grid = document.getElementById("numbersGrid");
   if (!grid) return;
@@ -72,7 +142,3 @@ function generarGridNumeros() {
     grid.appendChild(div);
   });
 }
-
-// =========================
-//
-// =========================

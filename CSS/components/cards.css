@@ -247,7 +247,7 @@
    📋 HISTORIAL
 ========================= */
 
-#lista div {
+#lista > div:not(.session-card) {
 
   background:
     linear-gradient(

@@ -1,0 +1,169 @@
+.bankroll-summary-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 265px;
+  padding: 26px;
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 88% 8%, rgba(250,204,21,.16), transparent 30%),
+    radial-gradient(circle at 0% 100%, rgba(185,28,28,.14), transparent 36%),
+    linear-gradient(145deg, rgba(20,20,20,.96), rgba(5,5,5,.98));
+  border: 1px solid rgba(212,175,55,.16);
+  box-shadow:
+    0 18px 48px rgba(0,0,0,.52),
+    inset 0 1px 0 rgba(255,255,255,.07);
+}
+
+.bankroll-summary-card .stat-title {
+  margin: 0 0 12px;
+  color: rgba(248,250,252,.52);
+  font-size: 12px;
+  letter-spacing: 1.8px;
+}
+
+.bankroll-summary-card .stat-value {
+  max-width: 100%;
+  margin: 0;
+  color: #f8fafc;
+  font-size: clamp(34px, 4.8vw, 54px);
+  line-height: .95;
+  font-weight: 950;
+  letter-spacing: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bankroll-full-value {
+  margin: 14px 0 0;
+  color: rgba(248,250,252,.58);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.bankroll-full-value span {
+  color: rgba(248,250,252,.84);
+  font-weight: 900;
+}
+
+.bankroll-summary-meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.bankroll-summary-meta span {
+  min-width: 0;
+  padding: 11px 12px;
+  border-radius: 12px;
+  color: rgba(248,250,252,.72);
+  font-size: 12px;
+  font-weight: 900;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.025));
+  border: 1px solid rgba(255,255,255,.07);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bankroll-summary-meta span[data-tone="positive"] {
+  color: #22c55e;
+}
+
+.bankroll-summary-meta span[data-tone="negative"] {
+  color: #ef4444;
+}
+
+.bankroll-goal-card {
+  min-height: 276px;
+}
+
+.goal-description {
+  margin: -10px 0 18px;
+  color: rgba(248,250,252,.62);
+  line-height: 1.45;
+}
+
+.goal-progress {
+  margin-top: auto;
+  padding: 16px;
+  border-radius: 16px;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.055), rgba(255,255,255,.022));
+  border: 1px solid rgba(255,255,255,.07);
+}
+
+.goal-progress__track {
+  height: 12px;
+  overflow: hidden;
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, rgba(0,0,0,.55), rgba(20,20,20,.82));
+  border: 1px solid rgba(212,175,55,.12);
+  box-shadow:
+    inset 0 2px 8px rgba(0,0,0,.45);
+}
+
+.goal-progress__track span {
+  display: block;
+  width: 0;
+  height: 100%;
+  border-radius: inherit;
+  background:
+    linear-gradient(90deg, #facc15, #d97706, #dc2626);
+  box-shadow:
+    0 0 22px rgba(250,204,21,.24);
+  transition: width .25s ease;
+}
+
+.goal-progress__track span[data-tone="complete"] {
+  background:
+    linear-gradient(90deg, #22c55e, #84cc16, #facc15);
+  box-shadow:
+    0 0 22px rgba(34,197,94,.28);
+}
+
+.goal-progress__info {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  margin-top: 12px;
+}
+
+.goal-progress__info strong {
+  color: #f8fafc;
+  font-size: 14px;
+}
+
+.goal-progress__info span {
+  color: rgba(248,250,252,.62);
+  font-size: 13px;
+  text-align: right;
+}
+
+@media(max-width:700px) {
+  .bankroll-summary-card {
+    min-height: 0;
+  }
+
+  .bankroll-summary-card .stat-value {
+    font-size: clamp(31px, 11vw, 44px);
+  }
+
+  .bankroll-summary-meta,
+  .goal-progress__info {
+    grid-template-columns: 1fr;
+  }
+
+  .goal-progress__info {
+    flex-direction: column;
+  }
+
+  .goal-progress__info span {
+    text-align: left;
+  }
+}
+

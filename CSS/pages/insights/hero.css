@@ -1,205 +1,77 @@
-/* ==========================
-   🌌 INSIGHTS NEXT LEVEL
-========================== */
-
 .insights-hero {
-
-    position: relative;
-
-    overflow: hidden;
-
-    padding: 70px 0 50px;
-
-    isolation: isolate;
-
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  padding: 96px 0 54px;
+  background:
+    radial-gradient(circle at 18% 40%, rgba(34,197,94,.18), transparent 28%),
+    radial-gradient(circle at 54% 0%, rgba(185,28,28,.16), transparent 34%),
+    radial-gradient(circle at 88% 45%, rgba(59,130,246,.14), transparent 30%),
+    linear-gradient(180deg, rgba(255,255,255,.02), transparent);
 }
-
-/* ==========================
-   ✨ BACKGROUND FX
-========================== */
 
 .insights-hero::before {
-
-    content: "";
-
-    position: absolute;
-
-    width: 700px;
-
-    height: 700px;
-
-    border-radius: 50%;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(34,197,94,0.20),
-            transparent 70%
-        );
-
-    top: -260px;
-
-    left: -220px;
-
-    filter: blur(70px);
-
-    animation:
-        floatGlow 9s ease-in-out infinite;
-
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(34,197,94,.08), transparent 32%),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255,255,255,.03) 0,
+      rgba(255,255,255,.03) 1px,
+      transparent 1px,
+      transparent 86px
+    );
+  opacity: .42;
 }
-
-.insights-hero::after {
-
-    content: "";
-
-    position: absolute;
-
-    width: 600px;
-
-    height: 600px;
-
-    border-radius: 50%;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(59,130,246,0.15),
-            transparent 70%
-        );
-
-    bottom: -260px;
-
-    right: -180px;
-
-    filter: blur(70px);
-
-    animation:
-        floatGlow2 11s ease-in-out infinite;
-
-}
-
-/* ==========================
-   🧠 HERO CONTENT
-========================== */
 
 .hero-content {
-
-    position: relative;
-
-    z-index: 3;
-
-    max-width: 1400px;
-
-    margin: 0 auto;
-
-    padding: 0 24px;
-
+  position: relative;
+  z-index: 1;
+  width: min(1320px, calc(100% - 40px));
+  margin: 0 auto;
 }
 
 .hero-badge {
-
-    position: relative;
-
-    overflow: hidden;
-
-    display: inline-flex;
-
-    align-items: center;
-
-    gap: 10px;
-
-    padding: 10px 18px;
-
-    border-radius: 999px;
-
-    background:
-        rgba(255,255,255,0.05);
-
-    border:
-        1px solid rgba(255,255,255,0.08);
-
-    backdrop-filter: blur(16px);
-
-    color: #22c55e;
-
-    font-weight: 800;
-
-    font-size: 0.82rem;
-
-    letter-spacing: 1px;
-
-    margin-bottom: 24px;
-
-}
-
-.hero-badge::before {
-
-    content: "";
-
-    position: absolute;
-
-    inset: 0;
-
-    background:
-        linear-gradient(
-            120deg,
-            transparent,
-            rgba(255,255,255,0.10),
-            transparent
-        );
-
-    transform: translateX(-100%);
-
-    animation:
-        shine 5s linear infinite;
-
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  margin: 0 0 24px;
+  padding: 0 16px;
+  border-radius: 999px;
+  color: #22c55e;
+  font-size: 12px;
+  font-weight: 950;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  background:
+    linear-gradient(135deg, rgba(34,197,94,.16), rgba(255,255,255,.045));
+  border: 1px solid rgba(34,197,94,.18);
+  box-shadow:
+    0 12px 34px rgba(0,0,0,.28),
+    inset 0 1px 0 rgba(255,255,255,.08);
 }
 
 .hero-content h1 {
-
-    padding-bottom: 12px;
-    
-    font-size:
-        clamp(3rem, 5vw, 5rem);
-
-    line-height: 1.08;
-
-    letter-spacing: -3px;
-
-    font-weight: 900;
-
-    margin-bottom: 20px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #ffffff 0%,
-            #dbeafe 40%,
-            #94a3b8 100%
-        );
-
-    -webkit-background-clip: text;
-
-    -webkit-text-fill-color: transparent;
-
-    text-shadow:
-        0 0 40px rgba(255,255,255,0.08);
-
+  max-width: 920px;
+  margin: 0;
+  color: #f8fafc;
+  font-size: clamp(48px, 7vw, 104px);
+  line-height: .9;
+  font-weight: 950;
+  letter-spacing: 0;
+  text-shadow:
+    0 18px 44px rgba(0,0,0,.48),
+    0 0 34px rgba(255,255,255,.06);
 }
 
 .hero-description {
-
-    max-width: 760px;
-
-    font-size: 1.05rem;
-
-    line-height: 1.8;
-
-    color:
-        rgba(255,255,255,0.7);
-
+  max-width: 720px;
+  margin: 24px 0 0;
+  color: rgba(248,250,252,.72);
+  font-size: clamp(16px, 1.5vw, 20px);
+  line-height: 1.6;
 }
 
-/* ==========================
-   📊 CONTAINER
-========================== */

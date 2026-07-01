@@ -1,22 +1,69 @@
 function getNivel(roi, pf) {
 
     if (pf === Infinity)
-        return "🟢 Perfecto";
+        return "Perfecto";
 
     if (roi > 10 && pf > 1.5)
-        return "🟢 Rentable";
+        return "Rentable";
 
     if (roi > 0)
-        return "🟡 Aceptable";
+        return "Aceptable";
 
-    return "🔴 Perdedor";
+    return "Perdedor";
+
+}
+
+function getMetricTone(value) {
+
+    if (value > 0) return "positive";
+    if (value < 0) return "negative";
+    return "neutral";
+
+}
+
+function getStreakLabel(rachaActual) {
+
+    if (rachaActual > 0)
+        return `${rachaActual} ganadas`;
+
+    if (rachaActual < 0)
+        return `${Math.abs(rachaActual)} perdidas`;
+
+    return "Sin racha";
+
+}
+
+function renderStatCard({ title, value, detail, tone = "neutral", featured = false }) {
+
+    return `
+        <article class="stat-card stat-card--${tone} ${featured ? "is-featured" : ""}">
+            <span class="stat-title">${title}</span>
+            <strong class="stat-value">${value}</strong>
+            ${detail ? `<span class="stat-detail">${detail}</span>` : ""}
+        </article>
+    `;
+
+}
+
+function renderEmptyStats(contenedor) {
+
+    contenedor.innerHTML = `
+        <section class="stats-empty">
+            <span class="stats-empty__chip">GameTrack</span>
+            <h2>Todavia no hay sesiones para analizar</h2>
+            <p>
+                Cuando guardes tus primeras sesiones, este panel va a mostrar
+                tu curva de bankroll, ROI, EV, rachas y control de riesgo.
+            </p>
+        </section>
+    `;
 
 }
 
 // ==========================
-// 📊 CHART
+// CHART
 // ==========================
-function renderChart(data) {
+function renderChart(data, tone) {
 
     const canvas =
         document.getElementById(
@@ -31,6 +78,20 @@ function renderChart(data) {
     if (window.chart)
         window.chart.destroy();
 
+    const accent =
+        tone === "positive"
+        ? "#22c55e"
+        : tone === "negative"
+        ? "#ef4444"
+        : "#d4af37";
+
+    const gradient =
+        ctx.createLinearGradient(0, 0, 0, canvas.offsetHeight || 260);
+
+    gradient.addColorStop(0, `${accent}55`);
+    gradient.addColorStop(.58, `${accent}12`);
+    gradient.addColorStop(1, `${accent}00`);
+
     window.chart = new Chart(ctx, {
 
         type: "line",
@@ -38,15 +99,21 @@ function renderChart(data) {
         data: {
 
             labels:
-                data.map((_, i) => i + 1),
+                data.map((_, i) => `Sesion ${i + 1}`),
 
             datasets: [{
 
                 data,
-
-                tension: 0.3,
-
-                borderWidth: 2
+                tension: .38,
+                borderWidth: 3,
+                borderColor: accent,
+                backgroundColor: gradient,
+                fill: true,
+                pointRadius: data.length === 1 ? 5 : 3,
+                pointHoverRadius: 6,
+                pointBackgroundColor: "#f8fafc",
+                pointBorderColor: accent,
+                pointBorderWidth: 2
 
             }]
 
@@ -54,12 +121,31 @@ function renderChart(data) {
 
         options: {
 
+            responsive: true,
+            maintainAspectRatio: false,
+
+            interaction: {
+                intersect: false,
+                mode: "index"
+            },
+
             plugins: {
 
                 legend: {
-
                     display: false
+                },
 
+                tooltip: {
+                    displayColors: false,
+                    backgroundColor: "rgba(5,5,5,.92)",
+                    borderColor: "rgba(212,175,55,.22)",
+                    borderWidth: 1,
+                    padding: 12,
+                    callbacks: {
+                        label(context) {
+                            return `Bankroll: ${formatearDinero(context.parsed.y)}`;
+                        }
+                    }
                 }
 
             },
@@ -67,9 +153,26 @@ function renderChart(data) {
             scales: {
 
                 x: {
+                    grid: {
+                        display: false
+                    },
+                    ticks: {
+                        color: "rgba(248,250,252,.42)",
+                        maxRotation: 0
+                    }
+                },
 
-                    display: false
-
+                y: {
+                    grid: {
+                        color: "rgba(255,255,255,.055)",
+                        drawBorder: false
+                    },
+                    ticks: {
+                        color: "rgba(248,250,252,.5)",
+                        callback(value) {
+                            return formatearDinero(value);
+                        }
+                    }
                 }
 
             }
@@ -81,7 +184,7 @@ function renderChart(data) {
 }
 
 // ==========================
-// 📈 ESTADÍSTICAS
+// ESTADISTICAS
 // ==========================
 function mostrarEstadisticas() {
 
@@ -95,6 +198,11 @@ function mostrarEstadisticas() {
             localStorage.getItem("sessions")
         ) || [];
 
+    if (sesiones.length === 0) {
+        renderEmptyStats(contenedor);
+        return;
+    }
+
     let total = 0;
     let totalInicial = 0;
 
@@ -107,8 +215,6 @@ function mostrarEstadisticas() {
     let mejorRacha = 0;
     let peorRacha = 0;
 
-    let rachaActual = 0;
-
     let rachaGanadora = 0;
     let rachaPerdedora = 0;
 
@@ -120,7 +226,7 @@ function mostrarEstadisticas() {
 
     let drawdownMax = 0;
 
-    let equityHistory = [];
+    const equityHistory = [];
 
     sesiones.forEach(s => {
 
@@ -130,7 +236,7 @@ function mostrarEstadisticas() {
 
         total += resultado;
 
-        totalInicial += s.inicial;
+        totalInicial += Number(s.inicial) || 0;
 
         equity += resultado;
 
@@ -148,49 +254,24 @@ function mostrarEstadisticas() {
         if (resultado > 0) {
 
             ganadas++;
-
             gananciasTotales += resultado;
-
             rachaGanadora++;
-
             rachaPerdedora = 0;
 
-            if (
-                rachaGanadora >
-                mejorRacha
-            ) {
+            if (rachaGanadora > mejorRacha)
+                mejorRacha = rachaGanadora;
 
-                mejorRacha =
-                    rachaGanadora;
-
-            }
-
-        }
-
-        else if (resultado < 0) {
+        } else if (resultado < 0) {
 
             perdidas++;
-
-            perdidasTotales +=
-                Math.abs(resultado);
-
+            perdidasTotales += Math.abs(resultado);
             rachaPerdedora++;
-
             rachaGanadora = 0;
 
-            if (
-                rachaPerdedora >
-                peorRacha
-            ) {
+            if (rachaPerdedora > peorRacha)
+                peorRacha = rachaPerdedora;
 
-                peorRacha =
-                    rachaPerdedora;
-
-            }
-
-        }
-
-        else {
+        } else {
 
             rachaGanadora = 0;
             rachaPerdedora = 0;
@@ -205,20 +286,16 @@ function mostrarEstadisticas() {
 
     });
 
-    rachaActual =
+    const rachaActual =
         rachaGanadora > 0
         ? rachaGanadora
         : -rachaPerdedora;
 
     const promedio =
-        sesiones.length
-        ? total / sesiones.length
-        : 0;
+        total / sesiones.length;
 
     const porcentaje =
-        sesiones.length
-        ? (ganadas / sesiones.length) * 100
-        : 0;
+        (ganadas / sesiones.length) * 100;
 
     const roi =
         totalInicial
@@ -248,66 +325,115 @@ function mostrarEstadisticas() {
     const nivel =
         getNivel(roi, profitFactor);
 
-    const colorTotal =
-        total >= 0
-        ? "#22c55e"
-        : "#ef4444";
-
-    const colorROI =
-        roi >= 0
-        ? "#22c55e"
-        : "#ef4444";
-
-    if (equityHistory.length === 0) {
-
-        equityHistory = [0];
-
-    }
+    const totalTone =
+        getMetricTone(total);
 
     contenedor.innerHTML = `
 
-        <div class="chart-container">
-            <canvas id="bankrollChart" height="120"></canvas>
-        </div>
-
-        <div class="stats-grid">
-
-            <div class="stat-card">
-                <p class="stat-title">Nivel</p>
-                <p class="stat-value">${nivel}</p>
-            </div>
-
-            <div class="stat-card">
-                <p class="stat-title">Ganancia total</p>
-                <p class="stat-value" style="color:${colorTotal}">
-                    ${formatearDinero(total)}
+        <section class="stats-hero stats-hero--${totalTone}">
+            <div class="stats-hero__copy">
+                <span class="stats-kicker">${sesiones.length} sesiones registradas</span>
+                <h2>${formatearDinero(total)}</h2>
+                <p>
+                    Balance acumulado con ROI ${roi.toFixed(1)}% y
+                    promedio por sesion de ${formatearDinero(promedio)}.
                 </p>
             </div>
 
-            <div class="stat-card">
-                <p class="stat-title">EV</p>
-                <p class="stat-value">${formatearDinero(promedio)}</p>
+            <div class="stats-hero__badges">
+                <span>${nivel}</span>
+                <span>${porcentaje.toFixed(1)}% ganadas</span>
             </div>
+        </section>
 
-            <div class="stat-card">
-                <p class="stat-title">% ganadas</p>
-                <p class="stat-value">${porcentaje.toFixed(1)}%</p>
+        <section class="chart-container chart-container--${totalTone}">
+            <div class="chart-header">
+                <div>
+                    <span class="stats-kicker">Curva de bankroll</span>
+                    <h3>Evolucion por sesion</h3>
+                </div>
+                <span class="chart-pill">${getStreakLabel(rachaActual)}</span>
             </div>
-
-            <div class="stat-card">
-                <p class="stat-title">ROI</p>
-                <p class="stat-value" style="color:${colorROI}">
-                    ${roi.toFixed(1)}%
-                </p>
+            <div class="chart-shell">
+                <canvas id="bankrollChart"></canvas>
             </div>
+        </section>
 
-        </div>
+        <section class="stats-grid">
+            ${renderStatCard({
+                title: "Nivel",
+                value: nivel,
+                detail: `PF ${profitText}`,
+                tone: totalTone,
+                featured: true
+            })}
+
+            ${renderStatCard({
+                title: "Ganancia total",
+                value: formatearDinero(total),
+                detail: `${sesiones.length} sesiones`,
+                tone: totalTone
+            })}
+
+            ${renderStatCard({
+                title: "EV",
+                value: formatearDinero(promedio),
+                detail: "Promedio por sesion",
+                tone: getMetricTone(promedio)
+            })}
+
+            ${renderStatCard({
+                title: "% ganadas",
+                value: `${porcentaje.toFixed(1)}%`,
+                detail: `${ganadas} ganadas / ${perdidas} perdidas`,
+                tone: getMetricTone(porcentaje - 50)
+            })}
+
+            ${renderStatCard({
+                title: "ROI",
+                value: `${roi.toFixed(1)}%`,
+                detail: `Base ${formatearDinero(totalInicial)}`,
+                tone: getMetricTone(roi)
+            })}
+
+            ${renderStatCard({
+                title: "Mejor sesion",
+                value: formatearDinero(mejor),
+                detail: "Pico individual",
+                tone: getMetricTone(mejor)
+            })}
+
+            ${renderStatCard({
+                title: "Peor sesion",
+                value: formatearDinero(peor),
+                detail: "Mayor golpe",
+                tone: getMetricTone(peor)
+            })}
+
+            ${renderStatCard({
+                title: "Drawdown max",
+                value: formatearDinero(drawdownMax),
+                detail: `${drawdownPct.toFixed(1)}% desde maximo`,
+                tone: drawdownMax > 0 ? "negative" : "neutral"
+            })}
+
+            ${renderStatCard({
+                title: "Racha",
+                value: getStreakLabel(rachaActual),
+                detail: `Mejor ${mejorRacha} / peor ${peorRacha}`,
+                tone: getMetricTone(rachaActual)
+            })}
+
+            ${renderStatCard({
+                title: "Ratio W/L",
+                value: winLossRatio.toFixed(2),
+                detail: "Ganadas contra perdidas",
+                tone: getMetricTone(winLossRatio - 1)
+            })}
+        </section>
     `;
 
-    renderChart(equityHistory);
+    renderChart(equityHistory, totalTone);
 
 }
 
-// ==========================
-// 💰 BANKROLL
-// ==========================

@@ -299,3 +299,17 @@ button:hover {
     translateX(110%);
 
 }
+
+.bet-panel button#girar:disabled,
+.bet-panel button#girar.spinning {
+
+  cursor: wait;
+
+  opacity: .82;
+
+  transform: none;
+
+  filter:
+    saturate(.86);
+
+}

@@ -21,7 +21,8 @@
 
 .settings-page .page-header,
 .settings-page .backup-card,
-.settings-page section:nth-of-type(4) {
+.settings-page .maintenance-card,
+.settings-page .updater-card {
 
   grid-column: 1 / -1;
 
@@ -78,7 +79,8 @@
 
   .settings-page .page-header,
   .settings-page .backup-card,
-  .settings-page section:nth-of-type(4),
+  .settings-page .maintenance-card,
+  .settings-page .updater-card,
   .settings-page > .small-card {
 
     grid-column: auto;

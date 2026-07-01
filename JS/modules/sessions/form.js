@@ -29,7 +29,13 @@ if (form) {
             isNaN(final)
         ) {
 
-            alert("Ingresá valores válidos");
+            window.gameTrackAlert?.(
+                "Ingresa valores validos",
+                {
+                    title: "Datos incompletos",
+                    danger: true
+                }
+            );
 
             return;
 

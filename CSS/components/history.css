@@ -1,226 +1,307 @@
-/* =========================
-   📜 HISTORIAL PAGE
-========================= */
+/* Historial page */
 
 .historial-page {
-
-  max-width: 1100px;
-
+  max-width: 1160px;
   margin: 0 auto;
-
 }
-
-/* =========================
-   🗑 ACCIONES HISTORIAL
-========================= */
 
 .historial-actions {
-
   display: flex;
-
   justify-content: flex-end;
-
   margin-bottom: 24px;
-
 }
-
-/* =========================
-   📋 LISTA
-========================= */
 
 #lista {
-
   display: grid;
-
   grid-template-columns:
-    repeat(auto-fit, minmax(320px, 1fr));
-
-  gap: 18px;
-
+    repeat(auto-fit, minmax(min(100%, 380px), 1fr));
+  gap: 20px;
   align-items: stretch;
-
 }
 
-/* =========================
-   📦 ITEM HISTORIAL
-========================= */
-
-#lista .stat-card {
-
+#lista .session-card {
+  --session-accent: #d4af37;
+  --session-accent-soft: rgba(212,175,55,.16);
+  isolation: isolate;
   position: relative;
-
   overflow: hidden;
-
-  width: 100%;
-
-  max-width: none;
-
-  height: 100%;
-
-  margin: 0;
-
   display: flex;
-
   flex-direction: column;
-
+  width: 100%;
+  max-width: none;
+  min-height: 340px;
+  margin: 0;
+  padding: 0;
+  border-radius: 24px;
+  border: 1px solid rgba(212,175,55,.16);
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.05), transparent 28%),
+    radial-gradient(circle at 100% 0%, rgba(212,175,55,.14), transparent 34%),
+    radial-gradient(circle at 0% 100%, rgba(185,28,28,.12), transparent 36%),
+    linear-gradient(150deg, rgba(22,22,22,.98), rgba(5,5,5,.98));
+  box-shadow:
+    0 26px 70px rgba(0,0,0,.56),
+    0 0 0 1px rgba(255,255,255,.03),
+    inset 0 1px 0 rgba(255,255,255,.08);
+  backdrop-filter: blur(16px);
 }
 
-/* ✨ glow */
+#lista .session-card.is-profit {
+  --session-accent: #22c55e;
+  --session-accent-soft: rgba(34,197,94,.18);
+}
 
-#lista .stat-card::before {
+#lista .session-card.is-loss {
+  --session-accent: #ef4444;
+  --session-accent-soft: rgba(239,68,68,.18);
+}
 
+#lista .session-card::before,
+#lista .session-card::after {
   content: "";
-
   position: absolute;
-
-  inset: 0;
-
   pointer-events: none;
-
-  background:
-
-    radial-gradient(
-      circle at top right,
-      rgba(212,175,55,.08),
-      transparent 30%
-    ),
-
-    radial-gradient(
-      circle at bottom left,
-      rgba(185,28,28,.08),
-      transparent 35%
-    );
-
 }
 
-/* =========================
-   🏷 TITULO JUEGO
-========================= */
+#lista .session-card::before {
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(90deg, var(--session-accent-soft), transparent 26%),
+    radial-gradient(circle at 82% 12%, var(--session-accent-soft), transparent 28%);
+  opacity: .9;
+}
 
-#lista strong {
+#lista .session-card::after {
+  inset: 0 auto 0 0;
+  width: 4px;
+  background:
+    linear-gradient(180deg, transparent, var(--session-accent), transparent);
+  box-shadow:
+    0 0 28px var(--session-accent-soft);
+}
 
-  display: block;
+#lista .session-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(212,175,55,.28);
+  box-shadow:
+    0 30px 86px rgba(0,0,0,.66),
+    0 0 34px var(--session-accent-soft),
+    inset 0 1px 0 rgba(255,255,255,.1);
+}
 
-  margin-bottom: 12px;
-
-  font-size: 22px;
-
+.session-card__topline {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 14px 18px;
+  color: rgba(248,250,252,.62);
+  font-size: 13px;
   font-weight: 800;
-
-  color: #f8fafc;
-
-  letter-spacing: -.5px;
-
-}
-
-/* =========================
-   📄 TEXTO
-========================= */
-
-#lista p {
-
-  margin-bottom: 8px;
-
-  color: #d4d4d8;
-
-  line-height: 1.5;
-
-}
-
-/* =========================
-   📝 NOTAS
-========================= */
-
-#lista p[style] {
-
-  margin-top: 12px;
-
-  padding: 12px 14px;
-
-  border-radius: 12px;
-
+  letter-spacing: 0;
   background:
-    rgba(255,255,255,.03);
-
-  border:
-    1px solid rgba(255,255,255,.04);
-
+    linear-gradient(90deg, rgba(255,255,255,.055), rgba(255,255,255,.015));
+  border-bottom: 1px solid rgba(255,255,255,.055);
 }
 
-/* =========================
-   📉 RESULTADOS
-========================= */
+.session-card__dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--session-accent);
+  box-shadow: 0 0 14px var(--session-accent-soft);
+}
+
+.session-card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px 22px 16px;
+}
+
+.session-card__eyebrow,
+.session-card__label,
+.session-card__note span,
+.session-card__result span {
+  display: block;
+  color: rgba(248,250,252,.52);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+}
+
+.session-card__game {
+  margin: 6px 0 0;
+  color: #f8fafc;
+  font-size: 28px;
+  line-height: 1.05;
+  font-weight: 950;
+}
+
+.session-card__status {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 0 12px;
+  border-radius: 999px;
+  color: #111827;
+  background: linear-gradient(135deg, var(--session-accent), #facc15);
+  font-size: 12px;
+  font-weight: 950;
+  box-shadow:
+    0 10px 26px var(--session-accent-soft),
+    inset 0 1px 0 rgba(255,255,255,.28);
+}
+
+.session-card__metrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  margin: 0 22px;
+  overflow: hidden;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.06);
+  background: rgba(255,255,255,.06);
+}
+
+.session-card__metric {
+  min-width: 0;
+  padding: 14px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.025));
+}
+
+.session-card__value {
+  display: block;
+  margin-top: 6px;
+  color: #f8fafc;
+  font-size: 18px;
+  line-height: 1.15;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.session-card__result {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 16px 22px 0;
+  padding: 16px;
+  border-radius: 18px;
+  background:
+    linear-gradient(135deg, var(--session-accent-soft), rgba(255,255,255,.035));
+  border: 1px solid var(--session-accent-soft);
+}
+
+.session-card__result strong {
+  color: currentColor;
+  font-size: 22px;
+  line-height: 1;
+  text-align: right;
+}
+
+.session-card__note {
+  margin: 16px 22px 0;
+  padding: 15px 16px;
+  border-radius: 18px;
+  color: rgba(248,250,252,.76);
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.06), rgba(255,255,255,.025));
+  border: 1px solid rgba(255,255,255,.07);
+}
+
+.session-card__note p {
+  margin: 7px 0 0;
+  line-height: 1.45;
+}
+
+.session-card__actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: auto;
+  padding: 18px 22px 22px;
+}
+
+#lista .delete-btn {
+  margin: 0;
+  min-height: 40px;
+  padding: 0 16px;
+  border-radius: 12px;
+  box-shadow:
+    0 12px 28px rgba(239,68,68,.16);
+}
 
 .resultado {
-
-  margin-top: 14px;
-
-  font-size: 18px;
-
-  font-weight: 800;
-
+  font-weight: 900;
 }
-
-/* 🟢 */
 
 .ganancia {
-
   color: #22c55e;
-
-  text-shadow:
-    0 0 14px rgba(34,197,94,.22);
-
+  text-shadow: 0 0 18px rgba(34,197,94,.26);
 }
-
-/* 🔴 */
 
 .perdida {
-
   color: #ef4444;
-
-  text-shadow:
-    0 0 14px rgba(239,68,68,.22);
-
+  text-shadow: 0 0 18px rgba(239,68,68,.26);
 }
 
-/* =========================
-   🗑 BOTON ELIMINAR
-========================= */
-
-.delete-btn {
-
-  margin-top: 18px;
-
-  width: fit-content;
-
-  align-self: flex-start;
-
-  margin-top: auto;
-
+.neutral {
+  color: #d4af37;
+  text-shadow: 0 0 18px rgba(212,175,55,.22);
 }
 
-/* =========================
-   📱 RESPONSIVE
-========================= */
+@media(max-width:700px) {
 
-@media(max-width:700px){
+  .historial-actions {
+    justify-content: stretch;
+  }
+
+  .historial-actions .danger-btn {
+    width: 100%;
+  }
 
   #lista {
-
     grid-template-columns: 1fr;
-
   }
 
-  #lista strong {
-
-    font-size: 18px;
-
+  #lista .session-card {
+    min-height: 0;
+    border-radius: 20px;
   }
 
-  .resultado {
+  .session-card__header {
+    flex-direction: column;
+    padding: 20px 18px 14px;
+  }
 
-    font-size: 16px;
+  .session-card__game {
+    font-size: 23px;
+  }
 
+  .session-card__metrics,
+  .session-card__result,
+  .session-card__note {
+    margin-left: 18px;
+    margin-right: 18px;
+  }
+
+  .session-card__result {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .session-card__result strong {
+    text-align: left;
+  }
+
+  .session-card__actions {
+    padding: 18px;
   }
 
 }
+

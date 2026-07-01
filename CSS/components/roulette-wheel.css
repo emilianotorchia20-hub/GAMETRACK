@@ -1,85 +1,332 @@
-/* =========================
-   🎰 ULTRA REALISTIC CASINO ROULETTE
-========================= */
-
 body {
   background:
-    radial-gradient(circle at top, #1b1b1f 0%, #090909 45%, #000000 100%);
+    radial-gradient(circle at 50% 14%, rgba(185,28,28,.22), transparent 28%),
+    radial-gradient(circle at 50% 34%, rgba(250,204,21,.12), transparent 34%),
+    linear-gradient(145deg, #070809 0%, #101312 42%, #050505 100%);
+}
+
+.roulette-wrapper {
+  position: relative;
+  padding: clamp(18px, 4vw, 42px) 0;
+}
+
+.roulette-wrapper::before {
+  content: "";
+  position: absolute;
+  width: min(72vw, 620px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(250,204,21,.18), transparent 56%),
+    radial-gradient(circle, rgba(220,38,38,.13), transparent 68%);
+  filter: blur(22px);
+  opacity: .9;
+  pointer-events: none;
 }
 
 .roulette-container {
+  --wheel-size: clamp(310px, 72vw, 570px);
 
   position: relative;
-
-  width: 470px;
-  height: 470px;
-
-  margin: 50px auto;
-
+  width: var(--wheel-size);
+  aspect-ratio: 1;
+  margin: clamp(18px, 4vw, 34px) auto;
   border-radius: 50%;
-
-  padding: 20px;
-
+  padding: calc(var(--wheel-size) * .045);
   background:
-    radial-gradient(circle at 50% 45%,
-      #383838 0%,
-      #1a1a1d 18%,
-      #0b0b0d 55%,
-      #000000 100%);
-
+    radial-gradient(circle at 32% 22%, rgba(255,255,255,.18), transparent 20%),
+    radial-gradient(circle at 50% 52%, #17110c 0 40%, #090604 72%, #030202 100%);
   box-shadow:
-
+    0 34px 80px rgba(0,0,0,.82),
+    0 0 90px rgba(250,204,21,.12),
     inset 0 0 0 2px rgba(255,255,255,.04),
-
-    inset 0 0 80px rgba(255,255,255,.03),
-
-    inset 0 -30px 80px rgba(0,0,0,.95),
-
-    0 20px 80px rgba(0,0,0,.95),
-
-    0 0 120px rgba(0,0,0,.9),
-
-    0 0 30px rgba(255,215,120,.08);
-
+    inset 0 0 52px rgba(0,0,0,.74);
+  isolation: isolate;
 }
-
-/* =========================
-   ✨ METAL OUTER RING
-========================= */
 
 .roulette-container::before {
-
-  content:"";
-
-  position:absolute;
-
-  inset:-12px;
-
-  border-radius:50%;
-
+  content: "";
+  position: absolute;
+  inset: calc(var(--wheel-size) * -.022);
+  z-index: -1;
+  border-radius: 50%;
   background:
-    linear-gradient(145deg,
-      #fff6d5 0%,
-      #c8a44f 10%,
-      #6d5520 28%,
-      #f4d88a 42%,
-      #5c4517 60%,
-      #e8c56f 78%,
-      #fff4c7 100%);
-
-  z-index:-2;
-
+    conic-gradient(
+      from 18deg,
+      #080808,
+      #342114,
+      #110907,
+      #6f4a22,
+      #0b0908,
+      #26150d,
+      #080808
+    );
   box-shadow:
-
-    0 0 35px rgba(255,215,120,.25),
-
-    0 0 100px rgba(255,215,120,.08);
-
+    0 0 0 1px rgba(255,255,255,.08),
+    0 22px 54px rgba(0,0,0,.88);
 }
 
-/* =========================
-   ✨ GLASS REFLECTION
-========================= */
-
 .roulette-container::after {
+  content: "";
+  position: absolute;
+  inset: calc(var(--wheel-size) * .035);
+  border-radius: 50%;
+  pointer-events: none;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.20), transparent 22% 78%, rgba(255,255,255,.06)),
+    radial-gradient(circle at 48% 18%, rgba(255,255,255,.14), transparent 17%);
+  mix-blend-mode: screen;
+  opacity: .45;
+  z-index: 8;
+}
+
+.pointer {
+  position: absolute;
+  top: calc(var(--wheel-size) * -.006);
+  left: 50%;
+  z-index: 12;
+  width: calc(var(--wheel-size) * .082);
+  height: calc(var(--wheel-size) * .118);
+  transform: translateX(-50%);
+  clip-path: polygon(50% 100%, 6% 22%, 34% 22%, 50% 0, 66% 22%, 94% 22%);
+  background:
+    linear-gradient(90deg, #8a5c12, #fff1a8 34%, #c58c20 58%, #5b3708 100%);
+  filter:
+    drop-shadow(0 9px 10px rgba(0,0,0,.62))
+    drop-shadow(0 0 14px rgba(250,204,21,.28));
+}
+
+.pointer::after {
+  content: "";
+  position: absolute;
+  inset: 24% 34% 46%;
+  border-radius: 50%;
+  background: #fff7c7;
+  box-shadow: 0 0 12px rgba(255,245,200,.75);
+}
+
+.pointer.settled {
+  animation: pointerSettle .8s ease;
+}
+
+.wheel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  background:
+    radial-gradient(circle, #060606 0 36%, #180f08 37% 52%, #050505 72%);
+  box-shadow:
+    inset 0 0 0 calc(var(--wheel-size) * .018) rgba(5,5,5,.96),
+    inset 0 0 0 calc(var(--wheel-size) * .035) rgba(213,155,48,.20),
+    inset 0 22px 38px rgba(255,255,255,.08),
+    inset 0 -32px 50px rgba(0,0,0,.84);
+}
+
+.wheel-rim {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, transparent 63%, rgba(255,255,255,.10) 64%, transparent 65%),
+    conic-gradient(from 20deg, #111, #3b2819, #070707, #61441f, #111);
+  box-shadow:
+    inset 0 0 0 calc(var(--wheel-size) * .022) rgba(0,0,0,.72),
+    inset 0 0 0 calc(var(--wheel-size) * .052) rgba(250,204,21,.08);
+}
+
+.wheel-inner {
+  position: absolute;
+  inset: calc(var(--wheel-size) * .105);
+  border-radius: 50%;
+  will-change: transform;
+  transform: rotate(0deg);
+}
+
+.roulette-pockets,
+.roulette-separators {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+}
+
+.roulette-pockets {
+  box-shadow:
+    inset 0 0 0 calc(var(--wheel-size) * .018) rgba(246,205,117,.58),
+    inset 0 0 0 calc(var(--wheel-size) * .088) rgba(0,0,0,.16),
+    inset 0 0 52px rgba(0,0,0,.52);
+}
+
+.roulette-pockets::after {
+  content: "";
+  position: absolute;
+  inset: calc(var(--wheel-size) * .158);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 22%, rgba(255,255,255,.12), transparent 28%),
+    radial-gradient(circle, #24150d 0%, #0b0806 64%, #030202 100%);
+  box-shadow:
+    0 0 0 calc(var(--wheel-size) * .012) rgba(247,203,112,.70),
+    inset 0 18px 26px rgba(255,255,255,.05),
+    inset 0 -22px 36px rgba(0,0,0,.86);
+}
+
+.roulette-separators {
+  opacity: .82;
+  mix-blend-mode: screen;
+}
+
+.roulette-numbers {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.wheel-number {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  place-items: center;
+  width: calc(var(--wheel-size) * .045);
+  height: calc(var(--wheel-size) * .045);
+  border-radius: 50%;
+  color: #fff;
+  font-size: clamp(9px, 1.85vw, 15px);
+  font-weight: 900;
+  line-height: 1;
+  text-shadow:
+    0 1px 2px #000,
+    0 0 9px rgba(0,0,0,.92);
+  transform:
+    translate(-50%, -50%)
+    rotate(var(--number-angle))
+    translateY(calc(var(--wheel-size) * -.335))
+    rotate(90deg);
+}
+
+.wheel-number.winner {
+  color: #fff8d0;
+  background: rgba(250,204,21,.22);
+  box-shadow:
+    0 0 0 1px rgba(255,244,190,.62),
+    0 0 18px rgba(250,204,21,.55);
+  animation: winningNumber 1.5s ease;
+}
+
+.inner-bowl {
+  position: absolute;
+  inset: calc(var(--wheel-size) * .208);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 34% 24%, rgba(255,255,255,.20), transparent 24%),
+    radial-gradient(circle, #2c1a0f 0 22%, #0c0907 62%, #030303 100%);
+  box-shadow:
+    0 0 0 calc(var(--wheel-size) * .01) rgba(246,207,126,.58),
+    inset 0 18px 30px rgba(255,255,255,.06),
+    inset 0 -24px 40px rgba(0,0,0,.86);
+}
+
+.roulette-spindle {
+  position: absolute;
+  inset: calc(var(--wheel-size) * .355);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 25%, #fff6c7, #e4b94b 30%, #865b16 62%, #2a1906 100%);
+  box-shadow:
+    0 0 0 calc(var(--wheel-size) * .012) rgba(255,238,164,.35),
+    0 10px 24px rgba(0,0,0,.72),
+    inset 0 6px 10px rgba(255,255,255,.42),
+    inset 0 -10px 16px rgba(0,0,0,.44);
+}
+
+.ball-track {
+  position: absolute;
+  inset: calc(var(--wheel-size) * .055);
+  z-index: 7;
+  border-radius: 50%;
+  pointer-events: none;
+  box-shadow:
+    inset 0 0 0 calc(var(--wheel-size) * .016) rgba(255,255,255,.08),
+    inset 0 0 0 calc(var(--wheel-size) * .038) rgba(0,0,0,.34);
+}
+
+.roulette-ball {
+  --ball-angle: 0deg;
+  --ball-radius: .46;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: calc(var(--wheel-size) * .035);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 32% 28%, #ffffff 0 14%, #f8f2dc 28%, #c9c0aa 70%, #76706a 100%);
+  box-shadow:
+    0 5px 8px rgba(0,0,0,.55),
+    0 0 10px rgba(255,255,255,.38),
+    inset -3px -4px 7px rgba(0,0,0,.28);
+  transform:
+    translate(-50%, -50%)
+    rotate(var(--ball-angle))
+    translateY(calc(var(--wheel-size) * -1 * var(--ball-radius)));
+  will-change: transform;
+}
+
+.wheel-glare {
+  position: absolute;
+  inset: 0;
+  z-index: 9;
+  border-radius: 50%;
+  pointer-events: none;
+  background:
+    linear-gradient(132deg, rgba(255,255,255,.17), transparent 26%),
+    radial-gradient(circle at 62% 18%, rgba(255,255,255,.12), transparent 16%);
+  opacity: .44;
+}
+
+.wheel.settled .roulette-ball {
+  animation: ballSettle .8s ease;
+}
+
+@keyframes pointerSettle {
+  0%, 100% { transform: translateX(-50%); }
+  30% { transform: translateX(-50%) translateY(5px); }
+  58% { transform: translateX(-50%) translateY(-2px); }
+}
+
+@keyframes winningNumber {
+  0% { transform: translate(-50%, -50%) rotate(var(--number-angle)) translateY(calc(var(--wheel-size) * -.335)) rotate(90deg) scale(1); }
+  45% { transform: translate(-50%, -50%) rotate(var(--number-angle)) translateY(calc(var(--wheel-size) * -.335)) rotate(90deg) scale(1.28); }
+  100% { transform: translate(-50%, -50%) rotate(var(--number-angle)) translateY(calc(var(--wheel-size) * -.335)) rotate(90deg) scale(1); }
+}
+
+@keyframes ballSettle {
+  0%, 100% {
+    filter: brightness(1);
+  }
+  45% {
+    filter: brightness(1.35);
+  }
+}
+
+@media(max-width:560px) {
+  .roulette-container {
+    --wheel-size: min(92vw, 360px);
+  }
+
+  .wheel-number {
+    font-size: 9px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pointer.settled,
+  .wheel.settled .roulette-ball,
+  .wheel-number.winner {
+    animation: none;
+  }
 }

@@ -1,3 +1,43 @@
+function escapeSessionText(value) {
+
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+function getSessionTone(resultado) {
+
+    if (resultado > 0) return "profit";
+    if (resultado < 0) return "loss";
+    return "even";
+
+}
+
+function getSessionStatus(resultado) {
+
+    if (resultado > 0) return "Ganancia";
+    if (resultado < 0) return "Perdida";
+    return "Sin cambio";
+
+}
+
+function renderSessionNote(notes) {
+
+    if (!notes) return "";
+
+    return `
+        <div class="session-card__note">
+            <span>Nota</span>
+            <p>${escapeSessionText(notes)}</p>
+        </div>
+    `;
+
+}
+
 function mostrarHistorial() {
 
     const lista =
@@ -18,89 +58,107 @@ function mostrarHistorial() {
             s.resultado ??
             (s.final - s.inicial);
 
+        const tone =
+            getSessionTone(resultado);
+
         const clase =
-            resultado >= 0
+            tone === "profit"
             ? "ganancia"
-            : "perdida";
+            : tone === "loss"
+            ? "perdida"
+            : "neutral";
+
+        const dateLabel =
+            s.date
+            ? formatearFecha(s.date)
+            : "Sin fecha";
+
+        const timeLabel =
+            s.date
+            ? formatearHora(s.date)
+            : "";
 
         const div =
             document.createElement("div");
 
-        div.className = "stat-card";
+        div.className =
+            `stat-card session-card is-${tone}`;
 
         div.innerHTML = `
 
-            <p style="
-                opacity:0.6;
-                font-size:0.9rem;
-                margin-bottom:10px;
-            ">
-
-                📅 ${
-                    s.date
-                    ? formatearFecha(s.date)
-                    : "Sin fecha"
-                }
-
-                •
-
+            <div class="session-card__topline">
+                <span class="session-card__date">${dateLabel}</span>
                 ${
-                    s.date
-                    ? formatearHora(s.date)
+                    timeLabel
+                    ? `<span class="session-card__dot"></span>
+                       <span>${timeLabel}</span>`
                     : ""
                 }
+            </div>
 
-            </p>
+            <div class="session-card__header">
+                <div>
+                    <span class="session-card__eyebrow">Sesion</span>
+                    <h2 class="session-card__game">
+                        ${escapeSessionText(s.game)}
+                    </h2>
+                </div>
 
-            <p>
-                <strong>${s.game}</strong>
-            </p>
+                <span class="session-card__status">
+                    ${getSessionStatus(resultado)}
+                </span>
+            </div>
 
-            <p>
-                Inicial:
-                ${formatearDinero(s.inicial)}
-            </p>
+            <div class="session-card__metrics">
+                <div class="session-card__metric">
+                    <span class="session-card__label">Inicial</span>
+                    <strong class="session-card__value">
+                        ${formatearDinero(s.inicial)}
+                    </strong>
+                </div>
 
-            <p>
-                Final:
-                ${formatearDinero(s.final)}
-            </p>
+                <div class="session-card__metric">
+                    <span class="session-card__label">Final</span>
+                    <strong class="session-card__value">
+                        ${formatearDinero(s.final)}
+                    </strong>
+                </div>
+            </div>
 
-            <p class="resultado ${clase}">
+            <div class="session-card__result resultado ${clase}">
+                <span>Resultado</span>
+                <strong>
+                    ${resultado >= 0 ? "+" : ""}
+                    ${formatearDinero(resultado)}
+                </strong>
+            </div>
 
-                Resultado:
+            ${renderSessionNote(s.notes)}
 
-                ${resultado >= 0 ? "+" : ""}
-
-                ${formatearDinero(resultado)}
-
-            </p>
-
-            ${s.notes
-                ? `
-                <p style="opacity:0.7;">
-                    📝 ${s.notes}
-                </p>
-                `
-                : ""
-            }
-
-            <button class="delete-btn">
-                Eliminar
-            </button>
+            <div class="session-card__actions">
+                <button class="delete-btn">
+                    Eliminar
+                </button>
+            </div>
 
         `;
 
         const btn =
             div.querySelector(".delete-btn");
 
-        btn.addEventListener("click", () => {
+        btn.addEventListener("click", async () => {
 
-            if (
-                !confirm(
-                    "¿Eliminar esta sesión?"
-                )
-            ) return;
+            const confirmed =
+                await window.gameTrackConfirm?.(
+                    "Eliminar esta sesion?",
+                    {
+                        title: "Eliminar sesion",
+                        confirmText: "Eliminar",
+                        danger: true
+                    }
+                );
+
+            if (!confirmed) return;
 
             let sesiones =
                 JSON.parse(
@@ -128,6 +186,3 @@ function mostrarHistorial() {
 
 }
 
-// ==========================
-// 🏆 NIVEL
-// ==========================

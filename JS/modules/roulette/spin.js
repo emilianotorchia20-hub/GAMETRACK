@@ -5,32 +5,26 @@ function calcularGanancia(resultado) {
   bets.forEach(b => {
     totalApostado += b.monto;
 
-    //
     if (b.tipo === "numero" && b.valor === resultado) {
       totalGanado += b.monto * 36;
     }
 
-    //
     if (b.tipo === "rojo" && rojos.includes(resultado)) {
       totalGanado += b.monto * 2;
     }
 
-    //
     if (b.tipo === "negro" && !rojos.includes(resultado) && resultado !== 0) {
       totalGanado += b.monto * 2;
     }
 
-    // par
     if (b.tipo === "par" && resultado % 2 === 0 && resultado !== 0) {
       totalGanado += b.monto * 2;
     }
 
-    // impar
     if (b.tipo === "impar" && resultado % 2 === 1) {
       totalGanado += b.monto * 2;
     }
 
-    // docenas
     if (b.tipo === "docena1" && resultado >= 1 && resultado <= 12) {
       totalGanado += b.monto * 3;
     }
@@ -44,63 +38,108 @@ function calcularGanancia(resultado) {
     }
   });
 
-  //
   return totalGanado;
 }
 
+function elegirResultado() {
+  const index = Math.floor(Math.random() * numeros.length);
+  return numeros[index];
+}
+
+function getBallFinalAngle() {
+  const offsetToPointer = normalizeAngle(ballAngle - POINTER_ANGLE);
+  return ballAngle - (10 * 360 + offsetToPointer);
+}
+
+function getSpinDuration() {
+  return prefersReducedMotion()
+    ? REDUCED_MOTION_DURATION_MS
+    : SPIN_DURATION_MS + Math.round(Math.random() * 1200);
+}
+
+function animateSpin(targetNumber, onComplete) {
+  const startTime = performance.now();
+  const duration = getSpinDuration();
+  const startWheel = rotation;
+  const endWheel = getFinalWheelRotation(targetNumber);
+  const startBall = ballAngle;
+  const endBall = getBallFinalAngle();
+  const reducedMotion = prefersReducedMotion();
+
+  function frame(now) {
+    const progress = Math.min(1, (now - startTime) / duration);
+    const wheelProgress = easeOutQuint(progress);
+    const ballProgress = easeOutBackSoft(progress);
+
+    const wheelAngle = startWheel + (endWheel - startWheel) * wheelProgress;
+    let currentBallAngle = startBall + (endBall - startBall) * ballProgress;
+    let ballRadius = BALL_TRACK_RADIUS;
+
+    if (!reducedMotion && progress > .68) {
+      const endPhase = (progress - .68) / .32;
+      const bounce = Math.sin(endPhase * Math.PI * 16) * (1 - endPhase);
+      currentBallAngle += bounce * (SLOT_ANGLE * .42);
+      ballRadius = BALL_TRACK_RADIUS - (BALL_TRACK_RADIUS - BALL_POCKET_RADIUS) * endPhase;
+    }
+
+    setWheelRotation(wheelAngle);
+    setBallAngle(currentBallAngle, ballRadius);
+
+    if (progress < 1) {
+      requestAnimationFrame(frame);
+      return;
+    }
+
+    setWheelRotation(endWheel);
+    setBallAngle(POINTER_ANGLE, BALL_POCKET_RADIUS);
+    onComplete();
+  }
+
+  requestAnimationFrame(frame);
+}
 
 function girar() {
+  if (isSpinning) return;
 
   if (bets.length === 0) {
-    alert("Hace una apuesta primero");
+    window.gameTrackAlert?.(
+      "Hace una apuesta primero",
+      { title: "Sin apuesta" }
+    );
     return;
   }
 
-  const wheelInner = document.getElementById("wheel-inner");
+  const spinButton = document.getElementById("girar");
+  const targetNumber = elegirResultado();
+  activeWinningNumber = targetNumber;
+  isSpinning = true;
 
-  const ang = 360 / numeros.length;
-  const vueltas = 5;
-
-  //
-  const index = Math.floor(Math.random() * numeros.length);
-
-  //
-  const target = index * ang;
-
-  const OFFSET = ang / 2-1;
-
- rotation += vueltas * 360 + (360 - target) - OFFSET;
-
-  wheelInner.style.transform = `rotate(${rotation}deg)`;
-
- setTimeout(() => {
-
-  let angle = rotation % 360;
-  angle = (360 - angle) % 360;
-
-  const realIndex = Math.floor(angle / ang);
-  const numeroReal = numeros[realIndex];
-
-  //
-  historial.unshift(numeroReal);
-
-  // limitar historial
-  if (historial.length > 12) {
-    historial.pop();
+  if (spinButton) {
+    spinButton.disabled = true;
+    spinButton.classList.add("spinning");
+    spinButton.textContent = "Girando";
   }
 
-  // guardar en localStorage
-  localStorage.setItem("historialRuleta", JSON.stringify(historial));
+  wheel?.classList.remove("settled");
+  document.querySelectorAll(".wheel-number").forEach(item => {
+    item.classList.remove("winner");
+  });
 
-  // renderizar
-  renderHistorial();
+  animateSpin(targetNumber, () => finalizarGiro(targetNumber, spinButton));
+}
 
-  //
-  result.textContent = numeroReal;
-  result.style.color = getTextColor(numeroReal);
+function finalizarGiro(numeroReal, spinButton) {
+  actualizarHistorial(numeroReal);
+
+  if (result) {
+    result.textContent = numeroReal;
+    result.style.color = getTextColor(numeroReal);
+    result.classList.remove("result-pop");
+    void result.offsetWidth;
+    result.classList.add("result-pop");
+  }
 
   const ganancia = calcularGanancia(numeroReal);
-
   const resultadoEl = document.getElementById("resultadoApuesta");
 
   if (resultadoEl) {
@@ -111,22 +150,33 @@ function girar() {
       ganancia > 0 ? "#22c55e" : "#ef4444";
   }
 
+  highlightWinningPocket(numeroReal);
   bets = [];
   renderApuestas();
+  activeWinningNumber = null;
+  isSpinning = false;
 
- }, 2000);
+  if (spinButton) {
+    spinButton.disabled = false;
+    spinButton.classList.remove("spinning");
+    spinButton.textContent = "Girar";
+  }
 }
+
 function getTextColor(n) {
-  if (n === 0) return "#22c55e"; // verde
-  return rojos.includes(n) ? "#ef4444" : "#ffffff"; // blanco para negros
+  if (n === 0) return "#22c55e";
+  return rojos.includes(n) ? "#ef4444" : "#ffffff";
 }
+
 function renderSaldo() {
   const el = document.getElementById("saldo");
   if (!el) return;
 
   el.textContent = `Fichas: ${saldoFichas}`;
 }
+
 function eliminarApuesta(index) {
+  if (isSpinning) return;
   bets.splice(index, 1);
   renderApuestas();
 }

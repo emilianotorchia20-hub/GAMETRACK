@@ -35,11 +35,14 @@ const scriptGroups = {
     "modules/roulette/boot.js",
   ],
   app: [
+    "modules/app/dialogs.js",
     "modules/app/navigation.js",
     "modules/app/shell.js",
     "modules/app/alert-settings.js",
+    "modules/app/bankroll-goal.js",
     "modules/app/dashboard.js",
     "modules/app/backup-events.js",
+    "modules/app/settings-maintenance.js",
   ],
 };
 

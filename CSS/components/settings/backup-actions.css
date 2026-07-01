@@ -34,9 +34,10 @@
 
     padding: 18px 26px;
 
-    border-radius: 18px;
+    border-radius: 12px;
 
-    border: none;
+    border:
+        1px solid rgba(255,255,255,.10);
 
     cursor: pointer;
 
@@ -125,5 +126,37 @@
 
     animation:
         backupShine 1s ease;
+
+}
+
+.quick-backup-btn {
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #facc15,
+            #d97706
+        );
+
+    color: #17120a;
+
+    box-shadow:
+        0 12px 30px rgba(250,204,21,.22);
+
+}
+
+.import-btn {
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #111827,
+            #030712
+        );
+
+    box-shadow:
+        0 12px 30px rgba(0,0,0,.35);
 
 }

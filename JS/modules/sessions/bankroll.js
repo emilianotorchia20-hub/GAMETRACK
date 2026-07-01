@@ -5,10 +5,40 @@ function mostrarBankroll() {
 
     if (!display) return;
 
+    const bankroll =
+        obtenerBankroll();
+
+    const fullValue =
+        formatearDinero(bankroll);
+
     display.textContent =
-        formatearDinero(
-            obtenerBankroll()
-        );
+        display.dataset.format === "compact"
+        ? formatearDineroCompacto(bankroll)
+        : fullValue;
+
+    display.title =
+        fullValue;
+
+    const fullValueDisplay =
+        document.getElementById("bankrollFullValue");
+
+    if (fullValueDisplay) {
+        fullValueDisplay.textContent =
+            fullValue;
+    }
+
+}
+
+function formatearDineroCompacto(valor) {
+
+    return valor.toLocaleString("es-AR", {
+        style: "currency",
+        currency: "ARS",
+        notation: "compact",
+        compactDisplay: "short",
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2
+    });
 
 }
 
@@ -22,13 +52,19 @@ function resetearDatos() {
 
     if (!btn) return;
 
-    btn.addEventListener("click", () => {
+    btn.addEventListener("click", async () => {
 
-        if (
-            !confirm(
-                "¿Seguro que querés borrar todo?"
-            )
-        ) return;
+        const confirmed =
+            await window.gameTrackConfirm?.(
+                "Seguro que queres borrar todo?",
+                {
+                    title: "Reiniciar datos",
+                    confirmText: "Resetear",
+                    danger: true
+                }
+            );
+
+        if (!confirmed) return;
 
         localStorage.removeItem("sessions");
 
@@ -71,11 +107,16 @@ function borrarTodo() {
 
     if (!btn) return;
 
-    btn.addEventListener("click", () => {
+    btn.addEventListener("click", async () => {
 
         const confirmar =
-            confirm(
-                "¿Seguro que querés borrar TODAS las sesiones?"
+            await window.gameTrackConfirm?.(
+                "Seguro que queres borrar TODAS las sesiones?",
+                {
+                    title: "Borrar sesiones",
+                    confirmText: "Borrar",
+                    danger: true
+                }
             );
 
         if (!confirmar) return;

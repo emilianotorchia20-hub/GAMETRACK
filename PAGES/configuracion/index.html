@@ -112,7 +112,7 @@
 
             <h1>
 
-                ⚙️ Configuración
+                Configuracion
 
             </h1>
 
@@ -122,22 +122,37 @@
              💰 BANKROLL
         ========================== -->
 
-        <div class="stat-card">
+        <div class="stat-card bankroll-summary-card">
 
             <p class="stat-title">
 
-                Bankroll actual
+                Saldo actual
 
             </p>
 
             <p
                 id="bankroll"
                 class="stat-value"
+                data-format="compact"
             >
 
                 0
 
             </p>
+
+            <p class="bankroll-full-value">
+
+                Valor completo:
+                <span id="bankrollFullValue">0</span>
+
+            </p>
+
+            <div class="bankroll-summary-meta">
+
+                <span id="bankrollSessionsMeta">0 sesiones</span>
+                <span id="bankrollTrendMeta">Sin movimiento</span>
+
+            </div>
 
         </div>
 
@@ -149,7 +164,7 @@
 
             <h2>
 
-                💰 Alertas bankroll
+                Alertas bankroll
 
             </h2>
 
@@ -172,7 +187,7 @@
 
                 <label for="bankrollLimit">
 
-                    Límite total
+                    Limite total
 
                 </label>
 
@@ -194,7 +209,7 @@
 
             <h2>
 
-                📉 Alertas por sesión
+                Alertas por sesion
 
             </h2>
 
@@ -217,7 +232,7 @@
 
                 <label for="sessionLossLimit">
 
-                    Límite por sesión
+                    Limite por sesion
 
                 </label>
 
@@ -235,6 +250,55 @@
              💾 BACKUP PREMIUM
         ========================== -->
 
+        <section class="settings-card bankroll-goal-card">
+
+            <h2>
+
+                Meta de bankroll
+
+            </h2>
+
+            <p class="goal-description">
+
+                Defini un objetivo y controla cuanto falta para alcanzarlo.
+
+            </p>
+
+            <div class="setting-item">
+
+                <label for="bankrollGoalInput">
+
+                    Objetivo
+
+                </label>
+
+                <input
+                    type="number"
+                    id="bankrollGoalInput"
+                    placeholder="Ej: 100000"
+                >
+
+            </div>
+
+            <div class="goal-progress">
+
+                <div class="goal-progress__track">
+
+                    <span id="bankrollGoalProgress"></span>
+
+                </div>
+
+                <div class="goal-progress__info">
+
+                    <strong id="bankrollGoalStatus">Sin meta definida</strong>
+                    <span id="bankrollGoalRemaining">Agrega un objetivo</span>
+
+                </div>
+
+            </div>
+
+        </section>
+
         <section class="backup-card">
 
             <!-- ✨ HEADER -->
@@ -243,7 +307,7 @@
 
                 <div class="backup-icon">
 
-                    💾
+                    GT
 
                 </div>
 
@@ -283,10 +347,18 @@
                     class="backup-btn export-btn"
                     id="exportDataBtn"
                     type="button"
-                    onclick="exportData()"
                 >
 
-                    💾 Exportar datos
+                    Exportar datos
+                </button>
+
+                <button
+                    class="backup-btn quick-backup-btn"
+                    id="quickBackupBtn"
+                    type="button"
+                >
+
+                    Backup rapido
 
                 </button>
 
@@ -296,18 +368,12 @@
                     class="backup-btn import-btn"
                 >
 
-                    📥 Importar datos
+                    Importar datos
 
                     <input
                         type="file"
                         id="importFile"
-                        accept=".json"
-                        onchange="
-                            importData(
-                                this.files[0]
-                            )
-                        "
-                    >
+                        accept=".json">
 
                 </label>
 
@@ -315,16 +381,81 @@
 
         </section>
 
-        <!-- =========================
-             🗑 RESET
-        ========================== -->
+        <section class="settings-card maintenance-card">
 
+            <h2>
+
+                Centro de datos
+
+            </h2>
+
+            <div class="data-health-grid">
+
+                <div class="data-health-item">
+
+                    <span>Sesiones</span>
+
+                    <strong id="settingsSessionsCount">0</strong>
+
+                </div>
+
+                <div class="data-health-item">
+
+                    <span>Historial ruleta</span>
+
+                    <strong id="settingsRouletteCount">0</strong>
+
+                </div>
+
+                <div class="data-health-item">
+
+                    <span>Uso local</span>
+
+                    <strong id="settingsStorageSize">0 KB</strong>
+
+                </div>
+
+                <div class="data-health-item">
+
+                    <span>Ultimo backup</span>
+
+                    <strong id="settingsLastBackup">Nunca</strong>
+
+                </div>
+
+            </div>
+
+            <div class="maintenance-actions">
+
+                <button
+                    class="maintenance-btn"
+                    id="refreshDataHealthBtn"
+                    type="button"
+                >
+
+                    Actualizar resumen
+
+                </button>
+
+                <button
+                    class="maintenance-btn danger"
+                    id="clearRouletteHistoryBtn"
+                    type="button"
+                >
+
+                    Limpiar historial de ruleta
+
+                </button>
+
+            </div>
+
+        </section>
 
         <!-- =========================
              ACTUALIZACIONES
         ========================== -->
 
-        <section class="settings-card">
+        <section class="settings-card updater-card">
 
             <h2>
 

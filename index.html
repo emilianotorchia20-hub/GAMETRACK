@@ -2,32 +2,24 @@
 <html lang="es">
 
 <head>
-
     <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <title>
-        GameTrack
-    </title>
-
-    <!-- =========================
-         🎨 CSS BASE
-    ========================== -->
+    <title>GameTrack</title>
 
     <link rel="stylesheet" href="./CSS/base.css">
     <link rel="stylesheet" href="./CSS/layout.css">
     <link rel="stylesheet" href="./CSS/utilities.css">
-
-    <!-- =========================
-         🧩 COMPONENTES
-    ========================== -->
-
     <link rel="stylesheet" href="./CSS/components/animations.css">
     <link rel="stylesheet" href="./CSS/components/alerts.css">
     <link rel="stylesheet" href="./CSS/components/background.css">
     <link rel="stylesheet" href="./CSS/components/buttons.css">
     <link rel="stylesheet" href="./CSS/components/cards.css">
-    <link rel="stylesheet" href="./CSS/components/dashboard.css">
     <link rel="stylesheet" href="./CSS/components/forms.css">
+    <link rel="stylesheet" href="./CSS/components/dashboard.css">
     <link rel="stylesheet" href="./CSS/components/history.css">
     <link rel="stylesheet" href="./CSS/components/install.css">
     <link rel="stylesheet" href="./CSS/components/loader.css">
@@ -37,37 +29,16 @@
     <link rel="stylesheet" href="./CSS/components/stats.css">
     <link rel="stylesheet" href="./CSS/components/updater.css">
 
-    <!-- =========================
-         🔔 TOASTIFY
-    ========================== -->
-
-    <!-- =========================
-         📱 PWA
-    ========================== -->
-
     <link rel="manifest" href="./manifest.json">
-
-    <meta
-        name="theme-color"
-        content="#0f172a"
-    >
-
+    <meta name="theme-color" content="#0f172a">
 </head>
 
 <body>
-
-    <!-- =========================
-         🌌 BACKGROUND FX
-    ========================== -->
-
     <div class="bg-light"></div>
     <div class="bg-shine"></div>
     <div class="bg-noise"></div>
 
-    <!-- ✨ PARTICLES -->
-
     <div class="particles">
-
         <span></span>
         <span></span>
         <span></span>
@@ -78,374 +49,200 @@
         <span></span>
         <span></span>
         <span></span>
-
     </div>
 
-    <!-- =========================
-         🎬 LOADER
-    ========================== -->
-
     <div id="loader">
-
         <div class="loader-content">
-
             <div class="loader-logo"></div>
-
-            <h1>
-
-                GAMETRACK
-
-            </h1>
-
-            <div class="loader-subtitle">
-
-                Casino Session Tracker
-
-            </div>
-
+            <h1>GAMETRACK</h1>
+            <div class="loader-subtitle">Casino Session Tracker</div>
             <div class="loader-bar">
-
                 <div class="loader-progress"></div>
-
             </div>
-
         </div>
-
     </div>
 
     <div id="appNav"></div>
 
-    <!-- =========================
-         🏠 MAIN
-    ========================== -->
+    <main class="home-page">
+        <section class="home-command">
+            <div class="home-command__content">
+                <span class="home-kicker">Casino command center</span>
 
-    <main>
-
-        <!-- 🎰 LOGO -->
-
-        <div class="logo">
-
-            <div class="logo-glow"></div>
-
-            <div class="logo-icon-wrap">
-
-                <div class="roulette-mini">
-
-                    <div class="roulette-center"></div>
-
-                </div>
-
-                <div class="cards">
-
-                    <div class="card back"></div>
-
-                    <div class="card front">
-
-                        ♠
-
-                    </div>
-
-                </div>
-
-                <div class="chips">
-
-                    <span class="chip red"></span>
-                    <span class="chip black"></span>
-
-                </div>
-
-            </div>
-
-            <div class="logo-text-wrap">
-
-                <span class="logo-text">
-
-                    GAMETRACK
-
-                </span>
-
-                <div class="logo-line"></div>
-
-            </div>
-
-            <div class="logo-shine"></div>
-
-        </div>
-
-        <!-- =========================
-             👑 DASHBOARD HERO
-        ========================== -->
-
-        <section class="dashboard-hero">
-
-            <!-- 💎 HERO -->
-
-            <div class="hero-main">
-
-                <div class="hero-subtitle">
-
-                    Casino Analytics
-
-                </div>
-
-                <h1 class="hero-title">
-
-                    Bienvenido de nuevo
-
+                <h1>
+                    Controla tu juego con datos reales.
                 </h1>
 
-                <!-- 💰 PROFIT -->
+                <p>
+                    Registra sesiones, mide tu rendimiento y toma mejores decisiones
+                    antes de la proxima jugada.
+                </p>
 
-                <div
-                    class="hero-profit"
-                    id="dashboardProfit"
-                >
-
-                    $0
-
+                <div class="home-actions">
+                    <a href="./PAGES/roulette/" class="home-action primary">
+                        Abrir ruleta
+                    </a>
+                    <a href="./PAGES/insights/" class="home-action">
+                        Ver insights
+                    </a>
                 </div>
-
-                <!-- 📊 STATS -->
-
-                <div class="hero-stats">
-
-                    <div class="hero-stat">
-
-                        <div class="hero-stat-label">
-
-                            Winrate
-
-                        </div>
-
-                        <div
-                            class="hero-stat-value"
-                            id="dashboardWinrate"
-                        >
-
-                            0%
-
-                        </div>
-
-                    </div>
-
-                    <div class="hero-stat">
-
-                        <div class="hero-stat-label">
-
-                            Sesiones
-
-                        </div>
-
-                        <div
-                            class="hero-stat-value"
-                            id="dashboardSessions"
-                        >
-
-                            0
-
-                        </div>
-
-                    </div>
-
-                    <div class="hero-stat">
-
-                        <div class="hero-stat-label">
-
-                            ROI
-
-                        </div>
-
-                        <div
-                            class="hero-stat-value"
-                            id="dashboardROI"
-                        >
-
-                            0%
-
-                        </div>
-
-                    </div>
-
-                </div>
-
             </div>
 
-            <!-- 👤 PLAYER -->
+            <div class="home-command__profit">
+                <span>Balance total</span>
+                <strong id="dashboardProfit">$0</strong>
+                <small id="dashboardSignal">Sin sesiones registradas</small>
+            </div>
+        </section>
 
-            <div class="player-card">
+        <section class="dashboard-hero">
+            <div class="hero-main">
+                <div class="hero-subtitle">Rendimiento general</div>
 
+                <h2 class="hero-title">
+                    Tu mesa, en numeros
+                </h2>
+
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <div class="hero-stat-label">Winrate</div>
+                        <div class="hero-stat-value" id="dashboardWinrate">0%</div>
+                    </div>
+
+                    <div class="hero-stat">
+                        <div class="hero-stat-label">Sesiones</div>
+                        <div class="hero-stat-value" id="dashboardSessions">0</div>
+                    </div>
+
+                    <div class="hero-stat">
+                        <div class="hero-stat-label">ROI</div>
+                        <div class="hero-stat-value" id="dashboardROI">0%</div>
+                    </div>
+
+                    <div class="hero-stat">
+                        <div class="hero-stat-label">EV promedio</div>
+                        <div class="hero-stat-value" id="dashboardAverage">$0</div>
+                    </div>
+
+                    <div class="hero-stat">
+                        <div class="hero-stat-label">Mejor sesion</div>
+                        <div class="hero-stat-value" id="dashboardBest">$0</div>
+                    </div>
+
+                    <div class="hero-stat">
+                        <div class="hero-stat-label">Racha</div>
+                        <div class="hero-stat-value" id="dashboardStreak">0</div>
+                    </div>
+                </div>
+            </div>
+
+            <aside class="player-card">
                 <div class="player-level">
-
                     <div class="player-badge"></div>
 
                     <div class="player-info">
-
-                        <h3 id="dashboardLevel">
-
-                            Rookie
-
-                        </h3>
-
-                        <p>
-
-                            Nivel automático
-
-                        </p>
-
+                        <span>Nivel actual</span>
+                        <h3 id="dashboardLevel">Rookie</h3>
+                        <p id="dashboardLevelHint">Nivel automatico</p>
                     </div>
-
                 </div>
 
-                <!-- 📋 ACTIVIDAD -->
-
-                <div
-                    class="activity-list"
-                    id="activityList"
-                >
-
+                <div class="home-quick-grid">
+                    <a href="./PAGES/historial/">Historial</a>
+                    <a href="./PAGES/estadisticas/">Estadisticas</a>
+                    <a href="./PAGES/configuracion/">Configuracion</a>
+                    <a href="./PAGES/roulette/">Ruleta</a>
                 </div>
 
-            </div>
-
+                <div class="activity-list" id="activityList"></div>
+            </aside>
         </section>
 
-        <!-- 🎰 FORMULARIO -->
-
-        <div class="form-container">
-
-            <h2>
-
-                Nueva sesión
-
-            </h2>
-
-            <form id="formSesion">
-
-                <!-- 🎮 JUEGO -->
-
-                <div class="form-group">
-
-                    <label for="game">
-
-                        Tipo de juego
-
-                    </label>
-
-                    <select id="game">
-
-                        <option>Ruleta</option>
-                        <option>Blackjack</option>
-                        <option>Tragamonedas</option>
-                        <option>Mines</option>
-                        <option>Dice</option>
-                        <option>Plinko</option>
-                        <option>Keno</option>
-                        <option>Chicken</option>
-                        <option>Moles</option>
-                        <option>Dragon Tower</option>
-                        <option>Flip</option>
-                        <option>Rock Paper Scissors</option>
-                        <option>Cases</option>
-
-                    </select>
-
+        <section class="session-workspace">
+            <div class="form-container">
+                <div class="form-heading">
+                    <span>Nueva entrada</span>
+                    <h2>Registrar sesion</h2>
+                    <p>
+                        Carga el inicio y final. GameTrack calcula el resultado,
+                        actualiza estadisticas y alimenta Insights.
+                    </p>
                 </div>
 
-                <!-- 💰 DINERO INICIAL -->
+                <form id="formSesion">
+                    <div class="form-group">
+                        <label for="game">Tipo de juego</label>
+                        <select id="game">
+                            <option>Ruleta</option>
+                            <option>Blackjack</option>
+                            <option>Tragamonedas</option>
+                            <option>Mines</option>
+                            <option>Dice</option>
+                            <option>Plinko</option>
+                            <option>Keno</option>
+                            <option>Chicken</option>
+                            <option>Moles</option>
+                            <option>Dragon Tower</option>
+                            <option>Flip</option>
+                            <option>Rock Paper Scissors</option>
+                            <option>Cases</option>
+                        </select>
+                    </div>
 
-                <div class="form-group">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="inicial">Dinero inicial</label>
+                            <input type="number" id="inicial" required>
+                        </div>
 
-                    <label for="inicial">
+                        <div class="form-group">
+                            <label for="final">Dinero final</label>
+                            <input type="number" id="final" required>
+                        </div>
+                    </div>
 
-                        Dinero inicial
+                    <div class="form-group">
+                        <label for="notes">Notas</label>
+                        <textarea id="notes" placeholder="Opcional..."></textarea>
+                    </div>
 
-                    </label>
+                    <button type="submit">
+                        Guardar sesion
+                    </button>
+                </form>
+            </div>
 
-                    <input
-                        type="number"
-                        id="inicial"
-                        required
-                    >
+            <aside class="session-side-card">
+                <span class="home-kicker">Sugerencia</span>
+                <h2 id="dashboardTipTitle">Crea tu primera muestra</h2>
+                <p id="dashboardTipText">
+                    Registra varias sesiones con notas cortas para detectar patrones
+                    de juego, rachas y limites saludables.
+                </p>
 
+                <div class="session-side-metrics">
+                    <div>
+                        <span>Ultima sesion</span>
+                        <strong id="dashboardLastSession">Sin datos</strong>
+                    </div>
+                    <div>
+                        <span>Juego top</span>
+                        <strong id="dashboardTopGame">Sin datos</strong>
+                    </div>
                 </div>
-
-                <!-- 💵 DINERO FINAL -->
-
-                <div class="form-group">
-
-                    <label for="final">
-
-                        Dinero final
-
-                    </label>
-
-                    <input
-                        type="number"
-                        id="final"
-                        required
-                    >
-
-                </div>
-
-                <!-- 📝 NOTAS -->
-
-                <div class="form-group">
-
-                    <label for="notes">
-
-                        Notas
-
-                    </label>
-
-                    <textarea
-                        id="notes"
-                        placeholder="Opcional..."
-                    ></textarea>
-
-                </div>
-
-                <!-- 🚀 SUBMIT -->
-
-                <button type="submit">
-
-                    Guardar sesión
-
-                </button>
-
-            </form>
-
-        </div>
-
+            </aside>
+        </section>
     </main>
-
-    <!-- =========================
-         📲 INSTALL BUTTON
-    ========================== -->
 
     <button
         id="installBtn"
         class="install-btn"
         style="display:none;"
     >
-
-        📲 Instalar App
-
+        Instalar App
     </button>
 
-    <!-- =========================
-         🔔 TOASTIFY
-    ========================== -->
-
-    <!-- =========================
-         🔧 JAVASCRIPT
-    ========================== -->
-
-    <!-- =========================
-         JAVASCRIPT
-    ========================== -->
-
     <script type="module" src="./JS/main.js"></script>
-
 </body>
 
 </html>
