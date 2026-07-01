@@ -34,6 +34,18 @@ function setDashboardText(id, value) {
   if (element) {
     element.textContent =
       value;
+
+    if (id === "dashboardProfit") {
+      const compactLength =
+        String(value).replace(/\s/g, "").length;
+
+      element.dataset.amountSize =
+        compactLength > 13
+        ? "long"
+        : compactLength > 9
+          ? "medium"
+          : "normal";
+    }
   }
 }
 
@@ -304,4 +316,3 @@ if (activityList) {
       }).join("");
   }
 }
-

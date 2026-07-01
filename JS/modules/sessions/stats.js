@@ -33,14 +33,62 @@ function getStreakLabel(rachaActual) {
 
 }
 
-function renderStatCard({ title, value, detail, tone = "neutral", featured = false }) {
+function getProfitFactorLabel(profitFactor, gananciasTotales, perdidasTotales) {
+
+    if (perdidasTotales === 0 && gananciasTotales > 0)
+        return "Sin perdidas";
+
+    if (perdidasTotales === 0)
+        return "Sin datos";
+
+    return profitFactor.toFixed(2);
+
+}
+
+function getProfitFactorSummary(profitText) {
+
+    return profitText === "Sin perdidas" || profitText === "Sin datos"
+        ? `PF ${profitText}`
+        : `${profitText} PF`;
+
+}
+
+function renderDetailPoint(label, value) {
 
     return `
-        <article class="stat-card stat-card--${tone} ${featured ? "is-featured" : ""}">
-            <span class="stat-title">${title}</span>
-            <strong class="stat-value">${value}</strong>
-            ${detail ? `<span class="stat-detail">${detail}</span>` : ""}
-        </article>
+        <div class="stat-detail-point">
+            <span>${label}</span>
+            <strong>${value}</strong>
+        </div>
+    `;
+
+}
+
+function renderStatDisclosure({
+    title,
+    value,
+    subtitle,
+    tone = "neutral",
+    open = false,
+    explanation,
+    points = []
+}) {
+
+    return `
+        <details class="stat-disclosure stat-disclosure--${tone}" ${open ? "open" : ""}>
+            <summary>
+                <span class="stat-disclosure__title">${title}</span>
+                <strong>${value}</strong>
+                <em>${subtitle}</em>
+            </summary>
+
+            <div class="stat-disclosure__body">
+                <p>${explanation}</p>
+                <div class="stat-detail-points">
+                    ${points.map(point => renderDetailPoint(point.label, point.value)).join("")}
+                </div>
+            </div>
+        </details>
     `;
 
 }
@@ -60,9 +108,6 @@ function renderEmptyStats(contenedor) {
 
 }
 
-// ==========================
-// CHART
-// ==========================
 function renderChart(data, tone) {
 
     const canvas =
@@ -183,9 +228,6 @@ function renderChart(data, tone) {
 
 }
 
-// ==========================
-// ESTADISTICAS
-// ==========================
 function mostrarEstadisticas() {
 
     const contenedor =
@@ -205,41 +247,36 @@ function mostrarEstadisticas() {
 
     let total = 0;
     let totalInicial = 0;
-
     let ganadas = 0;
     let perdidas = 0;
-
     let mejor = -Infinity;
     let peor = Infinity;
-
     let mejorRacha = 0;
     let peorRacha = 0;
-
     let rachaGanadora = 0;
     let rachaPerdedora = 0;
-
     let gananciasTotales = 0;
     let perdidasTotales = 0;
-
     let equity = 0;
     let maxEquity = 0;
-
     let drawdownMax = 0;
 
     const equityHistory = [];
+    const resultados = [];
 
     sesiones.forEach(s => {
 
         const resultado =
-            s.resultado ??
-            (s.final - s.inicial);
+            Number(
+                s.resultado ??
+                (s.final - s.inicial) ??
+                0
+            );
 
+        resultados.push(resultado);
         total += resultado;
-
         totalInicial += Number(s.inicial) || 0;
-
         equity += resultado;
-
         equityHistory.push(equity);
 
         if (equity > maxEquity)
@@ -252,7 +289,6 @@ function mostrarEstadisticas() {
             drawdownMax = dd;
 
         if (resultado > 0) {
-
             ganadas++;
             gananciasTotales += resultado;
             rachaGanadora++;
@@ -262,7 +298,6 @@ function mostrarEstadisticas() {
                 mejorRacha = rachaGanadora;
 
         } else if (resultado < 0) {
-
             perdidas++;
             perdidasTotales += Math.abs(resultado);
             rachaPerdedora++;
@@ -272,10 +307,8 @@ function mostrarEstadisticas() {
                 peorRacha = rachaPerdedora;
 
         } else {
-
             rachaGanadora = 0;
             rachaPerdedora = 0;
-
         }
 
         if (resultado > mejor)
@@ -308,9 +341,14 @@ function mostrarEstadisticas() {
         : gananciasTotales / perdidasTotales;
 
     const profitText =
-        profitFactor === Infinity
-        ? "∞"
-        : profitFactor.toFixed(2);
+        getProfitFactorLabel(
+            profitFactor,
+            gananciasTotales,
+            perdidasTotales
+        );
+
+    const profitSummary =
+        getProfitFactorSummary(profitText);
 
     const winLossRatio =
         perdidas
@@ -328,8 +366,15 @@ function mostrarEstadisticas() {
     const totalTone =
         getMetricTone(total);
 
-    contenedor.innerHTML = `
+    const recentResults =
+        resultados.slice(-5);
 
+    const recentAverage =
+        recentResults.length
+        ? recentResults.reduce((sum, value) => sum + value, 0) / recentResults.length
+        : 0;
+
+    contenedor.innerHTML = `
         <section class="stats-hero stats-hero--${totalTone}">
             <div class="stats-hero__copy">
                 <span class="stats-kicker">${sesiones.length} sesiones registradas</span>
@@ -359,81 +404,150 @@ function mostrarEstadisticas() {
             </div>
         </section>
 
-        <section class="stats-grid">
-            ${renderStatCard({
-                title: "Nivel",
-                value: nivel,
-                detail: `PF ${profitText}`,
-                tone: totalTone,
-                featured: true
-            })}
+        <section class="stats-data-panel">
+            <div class="stats-data-panel__header">
+                <div>
+                    <span class="stats-kicker">Analisis desplegable</span>
+                    <h3>Toca una estadistica para ver detalle</h3>
+                </div>
+                <strong>${profitSummary}</strong>
+            </div>
 
-            ${renderStatCard({
-                title: "Ganancia total",
-                value: formatearDinero(total),
-                detail: `${sesiones.length} sesiones`,
-                tone: totalTone
-            })}
+            <div class="stats-disclosure-list">
+                ${renderStatDisclosure({
+                    title: "Nivel",
+                    value: nivel,
+                    subtitle: profitSummary,
+                    tone: totalTone,
+                    open: true,
+                    explanation: "El nivel combina ROI y profit factor para dar una lectura rapida de rendimiento.",
+                    points: [
+                        { label: "ROI", value: `${roi.toFixed(1)}%` },
+                        { label: "Profit factor", value: profitText },
+                        { label: "Balance", value: formatearDinero(total) }
+                    ]
+                })}
 
-            ${renderStatCard({
-                title: "EV",
-                value: formatearDinero(promedio),
-                detail: "Promedio por sesion",
-                tone: getMetricTone(promedio)
-            })}
+                ${renderStatDisclosure({
+                    title: "Ganancia total",
+                    value: formatearDinero(total),
+                    subtitle: `${sesiones.length} sesiones registradas`,
+                    tone: totalTone,
+                    explanation: "Suma neta de todos los resultados. Es la foto general de tu bankroll registrado.",
+                    points: [
+                        { label: "Ganancias brutas", value: formatearDinero(gananciasTotales) },
+                        { label: "Perdidas brutas", value: formatearDinero(perdidasTotales) },
+                        { label: "Promedio reciente", value: formatearDinero(recentAverage) }
+                    ]
+                })}
 
-            ${renderStatCard({
-                title: "% ganadas",
-                value: `${porcentaje.toFixed(1)}%`,
-                detail: `${ganadas} ganadas / ${perdidas} perdidas`,
-                tone: getMetricTone(porcentaje - 50)
-            })}
+                ${renderStatDisclosure({
+                    title: "EV promedio",
+                    value: formatearDinero(promedio),
+                    subtitle: "Resultado esperado por sesion",
+                    tone: getMetricTone(promedio),
+                    explanation: "Mide cuanto estas ganando o perdiendo en promedio cada vez que registras una sesion.",
+                    points: [
+                        { label: "Promedio total", value: formatearDinero(promedio) },
+                        { label: "Ultimas 5 sesiones", value: formatearDinero(recentAverage) },
+                        { label: "Sesiones usadas", value: String(sesiones.length) }
+                    ]
+                })}
 
-            ${renderStatCard({
-                title: "ROI",
-                value: `${roi.toFixed(1)}%`,
-                detail: `Base ${formatearDinero(totalInicial)}`,
-                tone: getMetricTone(roi)
-            })}
+                ${renderStatDisclosure({
+                    title: "Winrate",
+                    value: `${porcentaje.toFixed(1)}%`,
+                    subtitle: `${ganadas} ganadas / ${perdidas} perdidas`,
+                    tone: getMetricTone(porcentaje - 50),
+                    explanation: "Indica que porcentaje de sesiones terminan positivas. No mide tamano de ganancias, solo frecuencia.",
+                    points: [
+                        { label: "Ganadas", value: String(ganadas) },
+                        { label: "Perdidas", value: String(perdidas) },
+                        { label: "Neutras", value: String(sesiones.length - ganadas - perdidas) }
+                    ]
+                })}
 
-            ${renderStatCard({
-                title: "Mejor sesion",
-                value: formatearDinero(mejor),
-                detail: "Pico individual",
-                tone: getMetricTone(mejor)
-            })}
+                ${renderStatDisclosure({
+                    title: "ROI",
+                    value: `${roi.toFixed(1)}%`,
+                    subtitle: `Base registrada ${formatearDinero(totalInicial)}`,
+                    tone: getMetricTone(roi),
+                    explanation: "Relaciona el resultado neto contra el dinero inicial acumulado de tus sesiones.",
+                    points: [
+                        { label: "Resultado neto", value: formatearDinero(total) },
+                        { label: "Base total", value: formatearDinero(totalInicial) },
+                        { label: "ROI", value: `${roi.toFixed(1)}%` }
+                    ]
+                })}
 
-            ${renderStatCard({
-                title: "Peor sesion",
-                value: formatearDinero(peor),
-                detail: "Mayor golpe",
-                tone: getMetricTone(peor)
-            })}
+                ${renderStatDisclosure({
+                    title: "Mejor sesion",
+                    value: formatearDinero(mejor),
+                    subtitle: "Mayor pico individual",
+                    tone: getMetricTone(mejor),
+                    explanation: "Tu mejor resultado individual. Sirve como referencia para comparar picos contra consistencia.",
+                    points: [
+                        { label: "Mejor", value: formatearDinero(mejor) },
+                        { label: "Promedio", value: formatearDinero(promedio) },
+                        { label: "Diferencia", value: formatearDinero(mejor - promedio) }
+                    ]
+                })}
 
-            ${renderStatCard({
-                title: "Drawdown max",
-                value: formatearDinero(drawdownMax),
-                detail: `${drawdownPct.toFixed(1)}% desde maximo`,
-                tone: drawdownMax > 0 ? "negative" : "neutral"
-            })}
+                ${renderStatDisclosure({
+                    title: "Peor sesion",
+                    value: formatearDinero(peor),
+                    subtitle: "Mayor golpe individual",
+                    tone: getMetricTone(peor),
+                    explanation: "Tu peor resultado individual. Es una buena senal para definir limites de perdida por sesion.",
+                    points: [
+                        { label: "Peor", value: formatearDinero(peor) },
+                        { label: "Limite sugerido", value: formatearDinero(Math.abs(peor) * .75) },
+                        { label: "Impacto vs promedio", value: formatearDinero(peor - promedio) }
+                    ]
+                })}
 
-            ${renderStatCard({
-                title: "Racha",
-                value: getStreakLabel(rachaActual),
-                detail: `Mejor ${mejorRacha} / peor ${peorRacha}`,
-                tone: getMetricTone(rachaActual)
-            })}
+                ${renderStatDisclosure({
+                    title: "Drawdown maximo",
+                    value: formatearDinero(drawdownMax),
+                    subtitle: `${drawdownPct.toFixed(1)}% desde maximo`,
+                    tone: drawdownMax > 0 ? "negative" : "neutral",
+                    explanation: "Mide la caida mas grande desde un pico de equity. Ayuda a evaluar riesgo y tolerancia.",
+                    points: [
+                        { label: "Drawdown", value: formatearDinero(drawdownMax) },
+                        { label: "Pico equity", value: formatearDinero(maxEquity) },
+                        { label: "Porcentaje", value: `${drawdownPct.toFixed(1)}%` }
+                    ]
+                })}
 
-            ${renderStatCard({
-                title: "Ratio W/L",
-                value: winLossRatio.toFixed(2),
-                detail: "Ganadas contra perdidas",
-                tone: getMetricTone(winLossRatio - 1)
-            })}
+                ${renderStatDisclosure({
+                    title: "Racha",
+                    value: getStreakLabel(rachaActual),
+                    subtitle: `Mejor ${mejorRacha} / peor ${peorRacha}`,
+                    tone: getMetricTone(rachaActual),
+                    explanation: "La racha actual mira solo las ultimas sesiones consecutivas con el mismo signo.",
+                    points: [
+                        { label: "Actual", value: getStreakLabel(rachaActual) },
+                        { label: "Mejor ganadora", value: String(mejorRacha) },
+                        { label: "Peor perdedora", value: String(peorRacha) }
+                    ]
+                })}
+
+                ${renderStatDisclosure({
+                    title: "Ratio W/L",
+                    value: winLossRatio.toFixed(2),
+                    subtitle: "Ganadas contra perdidas",
+                    tone: getMetricTone(winLossRatio - 1),
+                    explanation: "Compara cantidad de sesiones ganadas contra perdidas. Complementa al winrate.",
+                    points: [
+                        { label: "Ratio", value: winLossRatio.toFixed(2) },
+                        { label: "Ganadas", value: String(ganadas) },
+                        { label: "Perdidas", value: String(perdidas) }
+                    ]
+                })}
+            </div>
         </section>
     `;
 
     renderChart(equityHistory, totalTone);
 
 }
-

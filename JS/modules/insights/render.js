@@ -63,44 +63,43 @@ function getRecommendation({ total, winrate, streak, drawdown }) {
     if (total < 0 && streak < 0) {
         return {
             title: "Baja el ritmo",
-            text: "Tu saldo y tu racha estan en zona roja. Conviene reducir apuesta media y cerrar sesiones antes.",
+            text: "Balance y racha estan en rojo. Reducir exposicion y cerrar antes puede proteger capital.",
             tone: "negative"
         };
     }
 
     if (winrate >= 60 && total > 0) {
         return {
-            title: "Aprovecha la ventaja",
-            text: "El rendimiento es fuerte. Mantene el stake estable y evita subirlo por impulso.",
+            title: "Ventaja activa",
+            text: "El rendimiento es fuerte. Mantene stake estable y evita subir por impulso.",
             tone: "positive"
         };
     }
 
     if (drawdown > 0) {
         return {
-            title: "Controla el drawdown",
-            text: "Hay retroceso desde el pico. Usa limites por sesion para proteger capital.",
+            title: "Riesgo bajo observacion",
+            text: "Hay retroceso desde el pico. Revisar limites por sesion puede mejorar control.",
             tone: "warning"
         };
     }
 
     return {
-        title: "Base estable",
-        text: "Todavia no hay una senal extrema. Segui registrando sesiones para mejorar la lectura.",
+        title: "Lectura estable",
+        text: "No hay una senal extrema. Segui registrando sesiones para mejorar la muestra.",
         tone: "neutral"
     };
 
 }
 
-function renderKpiCard({ title, value, detail, tone = "neutral", label }) {
+function renderMetricRow({ label, value, detail, tone = "neutral" }) {
 
     return `
-        <article class="insight-kpi insight-kpi--${tone}">
-            <span class="insight-kpi__label">${label}</span>
-            <h3>${title}</h3>
-            <strong>${value}</strong>
-            <p>${detail}</p>
-        </article>
+        <div class="insight-metric-row">
+            <span>${label}</span>
+            <strong class="${tone}">${value}</strong>
+            <em>${detail}</em>
+        </div>
     `;
 
 }
@@ -110,7 +109,7 @@ function renderGameBreakdown(games) {
     const entries =
         Object.entries(games)
             .sort((a, b) => b[1] - a[1])
-            .slice(0, 4);
+            .slice(0, 6);
 
     if (entries.length === 0) {
         return `
@@ -147,6 +146,34 @@ function renderGameBreakdown(games) {
             </div>
         `;
     }).join("");
+
+}
+
+function renderRecentSessions(sessions) {
+
+    return [...sessions]
+        .reverse()
+        .slice(0, 6)
+        .map(session => {
+            const result =
+                getSessionResult(session);
+
+            const date =
+                session.date
+                ? new Date(session.date).toLocaleDateString("es-AR", {
+                    day: "2-digit",
+                    month: "2-digit"
+                })
+                : "Sin fecha";
+
+            return `
+                <div class="insight-session-row">
+                    <span>${date}</span>
+                    <strong>${escapeInsightText(session.game || "Juego")}</strong>
+                    <em class="${getTone(result)}">${formatearDinero(result)}</em>
+                </div>
+            `;
+        }).join("");
 
 }
 
@@ -291,94 +318,101 @@ function mostrarInsights() {
         getTone(total);
 
     contenedor.innerHTML = `
-        <section class="insight-command insight-command--${totalTone}">
-            <div class="insight-command__main">
-                <span class="insight-chip">Resumen inteligente</span>
-                <h2>${formatearDinero(total)}</h2>
-                <p>
-                    Balance total en ${sesiones.length} sesiones.
-                    Promedio por sesion: ${formatearDinero(average)}.
-                </p>
+        <section class="insight-terminal insight-terminal--${totalTone}">
+            <div class="insight-terminal__header">
+                <span>Panel de datos</span>
+                <strong>${sesiones.length} sesiones analizadas</strong>
             </div>
 
-            <div class="insight-command__side">
-                <span>Winrate</span>
-                <strong>${winrate.toFixed(1)}%</strong>
-                <small>${wins} ganadas / ${losses} perdidas</small>
-            </div>
-        </section>
-
-        <section class="insights-panel insight-action insight-action--${recommendation.tone}">
-            <span class="insight-chip">Lectura recomendada</span>
-            <h3>${recommendation.title}</h3>
-            <p>${recommendation.text}</p>
-        </section>
-
-        <section class="insight-kpi-grid">
-            ${renderKpiCard({
-                label: "Tendencia",
-                title: "Semana actual",
-                value: `${trend >= 0 ? "+" : ""}${trend.toFixed(1)}%`,
-                detail: `Esta semana: ${formatearDinero(currentWeekTotal)}`,
-                tone: getTone(trend)
-            })}
-
-            ${renderKpiCard({
-                label: "Pico",
-                title: "Mejor sesion",
-                value: formatearDinero(bestSession),
-                detail: "Record individual registrado",
-                tone: getTone(bestSession)
-            })}
-
-            ${renderKpiCard({
-                label: "Riesgo",
-                title: "Peor sesion",
-                value: formatearDinero(worstSession),
-                detail: `Drawdown max: ${formatearDinero(drawdown)}`,
-                tone: getTone(worstSession)
-            })}
-
-            ${renderKpiCard({
-                label: "Racha",
-                title: "Estado actual",
-                value: getStreakText(streak),
-                detail: "Sesiones consecutivas",
-                tone: getTone(streak)
-            })}
-        </section>
-
-        <section class="insights-panel game-breakdown">
-            <div class="insights-panel__header">
+            <div class="insight-terminal__body">
                 <div>
-                    <span class="insight-chip">Mapa de juegos</span>
-                    <h3>Rentabilidad por juego</h3>
+                    <span class="insight-terminal__label">Balance acumulado</span>
+                    <h2 class="${totalTone}">${formatearDinero(total)}</h2>
+                    <p>
+                        Promedio por sesion:
+                        <strong>${formatearDinero(average)}</strong>
+                    </p>
                 </div>
-                <strong>${escapeInsightText(topGame?.[0] || "Sin juego")}</strong>
-            </div>
 
-            <div class="game-breakdown__list">
-                ${renderGameBreakdown(games)}
+                <div class="insight-terminal__signal insight-terminal__signal--${recommendation.tone}">
+                    <span>Lectura</span>
+                    <strong>${recommendation.title}</strong>
+                    <p>${recommendation.text}</p>
+                </div>
             </div>
         </section>
 
-        <section class="insight-mini-grid">
-            <article>
-                <span>Total sesiones</span>
-                <strong>${sesiones.length}</strong>
-            </article>
-            <article>
-                <span>EV promedio</span>
-                <strong>${formatearDinero(average)}</strong>
-            </article>
-            <article>
-                <span>Esta semana</span>
-                <strong>${formatearDinero(currentWeekTotal)}</strong>
-            </article>
-            <article>
-                <span>Juego top</span>
-                <strong>${escapeInsightText(topGame?.[0] || "Sin juego")}</strong>
-            </article>
+        <section class="insight-data-panel">
+            <div class="insight-panel-heading">
+                <span>Indicadores clave</span>
+                <strong>${topGame ? escapeInsightText(topGame[0]) : "Sin juego"} lidera el rendimiento</strong>
+            </div>
+
+            <div class="insight-metrics-table">
+                ${renderMetricRow({
+                    label: "Tendencia semanal",
+                    value: `${trend >= 0 ? "+" : ""}${trend.toFixed(1)}%`,
+                    detail: `Semana actual ${formatearDinero(currentWeekTotal)}`,
+                    tone: getTone(trend)
+                })}
+
+                ${renderMetricRow({
+                    label: "Winrate",
+                    value: `${winrate.toFixed(1)}%`,
+                    detail: `${wins} ganadas / ${losses} perdidas`,
+                    tone: getTone(winrate - 50)
+                })}
+
+                ${renderMetricRow({
+                    label: "Mejor sesion",
+                    value: formatearDinero(bestSession),
+                    detail: "Pico individual",
+                    tone: getTone(bestSession)
+                })}
+
+                ${renderMetricRow({
+                    label: "Peor sesion",
+                    value: formatearDinero(worstSession),
+                    detail: `Drawdown max ${formatearDinero(drawdown)}`,
+                    tone: getTone(worstSession)
+                })}
+
+                ${renderMetricRow({
+                    label: "Racha actual",
+                    value: getStreakText(streak),
+                    detail: "Ultimas sesiones consecutivas",
+                    tone: getTone(streak)
+                })}
+            </div>
+        </section>
+
+        <section class="insight-split-panel">
+            <div class="insight-data-panel game-breakdown">
+                <div class="insight-panel-heading">
+                    <span>Rentabilidad por juego</span>
+                    <strong>Top ${Math.min(Object.keys(games).length, 6)}</strong>
+                </div>
+
+                <div class="game-breakdown__list">
+                    ${renderGameBreakdown(games)}
+                </div>
+            </div>
+
+            <div class="insight-data-panel insight-session-log">
+                <div class="insight-panel-heading">
+                    <span>Ultimos movimientos</span>
+                    <strong>Recientes</strong>
+                </div>
+
+                <div class="insight-session-table">
+                    <div class="insight-session-row head">
+                        <span>Fecha</span>
+                        <strong>Juego</strong>
+                        <em>Resultado</em>
+                    </div>
+                    ${renderRecentSessions(sesiones)}
+                </div>
+            </div>
         </section>
     `;
 

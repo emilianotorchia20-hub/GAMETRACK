@@ -113,13 +113,6 @@
   box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
 }
 
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 18px;
-  align-items: stretch;
-}
-
 .stats-empty {
   max-width: 680px;
   margin: 40px auto 0;
@@ -156,4 +149,3 @@
   max-width: 520px;
   line-height: 1.6;
 }
-
