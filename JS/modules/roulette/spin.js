@@ -65,6 +65,13 @@ function animateSpin(targetNumber, onComplete) {
   const startBall = ballAngle;
   const endBall = getBallFinalAngle();
   const reducedMotion = prefersReducedMotion();
+  const bounceSoundMarks = reducedMotion ? [] : [.72, .79, .86, .92];
+  let previousFrameTime = startTime;
+  let previousWheelAngle = startWheel;
+  let previousBallAngle = startBall;
+  let nextBounceSound = 0;
+
+  window.rouletteAudio?.beginSpin();
 
   function frame(now) {
     const progress = Math.min(1, (now - startTime) / duration);
@@ -85,6 +92,46 @@ function animateSpin(targetNumber, onComplete) {
     setWheelRotation(wheelAngle);
     setBallAngle(currentBallAngle, ballRadius);
 
+    const deltaTime =
+      Math.max(16, now - previousFrameTime);
+    const wheelAngularVelocity =
+      (wheelAngle - previousWheelAngle) / deltaTime;
+    const ballAngularVelocity =
+      (currentBallAngle - previousBallAngle) / deltaTime;
+    const phase =
+      progress < .12
+      ? "accelerating"
+      : progress < .58
+        ? "spinning"
+        : progress < .68
+          ? "slowing"
+          : "bouncing";
+
+    window.rouletteAudio?.updateSpin({
+      phase,
+      progress,
+      wheelAngle,
+      ballAngle: currentBallAngle,
+      ballRadius,
+      wheelAngularVelocity,
+      ballAngularVelocity
+    });
+
+    if (
+      !reducedMotion &&
+      nextBounceSound < bounceSoundMarks.length &&
+      progress >= bounceSoundMarks[nextBounceSound]
+    ) {
+      window.rouletteAudio?.triggerBounce(
+        1 - bounceSoundMarks[nextBounceSound] + .45
+      );
+      nextBounceSound++;
+    }
+
+    previousFrameTime = now;
+    previousWheelAngle = wheelAngle;
+    previousBallAngle = currentBallAngle;
+
     if (progress < 1) {
       requestAnimationFrame(frame);
       return;
@@ -92,6 +139,17 @@ function animateSpin(targetNumber, onComplete) {
 
     setWheelRotation(endWheel);
     setBallAngle(POINTER_ANGLE, BALL_POCKET_RADIUS);
+    window.rouletteAudio?.updateSpin({
+      phase: "landed",
+      progress: 1,
+      wheelAngle: endWheel,
+      ballAngle: POINTER_ANGLE,
+      ballRadius: BALL_POCKET_RADIUS,
+      wheelAngularVelocity: 0,
+      ballAngularVelocity: 0
+    });
+    window.rouletteAudio?.finishSpin();
+    window.rouletteAudio?.triggerBallDrop();
     onComplete();
   }
 
@@ -151,6 +209,10 @@ function finalizarGiro(numeroReal, spinButton) {
   }
 
   highlightWinningPocket(numeroReal);
+  window.setTimeout(() => {
+    window.rouletteAudio?.playResultSound();
+  }, 180);
+
   bets = [];
   renderApuestas();
   activeWinningNumber = null;

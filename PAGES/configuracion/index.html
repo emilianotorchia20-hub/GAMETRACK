@@ -246,6 +246,115 @@
 
         </section>
 
+        <section
+            class="settings-card audio-settings-card"
+            id="rouletteAudioSettings"
+        >
+
+            <div class="audio-settings-header">
+
+                <h2>
+
+                    Audio ruleta
+
+                </h2>
+
+                <span
+                    class="audio-status-pill"
+                    id="rouletteAudioStatusIcon"
+                >
+                    ON
+                </span>
+
+            </div>
+
+            <p class="audio-settings-copy">
+
+                Ajusta el sonido mecanico, los impactos de la bola y el anuncio del resultado.
+
+            </p>
+
+            <div class="audio-settings-meter">
+
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+
+            </div>
+
+            <div class="setting-item">
+
+                <label for="rouletteAudioEnabled">
+
+                    Activar sonido
+
+                </label>
+
+                <input
+                    type="checkbox"
+                    id="rouletteAudioEnabled"
+                >
+
+            </div>
+
+            <div class="setting-item">
+
+                <label for="rouletteAudioMuted">
+
+                    Silenciar ruleta
+
+                </label>
+
+                <input
+                    type="checkbox"
+                    id="rouletteAudioMuted"
+                >
+
+            </div>
+
+            <div class="audio-range-row">
+
+                <label for="rouletteMasterVolume">
+
+                    Volumen general
+
+                </label>
+
+                <input
+                    type="range"
+                    id="rouletteMasterVolume"
+                    min="0"
+                    max="100"
+                    step="1"
+                >
+
+                <strong id="rouletteMasterVolumeValue">55%</strong>
+
+            </div>
+
+            <div class="audio-range-row">
+
+                <label for="rouletteEffectsVolume">
+
+                    Volumen efectos
+
+                </label>
+
+                <input
+                    type="range"
+                    id="rouletteEffectsVolume"
+                    min="0"
+                    max="100"
+                    step="1"
+                >
+
+                <strong id="rouletteEffectsVolumeValue">72%</strong>
+
+            </div>
+
+        </section>
+
         <!-- =========================
              💾 BACKUP PREMIUM
         ========================== -->

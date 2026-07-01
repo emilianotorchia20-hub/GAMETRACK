@@ -1,4 +1,4 @@
-const CACHE_NAME = "gametrack-v2";
+const CACHE_NAME = "gametrack-v3";
 
 const urlsToCache = [
 
@@ -23,7 +23,9 @@ const urlsToCache = [
   "./JS/app.js",
   "./JS/storage.js",
   "./JS/sessions.js",
-  "./JS/roulette.js"
+  "./JS/roulette.js",
+  "./JS/modules/audio/roulette-audio.js",
+  "./JS/modules/app/audio-settings.js"
 
 ];
 

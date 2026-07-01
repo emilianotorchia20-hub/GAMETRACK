@@ -27,6 +27,7 @@ const scriptGroups = {
   ],
   roulette: [
     "modules/roulette/state.js",
+    "modules/audio/roulette-audio.js",
     "modules/roulette/wheel.js",
     "modules/roulette/bets.js",
     "modules/roulette/spin.js",
@@ -39,6 +40,7 @@ const scriptGroups = {
     "modules/app/navigation.js",
     "modules/app/shell.js",
     "modules/app/alert-settings.js",
+    "modules/app/audio-settings.js",
     "modules/app/bankroll-goal.js",
     "modules/app/dashboard.js",
     "modules/app/backup-events.js",
