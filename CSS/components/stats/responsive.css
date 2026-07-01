@@ -1,0 +1,56 @@
+@media(max-width:700px){
+
+  .page-header {
+
+    margin-bottom: 30px;
+
+  }
+
+  .page-header h1 {
+
+    font-size: 34px;
+
+  }
+
+  .stats-grid {
+
+    grid-template-columns: 1fr;
+
+    gap: 18px;
+
+  }
+
+  .stat-card {
+
+    padding: 22px;
+
+    border-radius: 26px;
+
+  }
+
+  .chart-container {
+
+    padding: 20px;
+
+    border-radius: 26px;
+
+  }
+
+  .stat-title {
+
+    font-size: 12px;
+
+    letter-spacing: 2px;
+
+  }
+
+  .stat-value {
+
+    font-size: 16px;
+
+  }
+
+}
+/* ==========================
+   👑 PREMIUM PAGE LOGO
+========================== */

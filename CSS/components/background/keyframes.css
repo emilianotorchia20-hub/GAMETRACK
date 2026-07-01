@@ -1,0 +1,61 @@
+@keyframes redGlowMove {
+
+  from {
+
+    transform:
+      translate(0px, 0px)
+      scale(1);
+
+  }
+
+  to {
+
+    transform:
+      translate(-80px, 60px)
+      scale(1.08);
+
+  }
+
+}
+
+@keyframes goldFloat {
+
+  from {
+
+    transform:
+      translateY(0px)
+      scale(1);
+
+  }
+
+  to {
+
+    transform:
+      translateY(-50px)
+      scale(1.1);
+
+  }
+
+}
+
+@keyframes shineMove {
+
+  from {
+
+    transform:
+      translateX(-100%);
+
+  }
+
+  to {
+
+    transform:
+      translateX(100%);
+
+  }
+
+}
+
+/* ==========================
+   📱 MOBILE
+========================== */

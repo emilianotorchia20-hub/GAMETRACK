@@ -1,0 +1,20 @@
+@media(max-width:700px){
+
+  body::after {
+
+    width: 420px;
+    height: 420px;
+
+  }
+
+  .bg-light {
+
+    width: 260px;
+    height: 260px;
+
+  }
+
+}
+/* ==========================
+   ✨ PARTICLES
+========================== */

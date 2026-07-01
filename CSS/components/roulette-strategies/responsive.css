@@ -1,0 +1,12 @@
+@media(max-width:1100px){
+
+  .strategy-panel,
+  .strategy-info {
+
+    width:100%;
+
+    max-width:650px;
+
+  }
+
+}

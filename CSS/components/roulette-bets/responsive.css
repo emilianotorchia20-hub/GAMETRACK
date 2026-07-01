@@ -1,0 +1,39 @@
+@media(max-width:900px){
+
+  .bet-panel {
+
+    max-width: 650px;
+
+  }
+
+}
+
+@media(max-width:560px){
+
+  .bet-panel {
+
+    padding: 18px;
+
+  }
+
+  .bet-options {
+
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+  }
+
+  .numbers-grid {
+
+    grid-template-columns:
+      repeat(6, minmax(0, 1fr));
+
+  }
+
+  .numbers-grid div {
+
+    height: 34px;
+
+  }
+
+}

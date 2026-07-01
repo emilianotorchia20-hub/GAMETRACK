@@ -1,0 +1,127 @@
+/* ==========================
+   🎬 ULTRA PREMIUM LOADER
+========================== */
+
+#loader {
+
+  position: fixed;
+
+  inset: 0;
+
+  overflow: hidden;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  z-index: 99999;
+
+  background:
+
+    radial-gradient(
+      circle at top,
+      rgba(255,215,120,.12),
+      transparent 30%
+    ),
+
+    radial-gradient(
+      circle at bottom right,
+      rgba(220,38,38,.10),
+      transparent 35%
+    ),
+
+    linear-gradient(
+      180deg,
+      #030303 0%,
+      #090909 50%,
+      #000000 100%
+    );
+
+  transition:
+    opacity .6s ease,
+    visibility .6s ease;
+
+}
+
+/* ==========================
+   ✨ BACKGROUND GRID
+========================== */
+
+#loader::before {
+
+  content:"";
+
+  position:absolute;
+
+  inset:0;
+
+  background-image:
+
+    linear-gradient(
+      rgba(255,255,255,.018) 1px,
+      transparent 1px
+    ),
+
+    linear-gradient(
+      90deg,
+      rgba(255,255,255,.018) 1px,
+      transparent 1px
+    );
+
+  background-size: 34px 34px;
+
+  opacity:.4;
+
+  mask-image:
+    radial-gradient(circle at center, black 35%, transparent 90%);
+
+}
+
+/* ==========================
+   ✨ CASINO GLOW
+========================== */
+
+#loader::after {
+
+  content:"";
+
+  position:absolute;
+
+  width:700px;
+  height:700px;
+
+  border-radius:50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255,215,120,.08),
+      transparent 70%
+    );
+
+  filter: blur(30px);
+
+  animation:
+    glowPulse 5s ease-in-out infinite;
+
+}
+
+/* ==========================
+   ❌ HIDDEN
+========================== */
+
+#loader.hidden {
+
+  opacity: 0;
+
+  visibility: hidden;
+
+  pointer-events: none;
+
+}
+
+/* ==========================
+   📦 CONTENT
+========================== */

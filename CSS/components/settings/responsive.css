@@ -1,0 +1,76 @@
+@media (max-width: 768px) {
+
+    .backup-card {
+
+        padding: 26px;
+
+        border-radius: 24px;
+
+    }
+
+    .backup-header {
+
+        align-items: flex-start;
+
+    }
+
+    .backup-icon {
+
+        width: 58px;
+
+        height: 58px;
+
+        font-size: 1.6rem;
+
+        border-radius: 18px;
+
+    }
+
+    .backup-title-wrap h2 {
+
+        font-size: 1.6rem;
+
+    }
+
+    .backup-actions {
+
+        flex-direction: column;
+
+    }
+
+    .backup-btn {
+
+        width: 100%;
+
+        min-width: unset;
+
+    }
+
+}
+/* =========================
+   📥 IMPORT FIX
+========================= */
+
+.import-btn {
+
+    appearance: none;
+
+    -webkit-appearance: none;
+
+    border: none;
+
+    outline: none;
+
+    text-decoration: none;
+
+    font-family: inherit;
+
+    color: white;
+
+}
+
+.import-btn input {
+
+    display: none;
+
+}

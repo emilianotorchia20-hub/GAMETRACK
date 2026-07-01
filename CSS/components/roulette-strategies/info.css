@@ -1,0 +1,266 @@
+.strategy-info {
+
+  position: relative;
+
+  width: 320px;
+
+  flex-shrink: 0;
+
+  padding: 28px;
+
+  border-radius: 32px;
+
+  overflow: hidden;
+
+  background:
+
+    linear-gradient(
+      145deg,
+      rgba(22,22,24,.97),
+      rgba(4,4,5,.99)
+    );
+
+  border:
+    1px solid rgba(255,255,255,.05);
+
+  box-shadow:
+
+    inset 0 1px 1px rgba(255,255,255,.04),
+
+    inset 0 -30px 50px rgba(0,0,0,.72),
+
+    0 18px 50px rgba(0,0,0,.75),
+
+    0 0 25px rgba(255,215,120,.05);
+
+  backdrop-filter: blur(14px);
+
+  height: fit-content;
+
+  display: none;
+
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+
+}
+
+/* =========================
+   ✨ INFO PANEL GLOW
+========================= */
+
+.strategy-info::before {
+
+  content:"";
+
+  position:absolute;
+
+  top:-120px;
+  right:-70px;
+
+  width:240px;
+  height:240px;
+
+  border-radius:50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255,215,120,.12),
+      transparent 72%
+    );
+
+}
+
+/* =========================
+   📖 ACTIVE PANEL
+========================= */
+
+.strategy-info.active {
+
+  display:block;
+
+  animation:
+    fadeIn .28s ease;
+
+}
+
+/* =========================
+   🏆 INFO TITLE
+========================= */
+
+.strategy-info h3 {
+
+  display:flex;
+  align-items:center;
+  gap:12px;
+
+  margin-top:0;
+
+  margin-bottom:22px;
+
+  color:#ffffff;
+
+  font-size:40px;
+
+  font-weight:800;
+
+  letter-spacing:-1px;
+
+  line-height:1;
+
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+
+  text-shadow:
+    0 0 20px rgba(255,255,255,.08);
+
+}
+
+/* =========================
+   ✨ SUBTITLES
+========================= */
+
+.strategy-info strong {
+
+  display:block;
+
+  margin-top:20px;
+
+  margin-bottom:10px;
+
+  color:#f5c84c;
+
+  font-size:13px;
+
+  font-weight:800;
+
+  text-transform:uppercase;
+
+  letter-spacing:2px;
+
+  text-shadow:
+    0 0 14px rgba(245,200,76,.12);
+
+}
+
+/* =========================
+   📄 TEXT
+========================= */
+
+.strategy-info p {
+
+  color:#d4d4d8;
+
+  line-height:1.8;
+
+  font-size:15px;
+
+}
+
+/* =========================
+   📋 LIST
+========================= */
+
+.strategy-info ul {
+
+  margin:10px 0 0;
+
+  padding:0;
+
+  list-style:none;
+
+}
+
+/* =========================
+   🔸 BULLETS
+========================= */
+
+.strategy-info li {
+
+  position:relative;
+
+  padding-left:18px;
+
+  margin-bottom:12px;
+
+  color:#f4f4f5;
+
+  line-height:1.65;
+
+  font-size:15px;
+
+}
+
+.strategy-info li::before {
+
+  content:"";
+
+  position:absolute;
+
+  left:0;
+  top:10px;
+
+  width:7px;
+  height:7px;
+
+  border-radius:50%;
+
+  background:#f5c84c;
+
+  box-shadow:
+    0 0 10px rgba(245,200,76,.45);
+
+}
+
+/* =========================
+   ✨ EXAMPLE BOX
+========================= */
+
+.strategy-example {
+
+  margin-top:18px;
+
+  padding:16px;
+
+  border-radius:18px;
+
+  background:
+
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.04),
+      rgba(255,255,255,.02)
+    );
+
+  border:
+    1px solid rgba(255,255,255,.06);
+
+  box-shadow:
+    inset 0 1px 1px rgba(255,255,255,.04);
+
+}
+
+/* =========================
+   💰 CODE STYLE
+========================= */
+
+.strategy-info code {
+
+  padding:4px 9px;
+
+  border-radius:10px;
+
+  background:
+    rgba(245,200,76,.12);
+
+  color:#ffe08a;
+
+  font-size:14px;
+
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+
+  font-weight:600;
+
+}
+
+/* =========================
+   ✨ FADE ANIMATION
+========================= */

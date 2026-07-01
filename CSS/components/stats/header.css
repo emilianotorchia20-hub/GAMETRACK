@@ -1,0 +1,68 @@
+.page-header {
+
+  position: relative;
+
+  margin-bottom: 40px;
+
+}
+
+.page-header h1 {
+
+  position: relative;
+
+  display: inline-block;
+
+  font-size: 46px;
+
+  font-weight: 900;
+
+  letter-spacing: -1.5px;
+
+  color: #ffffff;
+
+  text-shadow:
+
+    0 0 20px rgba(255,255,255,.05),
+
+    0 0 40px rgba(255,255,255,.02);
+
+}
+
+/* ==========================
+   ✨ HEADER LINE
+========================== */
+
+.page-header h1::after {
+
+  content:"";
+
+  display:block;
+
+  width:110px;
+
+  height:4px;
+
+  margin-top:14px;
+
+  border-radius:999px;
+
+  background:
+
+    linear-gradient(
+      90deg,
+      #d4af37,
+      #facc15,
+      #dc2626
+    );
+
+  box-shadow:
+
+    0 0 18px rgba(212,175,55,.35),
+
+    0 0 35px rgba(220,38,38,.14);
+
+}
+
+/* ==========================
+   💎 ULTRA GLASS CARD
+========================== */

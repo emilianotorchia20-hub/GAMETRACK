@@ -1,0 +1,167 @@
+.particles {
+
+  position: fixed;
+
+  inset: 0;
+
+  overflow: hidden;
+
+  pointer-events: none;
+
+  z-index: -1;
+
+}
+
+/* ==========================
+   ⚪ PARTICULA
+========================== */
+
+.particles span {
+
+  position: absolute;
+
+  display: block;
+
+  width: 4px;
+  height: 4px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(255,215,120,.7);
+
+  box-shadow:
+
+    0 0 10px rgba(255,215,120,.7),
+
+    0 0 20px rgba(255,215,120,.35);
+
+  animation:
+    particleFloat linear infinite;
+
+  opacity: .5;
+
+}
+
+/* ==========================
+   🎲 POSICIONES
+========================== */
+
+.particles span:nth-child(1){
+
+  left: 5%;
+  top: 90%;
+
+  animation-duration: 12s;
+  animation-delay: 0s;
+
+}
+
+.particles span:nth-child(2){
+
+  left: 15%;
+  top: 100%;
+
+  width: 2px;
+  height: 2px;
+
+  animation-duration: 18s;
+  animation-delay: 2s;
+
+}
+
+.particles span:nth-child(3){
+
+  left: 28%;
+  top: 95%;
+
+  animation-duration: 14s;
+  animation-delay: 1s;
+
+}
+
+.particles span:nth-child(4){
+
+  left: 40%;
+  top: 100%;
+
+  width: 3px;
+  height: 3px;
+
+  animation-duration: 20s;
+  animation-delay: 3s;
+
+}
+
+.particles span:nth-child(5){
+
+  left: 52%;
+  top: 92%;
+
+  animation-duration: 15s;
+  animation-delay: 0s;
+
+}
+
+.particles span:nth-child(6){
+
+  left: 65%;
+  top: 100%;
+
+  width: 2px;
+  height: 2px;
+
+  animation-duration: 22s;
+  animation-delay: 4s;
+
+}
+
+.particles span:nth-child(7){
+
+  left: 74%;
+  top: 96%;
+
+  animation-duration: 17s;
+  animation-delay: 1s;
+
+}
+
+.particles span:nth-child(8){
+
+  left: 83%;
+  top: 100%;
+
+  animation-duration: 13s;
+  animation-delay: 2s;
+
+}
+
+.particles span:nth-child(9){
+
+  left: 92%;
+  top: 95%;
+
+  width: 3px;
+  height: 3px;
+
+  animation-duration: 19s;
+  animation-delay: 0s;
+
+}
+
+.particles span:nth-child(10){
+
+  left: 97%;
+  top: 100%;
+
+  width: 2px;
+  height: 2px;
+
+  animation-duration: 24s;
+  animation-delay: 5s;
+
+}
+
+/* ==========================
+   🎞 ANIMACION
+========================== */

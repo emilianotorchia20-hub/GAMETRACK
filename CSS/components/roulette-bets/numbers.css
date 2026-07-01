@@ -1,0 +1,116 @@
+.numbers-grid {
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(12, minmax(0, 1fr));
+
+  gap: clamp(4px, .65vw, 7px);
+
+  margin: 22px 0 18px;
+
+  width: 100%;
+
+  min-width: 0;
+
+  position: relative;
+
+  z-index: 1;
+
+}
+
+.numbers-grid div {
+
+  min-width: 0;
+
+  height: clamp(30px, 3vw, 38px);
+
+  padding: 0;
+
+  display: grid;
+
+  place-items: center;
+
+  text-align: center;
+
+  border-radius: 8px;
+
+  border:
+    1px solid rgba(255,255,255,.08);
+
+  font-size: clamp(10px, .95vw, 12px);
+
+  font-weight: 900;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 8px 13px rgba(0,0,0,.30),
+    inset 0 1px 0 rgba(255,255,255,.12);
+
+  transition:
+    transform .15s ease,
+    filter .15s ease,
+    box-shadow .15s ease;
+
+}
+
+.numbers-grid div:hover {
+
+  transform:
+    translateY(-2px)
+    scale(1.04);
+
+  filter:
+    brightness(1.12);
+
+  box-shadow:
+    0 13px 17px rgba(0,0,0,.38),
+    inset 0 1px 0 rgba(255,255,255,.16);
+
+}
+
+/* 🎨 COLORES */
+
+.num-red {
+
+  background:
+    linear-gradient(
+      180deg,
+      #dc2626,
+      #991b1b
+    );
+
+  color: white;
+
+}
+
+.num-black {
+
+  background:
+    linear-gradient(
+      180deg,
+      #1f2937,
+      #020617
+    );
+
+  color: white;
+
+}
+
+.num-green {
+
+  background:
+    linear-gradient(
+      180deg,
+      #16a34a,
+      #166534
+    );
+
+  color: white;
+
+}
+
+/* =========================
+   📋 APUESTAS
+========================= */

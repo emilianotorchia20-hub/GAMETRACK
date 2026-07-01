@@ -114,60 +114,7 @@
 
     </div>
 
-    <!-- =========================
-         🔝 NAVBAR
-    ========================== -->
-
-    <nav>
-
-        <a href="../../index.html">
-
-            Inicio
-
-        </a>
-
-        <a href="../historial/index.html">
-
-            Historial
-
-        </a>
-
-        <a href="../estadisticas/index.html">
-
-            
-
-            Estadisticas
-
-        
-
-        </a>
-
-        <a href="../insights/index.html">
-
-            Insights
-
-        </a>
-
-        <a href="../configuracion/index.html">
-
-            
-
-            Configuracion
-
-        
-
-        </a>
-
-        <a
-            href="../roulette/index.html"
-            class="active"
-        >
-
-            Ruleta
-
-        </a>
-
-    </nav>
+    <div id="appNav"></div>
 
     <!-- =========================
          🎰 MAIN RULETA
@@ -296,28 +243,28 @@
                         class="chip"
                         data-value="10"
                     >
-                        10
+                        <span>10</span>
                     </button>
 
                     <button
                         class="chip"
                         data-value="50"
                     >
-                        50
+                        <span>50</span>
                     </button>
 
                     <button
                         class="chip active"
                         data-value="100"
                     >
-                        100
+                        <span>100</span>
                     </button>
 
                     <button
                         class="chip"
                         data-value="500"
                     >
-                        500
+                        <span>500</span>
                     </button>
 
                 </div>
@@ -416,232 +363,11 @@
 
                 <h2>
 
-                    
-
                     Estrategias
-
-                
 
                 </h2>
 
-                <!-- =========================
-                     🔥 PROGRESIVAS
-                ========================== -->
-
-                <h4>
-
-                    Progresivas
-
-                </h4>
-
-                <div
-                    class="strategy-card"
-                    data-strategy="martingale"
-                >
-
-                    <h3>
-
-                        Martingale
-
-                    </h3>
-
-                    <p>
-
-                        Duplicar apuesta tras perder
-
-                    </p>
-
-                
-
-                </div>
-
-                <div
-                    class="strategy-card"
-                    data-strategy="dalembert"
-                >
-
-                    <h3>
-
-                        D'Alembert
-
-                    </h3>
-
-                    <p>
-
-                        Sube y baja progresivamente
-
-                    </p>
-
-                
-
-                </div>
-
-                <div
-                    class="strategy-card"
-                    data-strategy="fibonacci"
-                >
-
-                    <h3>
-
-                        Fibonacci
-
-                    </h3>
-
-                    <p>
-
-                        Recuperacion con secuencia
-
-                    </p>
-
-                
-
-                </div>
-
-                <div
-                    class="strategy-card"
-                    data-strategy="labouchere"
-                >
-
-                    <h3>
-
-                        Labouchere
-
-                    </h3>
-
-                    <p>
-
-                        Sistema de cancelacion progresiva
-
-                    </p>
-
-                
-
-                </div>
-
-                <div
-                    class="strategy-card"
-                    data-strategy="reverseMartingale"
-                >
-
-                    <h3>
-
-                        Reverse Martingale
-
-                    </h3>
-
-                    <p>
-
-                        Duplicar cuando ganas
-
-                    </p>
-
-                
-
-                </div>
-
-                <!-- =========================
-                     🟡 CONSERVADORAS
-                ========================== -->
-
-                <h4>
-
-                    Conservadoras
-
-                </h4>
-
-                <div
-                    class="strategy-card"
-                    data-strategy="flat"
-                >
-
-                    <h3>
-
-                        Apuesta plana
-
-                    </h3>
-
-                    <p>
-
-                        Misma cantidad siempre
-
-                    </p>
-
-                
-
-                </div>
-
-                <div
-                    class="strategy-card"
-                    data-strategy="paroli"
-                >
-
-                    <h3>
-
-                        Paroli
-
-                    </h3>
-
-                    <p>
-
-                        Aprovechar rachas ganadoras
-
-                    </p>
-
-                
-
-                </div>
-
-                <!-- =========================
-                     🔴 AVANZADAS
-                ========================== -->
-
-                <h4>
-
-                    Avanzadas
-
-                </h4>
-
-                <div
-                    class="strategy-card"
-                    data-strategy="sector"
-                >
-
-                    <h3>
-
-                        Estrategia de sectores
-
-                    </h3>
-
-                    <p>
-
-                        Apostar zonas de la ruleta
-
-                    </p>
-
-                
-
-                </div>
-
-                <div
-                    class="strategy-card"
-                    data-strategy="contra"
-                >
-
-                    <h3>
-
-                        Contra racha
-
-                    </h3>
-
-                    <p>
-
-                        Apostar contra tendencias
-
-                    </p>
-
-                
-
-                </div>
+                <div id="strategyCards"></div>
 
             </div>
 

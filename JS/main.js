@@ -9,13 +9,38 @@ window.Chart = Chart;
 
 const legacyBasePath = window.location.pathname.includes("/PAGES/") ? "../../JS/" : "./JS/";
 
-const legacyScripts = {
-  storage: `${legacyBasePath}storage.js`,
-  alerts: `${legacyBasePath}alerts.js`,
-  sessions: `${legacyBasePath}sessions.js`,
-  insights: `${legacyBasePath}insights.js`,
-  roulette: `${legacyBasePath}roulette.js`,
-  app: `${legacyBasePath}app.js`,
+const scriptGroups = {
+  storage: ["storage.js"],
+  alerts: ["alerts.js"],
+  sessions: [
+    "modules/sessions/formatters.js",
+    "modules/sessions/form.js",
+    "modules/sessions/history.js",
+    "modules/sessions/stats.js",
+    "modules/sessions/bankroll.js",
+    "modules/sessions/boot.js",
+  ],
+  insights: [
+    "modules/insights/formatters.js",
+    "modules/insights/render.js",
+    "modules/insights/boot.js",
+  ],
+  roulette: [
+    "modules/roulette/state.js",
+    "modules/roulette/wheel.js",
+    "modules/roulette/bets.js",
+    "modules/roulette/spin.js",
+    "modules/roulette/strategies.js",
+    "modules/roulette/history.js",
+    "modules/roulette/boot.js",
+  ],
+  app: [
+    "modules/app/navigation.js",
+    "modules/app/shell.js",
+    "modules/app/alert-settings.js",
+    "modules/app/dashboard.js",
+    "modules/app/backup-events.js",
+  ],
 };
 
 const pageScripts = [
@@ -49,7 +74,9 @@ async function loadLegacyPageScripts() {
   const entry = pageScripts.find((item) => item.test(path));
 
   for (const key of entry.scripts) {
-    await loadClassicScript(legacyScripts[key]);
+    for (const file of scriptGroups[key]) {
+      await loadClassicScript(`${legacyBasePath}${file}`);
+    }
   }
 }
 

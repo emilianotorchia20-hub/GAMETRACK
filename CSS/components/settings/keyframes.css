@@ -1,0 +1,14 @@
+@keyframes backupShine {
+
+    100% {
+
+        transform:
+            translateX(220%);
+
+    }
+
+}
+
+/* =========================
+   📱 MOBILE
+========================= */

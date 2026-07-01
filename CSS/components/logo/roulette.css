@@ -1,0 +1,98 @@
+.roulette-mini {
+
+  position:absolute;
+
+  width:120px;
+  height:120px;
+
+  border-radius:50%;
+
+  background:
+
+    conic-gradient(
+      #991b1b 0deg 10deg,
+      #111 10deg 20deg,
+      #dc2626 20deg 30deg,
+      #111 30deg 40deg,
+      #991b1b 40deg 50deg,
+      #111 50deg 60deg,
+      #dc2626 60deg 70deg,
+      #111 70deg 80deg,
+      #15803d 80deg 90deg,
+      #111 90deg 100deg,
+      #991b1b 100deg 110deg,
+      #111 110deg 120deg,
+      #dc2626 120deg 130deg,
+      #111 130deg 140deg,
+      #991b1b 140deg 150deg,
+      #111 150deg 160deg,
+      #dc2626 160deg 170deg,
+      #111 170deg 180deg,
+      #991b1b 180deg 190deg,
+      #111 190deg 200deg,
+      #dc2626 200deg 210deg,
+      #111 210deg 220deg,
+      #991b1b 220deg 230deg,
+      #111 230deg 240deg,
+      #dc2626 240deg 250deg,
+      #111 250deg 260deg,
+      #991b1b 260deg 270deg,
+      #111 270deg 280deg,
+      #dc2626 280deg 290deg,
+      #111 290deg 300deg,
+      #991b1b 300deg 310deg,
+      #111 310deg 320deg,
+      #dc2626 320deg 330deg,
+      #111 330deg 340deg,
+      #991b1b 340deg 350deg,
+      #111 350deg 360deg
+    );
+
+  border:6px solid #d4af37;
+
+  box-shadow:
+
+    inset 0 0 20px rgba(0,0,0,.8),
+
+    0 0 18px rgba(255,215,120,.18);
+
+  animation:
+    logoRotate 12s linear infinite;
+
+}
+
+/* =========================
+   💿 CENTER
+========================= */
+
+.roulette-center {
+
+  position:absolute;
+
+  width:34px;
+  height:34px;
+
+  top:50%;
+  left:50%;
+
+  transform:
+    translate(-50%, -50%);
+
+  border-radius:50%;
+
+  background:
+
+    radial-gradient(
+      circle at 30% 30%,
+      #fff,
+      #999,
+      #222
+    );
+
+  border:2px solid #d4af37;
+
+}
+
+/* =========================
+   🃏 CARDS
+========================= */

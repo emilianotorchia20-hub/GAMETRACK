@@ -1,0 +1,37 @@
+@keyframes logoRotate {
+
+  from {
+
+    transform:rotate(0deg);
+
+  }
+
+  to {
+
+    transform:rotate(360deg);
+
+  }
+
+}
+
+@keyframes shineMove {
+
+  from {
+
+    transform:
+      translateX(-120%);
+
+  }
+
+  to {
+
+    transform:
+      translateX(120%);
+
+  }
+
+}
+
+/* =========================
+   📱 MOBILE
+========================= */

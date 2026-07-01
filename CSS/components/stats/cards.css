@@ -1,0 +1,203 @@
+.stat-card {
+
+  position: relative;
+
+  overflow: hidden;
+
+  min-width: 0;
+
+  width: 100%;
+
+  max-width: none;
+
+  height: 100%;
+
+  margin: 0;
+
+  padding: 28px;
+
+  border-radius: 32px;
+
+  background:
+
+    linear-gradient(
+      145deg,
+      rgba(22,22,24,.70) 0%,
+      rgba(10,10,12,.76) 55%,
+      rgba(3,3,4,.82) 100%
+    );
+
+  backdrop-filter: blur(18px);
+
+  -webkit-backdrop-filter: blur(18px);
+
+  border:
+    1px solid rgba(255,255,255,.06);
+
+  box-shadow:
+
+    inset 0 1px 0 rgba(255,255,255,.05),
+
+    inset 0 -30px 45px rgba(0,0,0,.35),
+
+    0 12px 45px rgba(0,0,0,.55),
+
+    0 0 30px rgba(255,215,120,.03);
+
+  transition:
+
+    transform .28s ease,
+
+    box-shadow .28s ease,
+
+    border-color .28s ease,
+
+    background .28s ease;
+
+}
+
+/* ==========================
+   ✨ TOP SHINE
+========================== */
+
+.stat-card::before {
+
+  content:"";
+
+  position:absolute;
+
+  inset:0;
+
+  border-radius:32px;
+
+  background:
+
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.08),
+      transparent 18%,
+      transparent 65%,
+      rgba(255,255,255,.015)
+    );
+
+  pointer-events:none;
+
+}
+
+/* ==========================
+   🔥 GOLD GLOW
+========================== */
+
+.stat-card::after {
+
+  content:"";
+
+  position:absolute;
+
+  width:220px;
+  height:220px;
+
+  top:-110px;
+  right:-110px;
+
+  border-radius:50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255,215,120,.10),
+      transparent 72%
+    );
+
+  filter: blur(24px);
+
+  pointer-events:none;
+
+}
+
+/* ==========================
+   ✨ HOVER
+========================== */
+
+.stat-card:hover {
+
+  transform:
+    translateY(-6px);
+
+  border-color:
+    rgba(255,215,120,.16);
+
+  box-shadow:
+
+    inset 0 1px 0 rgba(255,255,255,.06),
+
+    0 20px 60px rgba(0,0,0,.65),
+
+    0 0 35px rgba(255,215,120,.06);
+
+}
+
+/* ==========================
+   🏷 TITLE
+========================== */
+
+.stat-title {
+
+  position: relative;
+
+  z-index: 2;
+
+  margin-bottom: 16px;
+
+  color: rgba(255,255,255,.52);
+
+  font-size: 13px;
+
+  font-weight: 800;
+
+  letter-spacing: 2.5px;
+
+  text-transform: uppercase;
+
+  text-shadow:
+    0 0 12px rgba(255,255,255,.03);
+
+}
+
+/* ==========================
+   💰 VALUE
+========================== */
+
+.stat-value {
+
+  position: relative;
+
+  z-index: 2;
+
+  font-size: clamp(12px, 1vw, 20px);
+
+  font-weight: 800;
+
+  line-height: 1.1;
+
+  letter-spacing: -.3px;
+
+  color: #f8fafc;
+
+  white-space: nowrap;
+
+  overflow: visible;
+
+  text-overflow: unset;
+
+  text-shadow:
+
+    0 0 12px rgba(255,255,255,.04),
+
+    0 0 24px rgba(255,255,255,.02);
+
+}
+
+/* ==========================
+   📉 RESULTADO
+========================== */

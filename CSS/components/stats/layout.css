@@ -1,0 +1,32 @@
+/* ==========================
+   📊 STATS CONTAINER
+========================== */
+
+.stats-container {
+
+  max-width: 1200px;
+
+  margin: 0 auto;
+
+}
+
+/* ==========================
+   🧱 GRID
+========================== */
+
+.stats-grid {
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(auto-fit, minmax(320px, 1fr));
+
+  gap: 24px;
+
+  align-items: stretch;
+
+}
+
+/* ==========================
+   👑 PAGE HEADER
+========================== */

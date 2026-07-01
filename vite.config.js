@@ -1,6 +1,23 @@
-import { copyFileSync, existsSync, mkdirSync } from "node:fs";
+import { copyFileSync, existsSync, mkdirSync, readdirSync, statSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { defineConfig } from "vite";
+
+function copyDirectory(source, target) {
+  if (!existsSync(source)) return;
+
+  mkdirSync(target, { recursive: true });
+
+  for (const entry of readdirSync(source)) {
+    const sourcePath = join(source, entry);
+    const targetPath = join(target, entry);
+
+    if (statSync(sourcePath).isDirectory()) {
+      copyDirectory(sourcePath, targetPath);
+    } else {
+      copyFileSync(sourcePath, targetPath);
+    }
+  }
+}
 
 export default defineConfig({
   base: "./",
@@ -32,6 +49,7 @@ export default defineConfig({
           const source = resolve(__dirname, "JS", file);
           if (existsSync(source)) copyFileSync(source, join(legacyJsDir, file));
         }
+        copyDirectory(resolve(__dirname, "JS", "modules"), join(legacyJsDir, "modules"));
       },
     },
   ],

@@ -1,0 +1,31 @@
+@media(max-width:900px){
+
+  .logo {
+
+    gap:18px;
+
+    padding:18px 24px;
+
+  }
+
+  .logo-icon-wrap {
+
+    width:90px;
+    height:90px;
+
+  }
+
+  .roulette-mini {
+
+    width:82px;
+    height:82px;
+
+  }
+
+  .logo-text {
+
+    font-size:48px;
+
+  }
+
+}
