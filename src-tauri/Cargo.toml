@@ -1,6 +1,6 @@
 [package]
 name = "gametrack"
-version = "1.0.3"
+version = "1.0.4"
 description = "GameTrack desktop application"
 authors = ["GameTrack"]
 edition = "2021"
